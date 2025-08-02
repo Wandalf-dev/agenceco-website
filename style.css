@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');
 
 * {
   box-sizing: border-box;
@@ -8,21 +8,29 @@
 
 body {
   font-family: 'Poppins', sans-serif;
-  background-color: white;
+  background-color: black; /* bandes noires sur les côtés */
   color: #000;
   font-size: 16px;
   line-height: 1.6;
 }
 
+.main-wrapper {
+  max-width: 1440px; /* plus large qu'avant */
+  margin: 0 auto;
+  background-color: white;
+}
+
 /* HEADER */
 header {
   background-color: white;
-  padding: 20px 0;
+  padding: 16px 0;
   border-bottom: 1px solid #eee;
+  position: relative;
+  z-index: 10;
 }
 
 header .container {
-  max-width: 1240px;
+  max-width: 1440px;
   margin: 0 auto;
   padding: 0 40px;
   display: flex;
@@ -31,9 +39,13 @@ header .container {
 }
 
 .logo {
-  font-size: 26px;
+  font-size: 42px;       /* plus grand */
   font-weight: 700;
   color: #2b5018;
+}
+
+.logo span {
+  font-style: italic;    /* met juste "Eco" en italique */
 }
 
 nav ul {
@@ -45,8 +57,8 @@ nav ul {
 nav ul li a {
   text-decoration: none;
   color: #000;
-  font-size: 14px;
-  font-weight: 500;
+  font-size: 20px;      /* plus grand */
+  font-weight: 500;     /* en gras */
   transition: color 0.3s;
 }
 
@@ -54,256 +66,37 @@ nav ul li a:hover {
   color: #78be20;
 }
 
-/* HERO */
+/* HERO SECTION */
 .hero {
-  background: url('assets/bg-leaf.jpg') center center/cover no-repeat;
-  height: 500px;
+  position: relative;
+  height: 750px; /* plus grand que 500px */
+  background-image: url('assets/bg-leaf.jpg'); /* adapte si besoin */
+  background-size: cover;
+  background-position: center;
+}
+
+.hero-overlay {
+  width: 100%;
+  height: 100%;
   display: flex;
-  align-items: center;
-  justify-content: center;
+  align-items: flex-end;
+  justify-content: flex-end;
+  padding: 60px;
+}
+
+.hero-text {
   text-align: right;
-  padding: 0 50px;
+  color: white;
 }
 
-.hero h2 {
-  color: white;
-  font-size: 32px;
+.hero-text h1 {
+  font-size: 55px;   /* plus gros qu'avant */
+  line-height: 1.3;
   font-weight: 600;
 }
 
-.hero h2 span {
-  color: #c7f012;
+.hero-text span {
+  color: #c6f100;
   font-weight: 700;
-  font-size: 36px;
+  font-size: 70px;   /* pour donner plus de présence */
 }
-
-/* SECTION TITRES */
-section h2 {
-  text-align: center;
-  margin: 40px 0 20px;
-  color: #2b5018;
-}
-
-/* ÉQUIPE */
-.equipe p {
-  text-align: center;
-  max-width: 600px;
-  margin: 0 auto 30px;
-  font-size: 14px;
-  color: #333;
-}
-
-.membres {
-  display: flex;
-  justify-content: center;
-  gap: 50px;
-  margin-bottom: 30px;
-}
-
-.membre {
-  text-align: center;
-  font-size: 13px;
-}
-
-.membre img {
-  border-radius: 50%;
-  width: 100px;
-  height: 100px;
-  object-fit: cover;
-}
-
-.membre p {
-  margin: 4px 0;
-  font-size: 14px;
-  line-height: 1.4;
-  padding: 0;
-}
-
-
-/* STATS */
-.stats {
-  background-color: #113640;
-  color: #fff;
-  display: flex;
-  justify-content: space-around;
-  padding: 30px 0;
-  font-size: 14px;
-}
-
-.stats span {
-  display: block;
-  font-size: 12px;
-  color: #ccc;
-}
-
-/* SERVICES */
-.services .cartes-services {
-  display: flex;
-  justify-content: center;
-  gap: 50px;
-  margin-top: 20px;
-}
-
-.services .service {
-  text-align: center;
-  max-width: 180px;
-}
-
-.services .service img {
-  width: 100px;
-  height: auto;
-  margin-bottom: 10px;
-}
-
-.services .service h3 {
-  font-size: 14px;
-  font-weight: 500;
-}
-
-/* ACTUALITÉS */
-.actus {
-  padding: 40px 0;
-  background-color: white;
-}
-
-.actus .actu {
-  background-color: #4caf50;
-  color: white;
-  padding: 15px;
-  margin: 10px auto;
-  width: 300px;
-  text-align: center;
-  font-size: 13px;
-  border-radius: 6px;
-}
-
-/* CONTACT */
-.contact {
-  background-color: #113640;
-  color: white;
-  padding: 40px 0;
-  text-align: center;
-}
-
-.contact form {
-  max-width: 700px;
-  margin: 20px auto;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 15px;
-}
-
-.contact input,
-.contact textarea {
-  padding: 10px;
-  border: none;
-  border-radius: 4px;
-  font-family: inherit;
-}
-
-.contact textarea {
-  grid-column: span 2;
-  height: 100px;
-  resize: none;
-}
-
-.contact button {
-  background-color: #c7f012;
-  border: none;
-  padding: 10px 20px;
-  color: #000;
-  font-weight: 600;
-  cursor: pointer;
-  grid-column: span 2;
-  width: 120px;
-  justify-self: center;
-}
-
-/* APRÈS CONTACT */
-.apres-contact {
-  padding: 40px 0;
-}
-
-.image-texte {
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 40px;
-}
-
-.image-gauche img {
-  width: 300px;
-  border-radius: 10px;
-}
-
-.blocs-droite {
-  display: flex;
-  gap: 15px;
-}
-
-.blocs-droite img {
-  width: 60px;
-  height: auto;
-}
-
-/* GALERIE */
-.galerie {
-  text-align: center;
-  padding: 40px 0;
-}
-
-.galerie img {
-  width: 300px;
-  margin-top: 20px;
-  border-radius: 10px;
-}
-
-/* FOOTER */
-footer {
-  background-color: #113640;
-  color: white;
-  padding: 40px 20px 20px;
-}
-
-.footer-cols {
-  display: flex;
-  justify-content: space-around;
-  flex-wrap: wrap;
-  margin-bottom: 20px;
-}
-
-.footer-col h4 {
-  font-size: 14px;
-  margin-bottom: 10px;
-}
-
-.footer-col ul {
-  list-style: none;
-  font-size: 13px;
-  padding: 0;
-}
-
-.footer-bottom {
-  text-align: center;
-  border-top: 1px solid #ccc;
-  padding-top: 10px;
-}
-
-.footer-bottom p {
-  margin: 0;
-  font-size: 12px;
-}
-
-.footer-bottom a {
-  display: block;
-  color: #c7f012;
-  text-decoration: none;
-  margin: 10px 0;
-}
-
-.footer-socials img {
-  width: 20px;
-  margin: 0 5px;
-}
-
