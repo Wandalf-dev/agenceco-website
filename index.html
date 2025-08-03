@@ -1,21 +1,28 @@
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AgenceEco</title>
-  <link rel="stylesheet" href="style.css">
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
-</head>
-<body>
-  <div class="main-wrapper">
+<!DOCTYPE html> <!-- Indique que c’est un document HTML5 -->
+<html lang="fr"> <!-- Langue du document : français -->
 
-    <!-- Header -->
+<head>
+  <meta charset="UTF-8"> <!-- Encodage des caractères en UTF-8 (accents, etc.) -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- Responsive design pour mobiles -->
+  <title>AgenceEco</title> <!-- Titre de la page (affiché dans l’onglet du navigateur) -->
+  
+  <link rel="stylesheet" href="style.css"> <!-- Lien vers le fichier CSS externe -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet"> 
+  <!-- Lien vers la police Google Fonts "Poppins" avec différentes graisses -->
+</head>
+
+<body>
+  <div class="main-wrapper"> <!-- Conteneur global centré, avec fond blanc -->
+
+    <!-- ========= HEADER ========= -->
     <header>
-      <div class="container">
-        <div class="logo">Agenc<span>eco</span></div>
+      <div class="container"> <!-- Conteneur interne pour aligner logo et menu -->
+        <div class="logo">Agenc<span>eco</span></div> 
+        <!-- Logo texte : "eco" est en italique via le CSS -->
+        
         <nav>
           <ul>
+            <!-- Menu de navigation avec ancres vers les sections -->
             <li><a href="#">Accueil</a></li>
             <li><a href="#equipe">Notre équipe</a></li>
             <li><a href="#services">Nos services</a></li>
@@ -27,17 +34,95 @@
       </div>
     </header>
 
-    <!-- Section Hero -->
-    <section class="hero">
-      <div class="hero-overlay">
-        <div class="hero-text">
-          <h1>Bienvenue dans votre<br><span>agence web écologique</span></h1>
+    <!-- ========= SECTION HERO ========= -->
+    <section class="hero"> <!-- Section avec image de fond -->
+      <div class="hero-overlay"> <!-- Couvre l’image pour placer le texte dessus -->
+        <div class="hero-text"> <!-- Bloc contenant le texte d’intro -->
+          <h1>
+            Bienvenue dans votre<br>
+            <span>agence web écologique</span>
+          </h1>
         </div>
       </div>
     </section>
 
-    <!-- Sections à venir -->
+    <!-- ========= SECTION ÉQUIPE ========= -->
+    <section class="team-section" id="equipe"> <!-- Section avec ID pour lien ancré -->
+      <h2>Notre équipe</h2> <!-- Titre principal de la section -->
 
-  </div>
+      <p class="intro">
+        <!-- Paragraphe introductif de la section équipe -->
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
+        Donec sed leo in nisi vehicula bibendum. 
+        Aliquam sit amet blandit nisi, sodales molestie.
+      </p>
+
+      <div class="team-grid"> <!-- Grille de membres de l'équipe -->
+
+        <!-- ========== MEMBRE : Julie ========== -->
+        <div class="member"> <!-- Bloc individuel -->
+          <div class="photo-wrapper"> <!-- Cercle contenant la photo -->
+            <img src="assets/person1.jpg" alt="Julie Dupond" class="photo-julie"> <!-- Image de Julie -->
+          </div>
+          <h3>Julie Dupond</h3> <!-- Nom -->
+          <p>
+            Consectetur adipiscing elit.<br>
+            Donec sed leo in nisi<br>
+            vehicula bibendum
+          </p>
+        </div>
+
+        <!-- ========== MEMBRE : Romeo ========== -->
+        <div class="member">
+          <div class="photo-wrapper">
+            <img src="assets/person2.jpg" alt="Romeo Sylla" class="photo-romeo">
+          </div>
+          <h3>Romeo Sylla</h3>
+          <p>
+            Consectetur adipiscing elit.<br>
+            Donec sed leo in nisi<br>
+            vehicula bibendum
+          </p>
+        </div>
+
+        <!-- ========== MEMBRE : Javier ========== -->
+        <div class="member">
+          <div class="photo-wrapper">
+            <img src="assets/person3.jpg" alt="Javier Bardem" class="photo-javier">
+          </div>
+          <h3>Javier Bardem</h3>
+          <p>
+            Consectetur adipiscing elit.<br>
+            Donec sed leo in nisi<br>
+            vehicula bibendum
+          </p>
+        </div>
+      </div>
+
+      <!-- ========= BARRE DES STATISTIQUES ========= -->
+      <div class="stats-bar">
+        <div class="stat">
+          <strong>2500</strong>
+          <span>Clients satisfaits</span>
+        </div>
+        <div class="stat">
+          <strong>2500</strong>
+          <span>Clients satisfaits</span>
+        </div>
+        <div class="stat">
+          <strong>2500</strong>
+          <span>Clients satisfaits</span>
+        </div>
+        <div class="stat">
+          <strong>2500</strong>
+          <span>Clients satisfaits</span>
+        </div>
+      </div>
+
+    </section> <!-- Fin section équipe -->
+
+  </div> <!-- Fin de .main-wrapper -->
 </body>
 </html>
+
+<!-- D'autres sections à venir ! -->

@@ -1,32 +1,46 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');
+/* =============================
+   Import de la police principale
+   ============================= */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
 
+/* =============================
+   Réinitialisation de base
+   ============================= */
 * {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
+  box-sizing: border-box;    /* Inclut padding et border dans les dimensions */
+  margin: 0;                 /* Supprime marges par défaut */
+  padding: 0;                /* Supprime paddings par défaut */
 }
 
+/* =============================
+   Corps de la page (fond global)
+   ============================= */
 body {
   font-family: 'Poppins', sans-serif;
-  background-color: black; /* bandes noires sur les côtés */
+  background-color: black;  /* Fond noir visible sur les côtés */
   color: #000;
   font-size: 16px;
   line-height: 1.6;
 }
 
+/* =============================
+   Conteneur principal (zone blanche centrée)
+   ============================= */
 .main-wrapper {
-  max-width: 1440px; /* plus large qu'avant */
-  margin: 0 auto;
+  max-width: 1425px;         /* Largeur de la zone blanche */
+  margin: 0 auto;            /* Centre horizontalement */
   background-color: white;
 }
 
-/* HEADER */
+/* =============================
+   HEADER : logo + menu de navigation
+   ============================= */
 header {
   background-color: white;
-  padding: 16px 0;
+  padding: 16px 0;           /* Espacement haut/bas */
   border-bottom: 1px solid #eee;
   position: relative;
-  z-index: 10;
+  z-index: 10;               /* Passe devant l’image hero */
 }
 
 header .container {
@@ -34,43 +48,50 @@ header .container {
   margin: 0 auto;
   padding: 0 40px;
   display: flex;
-  justify-content: space-between;
-  align-items: center;
+  justify-content: space-between; /* Logo à gauche, menu à droite */
+  align-items: center;            /* Centre verticalement */
 }
 
+/* Texte "AgenceEco" */
 .logo {
-  font-size: 42px;       /* plus grand */
+  font-size: 42px;
   font-weight: 700;
-  color: #2b5018;
+  color: #255219;
 }
 
+/* Partie "eco" du logo en italique */
 .logo span {
-  font-style: italic;    /* met juste "Eco" en italique */
+  font-style: italic;
 }
 
+/* =============================
+   NAVIGATION
+   ============================= */
 nav ul {
-  list-style: none;
+  list-style: none;         /* Supprime les puces */
   display: flex;
-  gap: 28px;
+  gap: 28px;                /* Espacement horizontal entre les liens */
 }
 
 nav ul li a {
   text-decoration: none;
   color: #000;
-  font-size: 20px;      /* plus grand */
-  font-weight: 500;     /* en gras */
+  font-size: 20px;
+  font-weight: 500;
   transition: color 0.3s;
 }
 
 nav ul li a:hover {
-  color: #78be20;
+  color: #78be20;           /* Couleur au survol */
 }
 
-/* HERO SECTION */
+/* =============================
+   HERO : image de fond + texte d’intro
+   ============================= */
 .hero {
   position: relative;
-  height: 750px; /* plus grand que 500px */
-  background-image: url('assets/bg-leaf.jpg'); /* adapte si besoin */
+  height: 800px;                      /* Hauteur du bloc hero */
+  background-image: url('assets/bg-leaf.jpg');
   background-size: cover;
   background-position: center;
 }
@@ -79,18 +100,19 @@ nav ul li a:hover {
   width: 100%;
   height: 100%;
   display: flex;
-  align-items: flex-end;
-  justify-content: flex-end;
+  align-items: flex-end;              /* Texte en bas */
+  justify-content: flex-end;          /* Aligné à droite */
   padding: 60px;
 }
 
+/* Bloc texte sur image */
 .hero-text {
   text-align: right;
   color: white;
 }
 
 .hero-text h1 {
-  font-size: 55px;   /* plus gros qu'avant */
+  font-size: 55px;
   line-height: 1.3;
   font-weight: 600;
 }
@@ -98,5 +120,140 @@ nav ul li a:hover {
 .hero-text span {
   color: #c6f100;
   font-weight: 700;
-  font-size: 70px;   /* pour donner plus de présence */
+  font-size: 70px;
+}
+
+/* =============================
+   SECTION ÉQUIPE
+   ============================= */
+.team-section {
+  background-color: white;
+  padding: 40px 0 60px;
+  text-align: center;
+}
+
+/* Titre "Notre équipe" */
+.team-section h2 {
+  color: #469B61;
+  font-size: 55px;
+  font-weight: 600;
+  margin-bottom: 40px;
+}
+
+/* Paragraphe sous le titre */
+.team-section .intro {
+  max-width: 1300px;
+  margin: 0 auto 80px;   /* Espace avec les cercles */
+  font-size: 29px;
+  font-weight: 500;
+  color: #111;
+  line-height: 1.4;
+}
+
+/* Grille contenant les membres */
+.team-grid {
+  display: flex;
+  justify-content: center;
+  gap: 180px;             /* Espace entre les cartes */
+  flex-wrap: wrap;
+  padding-bottom: 60px;
+}
+
+/* Bloc individuel pour chaque membre */
+.member {
+  width: 280px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+/* Nom et prénom du membre */
+.member h3 {
+  font-size: 26px;
+  font-weight: 500;
+  color: #000;
+  margin-bottom: 4px;
+}
+
+/* Description sous le nom */
+.member p {
+  font-size: 18px;
+  color: #868686;
+  line-height: 1.5;
+  margin: 0;
+  text-align: center;
+}
+
+/* Cercle contenant la photo */
+.photo-wrapper {
+  width: 250px;
+  height: 250px;
+  border-radius: 50%;
+  overflow: hidden;
+  margin: 0 auto 10px;
+  position: relative;
+}
+
+/* Image de Julie */
+.photo-julie {
+  object-fit: cover;
+  object-position: center 10%;
+  width: 100%;
+  height: 100%;
+}
+
+/* Image de Romeo */
+.photo-romeo {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 50% 35%;
+  transform: scale(1.5);
+  display: block;
+}
+
+/* Image de Javier */
+.photo-javier {
+  width: 150%;
+  height: 150%;
+  object-fit: cover;
+  object-position: 50% 5%;
+  display: block;
+  position: relative;
+  left: -25%;
+  top: -15%;
+}
+
+/* =============================
+   BARRE DES STATISTIQUES
+   ============================= */
+.stats-bar {
+  background-color: #183a43;
+  display: flex;
+  justify-content: center;
+  padding: 30px 0;
+  gap: 160px;
+  flex-wrap: wrap;
+}
+
+/* Bloc de stats */
+.stat {
+  color: white;
+  text-align: center;
+}
+
+/* Nombre mis en avant */
+.stat strong {
+  display: block;
+  font-size: 45px;
+  font-weight: 700;
+  color: #c8ff00;
+  margin-bottom: -6px;
+}
+
+/* Libellé en dessous du nombre */
+.stat span {
+  font-size: 18px;
+  font-weight: 550;
 }
