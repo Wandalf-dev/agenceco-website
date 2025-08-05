@@ -24,7 +24,7 @@ body {
 }
 
 html {
-  scroll-behavior: smooth;
+  scroll-behavior: smooth;  /* Défilement fluide lors du scroll interne */
 }
 
 
@@ -32,8 +32,8 @@ html {
    Conteneur principal (zone blanche centrée)
    ============================= */
 .main-wrapper {
-  max-width: 1425px;         /* Largeur de la zone blanche */
-  margin: 0 auto;            /* Centre horizontalement */
+  max-width: 1425px;         /* Largeur de la zone blanche */  /* Largeur fixe du contenu principal */
+  margin: 0 auto;            /* Centre horizontalement */  /* Centre horizontalement dans la page */
   background-color: white;
 }
 
@@ -50,9 +50,9 @@ header {
 
 header .container {
   max-width: 1440px;
-  margin: 0 auto;
+  margin: 0 auto;  /* Centre horizontalement dans la page */
   padding: 0 40px;
-  display: flex;
+  display: flex;  /* Mise en page flexible (ligne ou colonne) */
   justify-content: space-between; /* Logo à gauche, menu à droite */
   align-items: center;            /* Centre verticalement */
 }
@@ -74,8 +74,8 @@ header .container {
    ============================= */
 nav ul {
   list-style: none;         /* Supprime les puces */
-  display: flex;
-  gap: 28px;                /* Espacement horizontal entre les liens */
+  display: flex;            /* Mise en page flexible (ligne ou colonne) */
+  gap: 28px;                /* Espacement horizontal entre les liens */  /* Espace entre les éléments flex */
 }
 
 nav ul li a {
@@ -83,7 +83,7 @@ nav ul li a {
   color: #000;
   font-size: 20px;
   font-weight: 500;
-  transition: color 0.3s;
+  transition: color 0.3s;  /* Lisse les changements d’état comme le hover */
 }
 
 nav ul li a:hover {
@@ -104,7 +104,7 @@ nav ul li a:hover {
 .hero-overlay {
   width: 100%;
   height: 100%;
-  display: flex;
+  display: flex;  /* Mise en page flexible (ligne ou colonne) */
   align-items: flex-end;              /* Texte en bas */
   justify-content: flex-end;          /* Aligné à droite */
   padding: 60px;
@@ -148,7 +148,7 @@ nav ul li a:hover {
 /* Paragraphe sous le titre */
 .team-section .intro {
   max-width: 1300px;
-  margin: 0 auto 80px;   /* Espace avec les cercles */
+  margin: 0 auto 80px;   /* Espace avec les cercles */  /* Centre horizontalement dans la page */
   font-size: 29px;
   font-weight: 500;
   color: #111;
@@ -157,9 +157,9 @@ nav ul li a:hover {
 
 /* Grille contenant les membres */
 .team-grid {
-  display: flex;
+  display: flex;  /* Mise en page flexible (ligne ou colonne) */
   justify-content: center;
-  gap: 180px;             /* Espace entre les cartes */
+  gap: 180px;             /* Espace entre les cartes */  /* Espace entre les éléments flex */
   flex-wrap: wrap;
   padding-bottom: 60px;
 }
@@ -167,7 +167,7 @@ nav ul li a:hover {
 /* Bloc individuel pour chaque membre */
 .member {
   width: 280px;
-  display: flex;
+  display: flex;  /* Mise en page flexible (ligne ou colonne) */
   flex-direction: column;
   align-items: center;
   text-align: center;
@@ -194,16 +194,16 @@ nav ul li a:hover {
 .photo-wrapper {
   width: 250px;
   height: 250px;
-  border-radius: 50%;
-  overflow: hidden;
-  margin: 0 auto 10px;
+  border-radius: 50%;  /* Rend un élément parfaitement circulaire */
+  overflow: hidden;  /* Masque tout dépassement visuel de l’élément */
+  margin: 0 auto 10px;  /* Centre horizontalement dans la page */
   position: relative;
 }
 
 /* Image de Julie */
 .photo-julie {
-  object-fit: cover;
-  object-position: center 10%;
+  object-fit: cover;  /* Permet à l’image de remplir son conteneur sans être déformée */
+  object-position: center 10%;  /* Ajuste l’alignement du contenu à l’intérieur du cadre */
   width: 100%;
   height: 100%;
 }
@@ -212,9 +212,9 @@ nav ul li a:hover {
 .photo-romeo {
   width: 100%;
   height: 100%;
-  object-fit: cover;
-  object-position: 50% 35%;
-  transform: scale(1.5);
+  object-fit: cover;  
+  object-position: 50% 35%;  /* Ajuste l’alignement du contenu à l’intérieur du cadre */
+  transform: scale(1.5);  /* Applique une transformation CSS (zoom, déplacement, rotation…) */
   display: block;
 }
 
@@ -222,8 +222,8 @@ nav ul li a:hover {
 .photo-javier {
   width: 150%;
   height: 150%;
-  object-fit: cover;
-  object-position: 50% 5%;
+  object-fit: cover;  
+  object-position: 50% 5%;  
   display: block;
   position: relative;
   left: -25%;
@@ -235,10 +235,10 @@ nav ul li a:hover {
    ============================= */
 .stats-bar {
   background-color: #183a43;
-  display: flex;
+  display: flex;  /* Mise en page flexible (ligne ou colonne) */
   justify-content: center;
   padding: 30px 0;
-  gap: 160px;
+  gap: 160px;  /* Espace entre les éléments flex */
   flex-wrap: wrap;
 }
 
@@ -271,22 +271,22 @@ nav ul li a:hover {
 
 .services h2 {
   font-size: 55px;
-  color: #469B61; /* Vert foncé */
+  color: #469B61;
   margin-bottom: 80px;
   font-weight: 600;
   margin-top: -60px;
 }
 
 .services-grid {
-  display: flex;
+  display: flex;  
   justify-content: center;
-  gap: 200px;
+  gap: 200px;  
   flex-wrap: wrap;
 }
 
 /* Conteneur image + texte */
 .service-wrapper {
-  display: flex;
+  display: flex;  
   flex-direction: column;
   align-items: center;
 }
@@ -299,17 +299,17 @@ nav ul li a:hover {
   width: 450px;
   height: 450px;
 
-  display: flex;
+  display: flex;  
   align-items: center;
   justify-content: center;
 
   box-shadow: 0 4px 10px rgba(0,0,0,0.05);
-  transition: transform 0.3s ease;
+  transition: transform 0.3s ease;  /* Lisse les changements d’état comme le hover */
 }
 
 /* Fonction "hover" qui permet de faire bouger les icones au survol */
 .service-card:hover {
-  transform: translateY(-10px);
+  transform: translateY(-10px);  /* Applique une transformation CSS (zoom, déplacement, rotation…) */
 }
 
 /* Icône dans la box */
@@ -332,7 +332,7 @@ nav ul li a:hover {
 /* ===== Bloc Actualités ===== */
 
 .actus {
-  text-align: center;         /* Centre le texte à l’intérieur du bloc */
+  text-align: center;         
   padding: 40px 20px 80px 20px;         
 }
 
@@ -340,7 +340,7 @@ nav ul li a:hover {
   font-size: 55px;            
   color: #469B61;             
   font-weight: 600;           
-  margin-bottom: 50px;        /* Espace sous le titre */
+  margin-bottom: 50px;        
 }
 
 
@@ -349,16 +349,16 @@ nav ul li a:hover {
   background-color: #469B61;             
   border-radius: 10px;                   
   padding: 30px 20px;                    
-  margin: 0 auto 15px;                   
+  margin: 0 auto 15px;                     /* Centre horizontalement dans la page */
   max-width: 1200px;                     
   color: white;                          
   font-family: 'Poppins', sans-serif;    
   box-shadow: 0 4px 12px rgba(0,0,0,0.05);
 
-  display: flex;
+  display: flex;  
   flex-direction: column;
   justify-content: space-between;
-  gap: 15px;                              
+  gap: 15px;                                
 }
 
 /* Supprime les marges internes : le gap les remplace */
@@ -397,13 +397,13 @@ nav ul li a:hover {
 }
 
 .contact form {
-  max-width: 1000px;     /* ✅ Resserre le formulaire */
-  margin: 0 auto;       /* ✅ Centre horizontalement */
+  max-width: 1000px;     
+  margin: 0 auto;         
   width: 100%;
 }
 
 .contact h2 {
-  color: #C8FF00; /* vert fluo */
+  color: #C8FF00; 
   text-align: center;
   font-size: 3.5em;
   font-weight: 700;
@@ -419,36 +419,39 @@ nav ul li a:hover {
 
 /* Conteneur de ligne à deux colonnes */
 .form-row {
-  display: flex;
-  gap: 30px;
-  margin-bottom: 15px; /* Avant : 30px */
+  display: flex;  
+  gap: 80px;  
+  margin-bottom: 15px; 
   flex-wrap: wrap;
 }
 
 .form-group {
   flex: 1;
-  display: flex;
+  display: flex;  
   flex-direction: column;
-  margin-bottom: 15px; /* Ajouté pour les groupes en colonne */
+  margin-bottom: 35px; 
   position: relative;
 }
 
+/* ::after ajoute un élément décoratif après l’élément concerné */
 .form-group::after {
   content: "";
   position: absolute;
   bottom: 0;
   left: 0;
   width: 100%;
-  height: 4px;                       /* Épaisseur du trait */
+  height: 3px;                       /* Épaisseur du trait */
   background-color: white;          /* Couleur du trait */
-  border-radius: 6px;               /* ✅ Arrondi des extrémités */
+  border-radius: 6px;               /* Arrondi des extrémités */
   pointer-events: none;
 }
 
 .form-group label {
   font-weight: 300;
-  margin-bottom: 4px; /* Avant : 8px */
+  margin-bottom: 4px; 
   font-size: 1.3em;
+  position: absolute;
+  left: -9999px;
 }
 
 .form-group label:hover {
@@ -462,17 +465,26 @@ nav ul li a:hover {
   background: transparent;
   border: none;                /* Supprime toutes les bordures */
   padding: 8px 0;
-  color: #F4F6F5;
   font-size: 1.3em;
   outline: none;
   position: relative;
+  font-family: 'Poppins', sans-serif; /* Ajout de la police pour "message" */
+  color: white;         
+  font-size: 1.4em;    
 }
+
 
 
 .form-group input::placeholder,
 .form-group textarea::placeholder {
-  color: #ccc;
+  color: #ccc;             
+  font-weight: 300;        
+  font-size: 1.1em;        
+  opacity: 1;              
+  font-family: 'Poppins', sans-serif; /* Forcer la même police ici aussi */
 }
+
+
 
 .form-group textarea {
   resize: none;
@@ -480,7 +492,7 @@ nav ul li a:hover {
 
 /* Bouton d'envoi */
 .form-submit {
-  display: flex;
+  display: flex; 
   justify-content: flex-end;
   margin-top: 40px;
 }
@@ -490,22 +502,23 @@ nav ul li a:hover {
   color: #000;
   font-weight: 600;
   border: none;
-  border-radius: 25px;
+  border-radius: 999px;
 
-  padding: 18px 40px;        /* ✅ Plus grand (haut/bas + gauche/droite) */
-  font-size: 1.2em;          /* ✅ Texte plus grand */
-  min-width: 180px;          /* ✅ Largeur minimum */
+  padding: 18px 40px;        
+  font-size: 1.1em;         
+  min-width: 180px;          
   cursor: pointer;
-  transition: opacity 0.3s ease;
+  transition: opacity 0.3s ease;  
+  font-family: 'Poppins', sans-serif;
 }
 
 
 .form-submit button:hover {
-  opacity: 0.5; /* ✅ Opacité plus faible au survol */
+  opacity: 0.5; /* Opacité plus faible au survol */
 }
 
 #message {
-  height: 200px; /* ou plus si tu veux une zone plus grande */
+  height: 200px; 
 }
 
 /* Supprimer le fond bleu des champs remplis automatiquement (Chrome) */
@@ -513,9 +526,123 @@ input:-webkit-autofill,
 textarea:-webkit-autofill,
 select:-webkit-autofill {
   background-color: transparent !important;
-  -webkit-box-shadow: 0 0 0px 1000px #163a42 inset !important; /* même fond que ton formulaire */
+  -webkit-box-shadow: 0 0 0px 1000px #163a42 inset !important; /* même fond que le formulaire */  /* Contour transparent pour neutraliser la coloration auto-remplie de Chrome */
   -webkit-text-fill-color: white !important;
-  transition: background-color 9999s ease-out, color 9999s ease-out;
+  transition: background-color 9999s ease-out, color 9999s ease-out;  /* Lisse les changements d’état comme le hover */
 }
 
 
+/* =======================
+   PARTIE "A PROPOS"
+   ======================= */
+
+.apropos {
+  padding: 80px 20px;
+  background-color: white;
+  font-family: 'Poppins', sans-serif;
+}
+
+/* Conteneur principal : image + encart texte côte à côte */
+.apropos-wrapper {
+  display: flex;  
+  gap: 60px;                      /* Espace entre l’image et la box texte */  /* Espace entre les éléments flex */
+  justify-content: center;       
+  align-items: center;           
+  max-width: 1300px;
+  margin: 0 auto;               /* Centre horizontalement dans la page */
+  flex-wrap: wrap;               /* Permet l’adaptation sur petit écran */
+}
+
+/* Bloc image (à gauche) */
+.apropos-image {
+  flex: 1;
+  display: flex;  
+  align-items: flex-start;       /* Garde le haut aligné avec le texte */
+}
+
+.apropos-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;            /* Permet à l’image de remplir son conteneur sans être déformée */
+  border-radius: 25px;
+  align-self: flex-end;         /* Étire vers le bas si possible : ici la mise en page est manuelle */
+}
+
+/* Bloc contenu texte + icônes (à droite) */
+.apropos-content {
+  border: 1px solid #13353d;
+  border-radius: 10px;
+  padding: 25px 20px;
+  width: 600px;
+  text-align: center;
+}
+
+/* Titre */
+.apropos-content h2 {
+  font-size: 1.8em;
+  font-weight: 600;
+  margin-bottom: 20px;
+}
+
+/* Sous-titre */
+.apropos-content p {
+  color: #666;
+  font-size: 1.1em;
+  margin-bottom: 40px;
+  font-weight: 300;
+}
+
+/* Conteneur des icônes */
+.apropos-icons {
+  display: flex;  
+  justify-content: space-between;
+  gap: 25px;  
+  flex-wrap: wrap;
+}
+
+/* Une icône (cercle + texte) */
+.icon-box {
+  display: flex;  
+  flex-direction: column;
+  align-items: center;
+  flex: 1;
+}
+
+.icon-box img {
+  width: 80px;
+  height: 80px;
+  margin-bottom: 10px;
+}
+
+.icon-box p {
+  font-weight: 600;
+  color: #13353d;
+}
+
+/* Cercle entourant l’icône */
+.icon-circle {
+  width: 140px;
+  height: 140px;
+  border: 4px solid #13353d;
+  border-radius: 50%;  
+  display: flex;  
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;  /* Masque tout dépassement visuel de l’élément */
+  margin: 0 auto;  /* Centre horizontalement dans la page */
+  background-color: white; /* Cercle blanc autour de l’image */
+}
+
+/* Image à l’intérieur du cercle */
+.icon-circle img {
+  max-width: 60px;      
+  max-height: 60px;
+  object-fit: contain;  
+  display: block;
+}
+
+/* Ajustements manuels pour certaines icônes mal centrées */
+.icon-stable {
+  margin-top: 5px;     
+  margin-left: 7px;    
+}

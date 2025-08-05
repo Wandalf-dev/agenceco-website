@@ -1,29 +1,31 @@
 <!DOCTYPE html> <!-- Indique que c’est un document HTML5 -->
-<html lang="fr"> <!-- Langue du document : français -->
+<html lang="fr"> <!-- Langue du document -->
 
 <head>
-  <meta charset="UTF-8"> <!-- Encodage des caractères en UTF-8 (accents, etc.) -->
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- Responsive design pour mobiles -->
-  <title>AgenceEco</title> <!-- Titre de la page (affiché dans l’onglet du navigateur) -->
-  
-  <link rel="stylesheet" href="style.css"> <!-- Lien vers le fichier CSS externe -->
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet"> 
-  <!-- Lien vers la police Google Fonts "Poppins" avec différentes graisses -->
+  <meta charset="UTF-8"> <!-- Encodage UTF-8 pour les caractères spéciaux -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- Responsive : adapte le rendu aux écrans mobiles -->
+  <title>AgenceEco</title> <!-- Titre de l’onglet -->
+
+  <!-- Police Poppins importée depuis Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+
+  <!-- Lien vers la feuille de style principale -->
+  <link rel="stylesheet" href="style.css">
 </head>
 
-
 <body>
-  <div class="main-wrapper"> <!-- Conteneur global centré, avec fond blanc -->
+  <div class="main-wrapper"> <!-- ✅ Conteneur principal centré -->
 
-    <!-- ========= HEADER ========= -->
+    <!-- ===========================
+         HEADER : logo + navigation
+    ============================ -->
     <header>
-      <div class="container"> <!-- Conteneur interne pour aligner logo et menu -->
-        <div class="logo">Agenc<span>eco</span></div> 
-        <!-- Logo texte : "eco" est en italique via le CSS -->
-        
+      <div class="container">
+        <div class="logo">Agenc<span>eco</span></div> <!-- Mot "eco" mis en italique via CSS -->
+
         <nav>
           <ul>
-            <!-- Menu de navigation avec ancres vers les sections -->
+            <!-- Liens de navigation internes -->
             <li><a href="#">Accueil</a></li>
             <li><a href="#equipe">Notre équipe</a></li>
             <li><a href="#services">Nos services</a></li>
@@ -35,10 +37,12 @@
       </div>
     </header>
 
-    <!-- ========= PARTIE "HERO" (TOP) ========= -->
-    <section class="hero"> <!-- Section avec image de fond -->
-      <div class="hero-overlay"> <!-- Couvre l’image pour placer le texte dessus -->
-        <div class="hero-text"> <!-- Bloc contenant le texte d’intro -->
+    <!-- ===========================
+         HERO (image de fond + slogan)
+    ============================ -->
+    <section class="hero">
+      <div class="hero-overlay"> <!-- ✅ Permet d’ajouter un fond + positionner texte -->
+        <div class="hero-text">
           <h1>
             Bienvenue dans votre<br>
             <span>agence web écologique</span>
@@ -47,25 +51,25 @@
       </div>
     </section>
 
-    <!-- ========= PARTIE "ÉQUIPE" ========= -->
-    <section class="team-section" id="equipe"> <!-- Section avec ID pour lien ancré -->
-      <h2>Notre équipe</h2> <!-- Titre principal de la section -->
+    <!-- ===========================
+         ÉQUIPE
+    ============================ -->
+    <section class="team-section" id="equipe">
+      <h2>Notre équipe</h2>
 
       <p class="intro">
-        <!-- Paragraphe introductif de la section équipe -->
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
-        Donec sed leo in nisi vehicula bibendum. 
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+        Donec sed leo in nisi vehicula bibendum.
         Aliquam sit amet blandit nisi, sodales molestie.
       </p>
 
-      <div class="team-grid"> <!-- Grille de membres de l'équipe -->
-
-        <!-- ========== MEMBRE : Julie ========== -->
-        <div class="member"> <!-- Bloc individuel -->
-          <div class="photo-wrapper"> <!-- Cercle contenant la photo -->
-            <img src="assets/person1.jpg" alt="Julie Dupond" class="photo-julie"> <!-- Image de Julie -->
+      <div class="team-grid">
+        <!-- === Julie === -->
+        <div class="member">
+          <div class="photo-wrapper">
+            <img src="assets/person1.jpg" alt="Julie Dupond" class="photo-julie">
           </div>
-          <h3>Julie Dupond</h3> <!-- Nom -->
+          <h3>Julie Dupond</h3>
           <p>
             Consectetur adipiscing elit.<br>
             Donec sed leo in nisi<br>
@@ -73,7 +77,7 @@
           </p>
         </div>
 
-        <!-- ========== MEMBRE : Romeo ========== -->
+        <!-- === Romeo === -->
         <div class="member">
           <div class="photo-wrapper">
             <img src="assets/person2.jpg" alt="Romeo Sylla" class="photo-romeo">
@@ -86,7 +90,7 @@
           </p>
         </div>
 
-        <!-- ========== MEMBRE : Javier ========== -->
+        <!-- === Javier === -->
         <div class="member">
           <div class="photo-wrapper">
             <img src="assets/person3.jpg" alt="Javier Bardem" class="photo-javier">
@@ -100,7 +104,7 @@
         </div>
       </div>
 
-      <!-- ========= PARTIE "STATISTIQUES" ========= -->
+      <!-- === BARRE STATISTIQUES === -->
       <div class="stats-bar">
         <div class="stat">
           <strong>2500</strong>
@@ -119,15 +123,15 @@
           <span>Clients satisfaits</span>
         </div>
       </div>
+    </section>
 
-    </section> <!-- Fin section équipe -->
-
-
-    <!-- ========= PARTIE "SERVICES" ========= -->
+    <!-- ===========================
+         SERVICES
+    ============================ -->
     <section class="services" id="services">
       <h2>Nos services</h2>
+
       <div class="services-grid">
-        
         <div class="service-wrapper">
           <div class="service-card">
             <img src="assets/icon1.jpg" alt="Icône site web">
@@ -141,88 +145,130 @@
           </div>
           <p class="service-label">Audit qualité</p>
         </div>
-
       </div>
     </section>
 
-
-    <!-- ========= PARTIE "ACTU" ========= -->
+    <!-- ===========================
+         ACTUALITÉS
+    ============================ -->
     <section class="actus" id="actus">
       <h2>Dernières actualités</h2>
 
-        <div class="actus-card">
-          <h3>Le titre de mon actualité</h3>
-            <p class="date">05/04/2023</p>
-            <p>La description de l’actualité</p>
-            <p>Le contenu de l’actualité</p>   
-        </div>
+      <div class="actus-card">
+        <h3>Le titre de mon actualité</h3>
+        <p class="date">05/04/2023</p>
+        <p>La description de l’actualité</p>
+        <p>Le contenu de l’actualité</p>
+      </div>
 
-        <div class="actus-card">
-          <h3>Le titre de mon actualité</h3>
-            <p class="date">05/04/2023</p>
-            <p>La description de l’actualité</p>
-            <p>Le contenu de l’actualité</p>
-        </div>
+      <div class="actus-card">
+        <h3>Le titre de mon actualité</h3>
+        <p class="date">05/04/2023</p>
+        <p>La description de l’actualité</p>
+        <p>Le contenu de l’actualité</p>
+      </div>
 
-        <div class="actus-card">
-          <h3>Le titre de mon actualité</h3>
-            <p class="date">05/04/2023</p>
-            <p>La description de l’actualité</p>
-            <p>Le contenu de l’actualité</p>
-        </div>
+      <div class="actus-card">
+        <h3>Le titre de mon actualité</h3>
+        <p class="date">05/04/2023</p>
+        <p>La description de l’actualité</p>
+        <p>Le contenu de l’actualité</p>
+      </div>
     </section>
 
-<!-- ========= PARTIE "CONACTEZ-NOUS" ========= -->
+    <!-- ===========================
+         FORMULAIRE DE CONTACT
+    ============================ -->
     <section class="contact" id="contact">
       <h2>Contactez-nous</h2>
       <p class="subtitle">Lorem ipsum dolor sit amet, consectetur adipiscing elit. donec sed leo in.</p>
-    <form>
-      <div class="form-row">
-        <div class="form-group">
-          <label for="nom">Nom</label>
-          <input type="text" id="nom" name="nom">
+
+      <form>
+        <!-- Ligne 1 -->
+        <div class="form-row">
+          <div class="form-group">
+            <input type="text" id="nom" name="nom" placeholder="Nom">
+          </div>
+          <div class="form-group">
+            <input type="text" id="categorie" name="categorie" placeholder="Catégorie">
+          </div>
         </div>
+
+        <!-- Ligne 2 -->
+        <div class="form-row">
+          <div class="form-group">
+            <input type="text" id="telephone" name="telephone" placeholder="Téléphone">
+          </div>
+          <div class="form-group">
+            <input type="text" id="ville" name="ville" placeholder="Ville">
+          </div>
+        </div>
+
+        <!-- Email -->
         <div class="form-group">
-          <label for="categorie">Catégorie</label>
-          <input type="text" id="categorie" name="categorie">
+          <input type="email" id="email" name="email" placeholder="Email">
+        </div>
+
+        <!-- Message -->
+        <div class="form-group">
+          <textarea id="message" name="message" rows="10" maxlength="500" placeholder="Message" style="resize: none;"></textarea>
+        </div>
+
+        <!-- Bouton envoyer -->
+        <div class="form-submit">
+          <button type="submit">Envoyer</button>
+        </div>
+      </form>
+    </section>
+
+    <!-- ===========================
+         SECTION "À PROPOS"
+    ============================ -->
+    <section class="apropos">
+      <div class="apropos-wrapper">
+        <!-- Image à gauche -->
+        <div class="apropos-image">
+          <img src="assets/meeting.jpg" alt="Photo d'équipe en réunion">
+        </div>
+
+        <!-- Contenu à droite -->
+        <div class="apropos-content">
+          <h2>À propos de nous</h2>
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. donec sed leo in adipiscing</p>
+
+          <div class="apropos-icons">
+            <!-- Icône 1 -->
+            <div class="icon-box">
+              <div class="icon-circle">
+                <div class="icon-stable">
+                  <img src="assets/icon4.jpg" alt="Icône Écologique">
+                </div>
+              </div>
+              <p>Écologique</p>
+            </div>
+
+            <!-- Icône 2 -->
+            <div class="icon-box">
+              <div class="icon-circle">
+                <img src="assets/icon5.jpg" alt="Icône Responsable">
+              </div>
+              <p>Responsable</p>
+            </div>
+
+            <!-- Icône 3 -->
+            <div class="icon-box">
+              <div class="icon-circle">
+                <div class="icon-stable">
+                  <img src="assets/icon6.jpg" alt="Icône Assistance">
+                </div>
+              </div>
+              <p>24/7 Assistance</p>
+            </div>
+          </div>
         </div>
       </div>
+    </section>
 
-      <div class="form-row">
-        <div class="form-group">
-          <label for="telephone">Téléphone</label>
-          <input type="text" id="telephone" name="telephone">
-        </div>
-        <div class="form-group">
-          <label for="ville">Ville</label>
-          <input type="text" id="ville" name="ville">
-        </div>
-      </div>
-
-      <div class="form-group">
-        <label for="email">Email</label>
-        <input type="email" id="email" name="email">
-      </div>
-
-      <div class="form-group">
-        <label for="message">Message</label>
-        <textarea id="message" name="message" rows="10" maxlength="500" style="resize: none;"></textarea>
-      </div>
-
-      <div class="form-submit">
-        <button type="submit">Envoyer</button>
-      </div>
-    </form>
-  </section>
-
-
-
-
-
-  </div> <!-- Fin de .main-wrapper -->
-
-
+  </div> <!-- Fin .main-wrapper -->
 </body>
 </html>
-
-<!-- D'autres sections à venir ! -->
