@@ -388,4 +388,134 @@ nav ul li a:hover {
 }
 
 
+/* ===== Partie contact ===== */
+.contact {
+  background-color: #13353d;
+  color: white;
+  padding: 50px 20px;
+  font-family: 'Poppins', sans-serif;
+}
+
+.contact form {
+  max-width: 1000px;     /* ✅ Resserre le formulaire */
+  margin: 0 auto;       /* ✅ Centre horizontalement */
+  width: 100%;
+}
+
+.contact h2 {
+  color: #C8FF00; /* vert fluo */
+  text-align: center;
+  font-size: 3.5em;
+  font-weight: 700;
+  margin-bottom: 20px;
+}
+
+.contact .subtitle {
+  text-align: center;
+  margin-bottom: 50px;
+  color: white;
+  font-size: 1.6em;
+}
+
+/* Conteneur de ligne à deux colonnes */
+.form-row {
+  display: flex;
+  gap: 30px;
+  margin-bottom: 15px; /* Avant : 30px */
+  flex-wrap: wrap;
+}
+
+.form-group {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 15px; /* Ajouté pour les groupes en colonne */
+  position: relative;
+}
+
+.form-group::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 4px;                       /* Épaisseur du trait */
+  background-color: white;          /* Couleur du trait */
+  border-radius: 6px;               /* ✅ Arrondi des extrémités */
+  pointer-events: none;
+}
+
+.form-group label {
+  font-weight: 300;
+  margin-bottom: 4px; /* Avant : 8px */
+  font-size: 1.3em;
+}
+
+.form-group label:hover {
+  cursor: text;  /* style du curseur */
+}
+
+
+/* Inputs et textarea */
+.form-group input,
+.form-group textarea {
+  background: transparent;
+  border: none;                /* Supprime toutes les bordures */
+  padding: 8px 0;
+  color: #F4F6F5;
+  font-size: 1.3em;
+  outline: none;
+  position: relative;
+}
+
+
+.form-group input::placeholder,
+.form-group textarea::placeholder {
+  color: #ccc;
+}
+
+.form-group textarea {
+  resize: none;
+}
+
+/* Bouton d'envoi */
+.form-submit {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 40px;
+}
+
+.form-submit button {
+  background-color: #C8FF00;
+  color: #000;
+  font-weight: 600;
+  border: none;
+  border-radius: 25px;
+
+  padding: 18px 40px;        /* ✅ Plus grand (haut/bas + gauche/droite) */
+  font-size: 1.2em;          /* ✅ Texte plus grand */
+  min-width: 180px;          /* ✅ Largeur minimum */
+  cursor: pointer;
+  transition: opacity 0.3s ease;
+}
+
+
+.form-submit button:hover {
+  opacity: 0.5; /* ✅ Opacité plus faible au survol */
+}
+
+#message {
+  height: 200px; /* ou plus si tu veux une zone plus grande */
+}
+
+/* Supprimer le fond bleu des champs remplis automatiquement (Chrome) */
+input:-webkit-autofill,
+textarea:-webkit-autofill,
+select:-webkit-autofill {
+  background-color: transparent !important;
+  -webkit-box-shadow: 0 0 0px 1000px #163a42 inset !important; /* même fond que ton formulaire */
+  -webkit-text-fill-color: white !important;
+  transition: background-color 9999s ease-out, color 9999s ease-out;
+}
+
 
