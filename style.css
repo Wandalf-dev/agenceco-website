@@ -850,6 +850,7 @@ select:-webkit-autofill {
 
 .login-btn:hover {
   background-color: #b4eb00;
+  opacity: 0.5;
 }
 
 .social-icons {
@@ -881,6 +882,154 @@ select:-webkit-autofill {
 
 /* Responsive */
 @media (max-width: 900px) {
+  /* HEADER */
+  header .container {
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    padding: 0 20px;
+  }
+
+  nav ul {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  /* HERO */
+  .hero {
+    height: auto;
+    padding: 80px 20px;
+    background-position: center;
+  }
+
+  .hero-overlay {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 40px 20px;
+  }
+
+  .hero-text h1 {
+    font-size: 36px;
+  }
+
+  .hero-text span {
+    font-size: 45px;
+  }
+
+  /* TEAM */
+  .team-section h2 {
+    font-size: 36px;
+  }
+
+  .team-section .intro {
+    font-size: 20px;
+    padding: 0 10px;
+  }
+
+  .team-grid {
+    flex-direction: column;
+    gap: 40px;
+  }
+
+  /* SERVICES */
+  .services h2 {
+    font-size: 36px;
+  }
+
+  .services-grid {
+    flex-direction: column;
+    gap: 40px;
+  }
+
+  .service-card {
+    width: 90%;
+    height: auto;
+    padding: 30px 20px;
+  }
+
+  .service-card img {
+    width: 150px;
+  }
+
+  .service-label {
+    font-size: 24px;
+  }
+
+  /* ACTUS */
+  .actus h2 {
+    font-size: 36px;
+  }
+
+  .actus-card {
+    padding: 20px 15px;
+  }
+
+  .actus-card h3 {
+    font-size: 20px;
+  }
+
+  .actus-card p,
+  .actus-card .date {
+    font-size: 16px;
+  }
+
+  /* CONTACT */
+  .contact h2 {
+    font-size: 2em;
+  }
+
+  .contact .subtitle {
+    font-size: 1.2em;
+  }
+
+  .form-row {
+    flex-direction: column;
+    gap: 30px;
+  }
+
+  .form-submit {
+    justify-content: center;
+  }
+
+  .form-submit button {
+    width: 100%;
+    max-width: 240px;
+  }
+
+  /* A PROPOS */
+  .apropos-wrapper {
+    flex-direction: column;
+  }
+
+  .apropos-content {
+    width: 100%;
+  }
+
+  .apropos-icons {
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  /* GALERIE */
+  .notre-galerie h2 {
+    font-size: 36px;
+  }
+
+  .notre-galerie .intro {
+    font-size: 20px;
+  }
+
+  .btn {
+    width: 50px;
+    height: 50px;
+  }
+
+  .btn svg {
+    width: 30px;
+    height: 30px;
+  }
+
   .footer-top {
     padding: 30px 20px 0 20px;
   }
@@ -909,6 +1058,7 @@ select:-webkit-autofill {
     width: 100%;
   }
 }
+
 
 html, body {
   height: 100%;
