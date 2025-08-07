@@ -1263,7 +1263,8 @@ body {
 @media (max-width: 900px) {
   .footer { padding-top: 40px !important; }
 
-  .footer .footer-top { padding: 0 20px !important; }
+  /* plus de marge sur les côtés */
+  .footer .footer-top { padding: 0 40px !important; }
 
   .footer .footer-row {
     flex-direction: column !important;
@@ -1283,7 +1284,7 @@ body {
   .footer .footer-column h3 { font-size: 20px !important; margin-bottom: 4px !important; }
   .footer .footer-column p  { font-size: 15px !important; line-height: 1.6 !important; margin-top: 0 !important; }
 
-  /* Bloc contact sous les colonnes, aligné à gauche */
+  /* Bloc contact sous les colonnes */
   .footer .footer-contact {
     align-items: flex-start !important;
     gap: 16px !important;
@@ -1291,16 +1292,16 @@ body {
     margin-top: 8px !important;
   }
 
-  /* icônes + texte parfaitement alignés */
+  /* icônes + texte parfaitement alignés au centre */
   .footer .contact-item {
     display: flex !important;
     align-items: center !important;  /* centre verticalement icône + texte */
-    gap: 10px !important;
+    gap: 12px !important;
   }
   .footer .contact-item .icon {
     width: 28px !important;
     height: 28px !important;
-    margin-top: 0 !important;        /* supprime le décalage vers le haut */
+    margin-top: 0 !important;
     flex-shrink: 0 !important;
   }
   .footer .contact-item p { font-size: 15px !important; line-height: 1.5 !important; margin: 0 !important; }
@@ -1311,12 +1312,12 @@ body {
     flex-direction: column !important;
     align-items: center !important;
     text-align: center !important;
-    gap: 16px !important;             /* même espace entre bouton / réseaux / copyright */
+    gap: 16px !important;
   }
 
   .footer .footer-bottom .login-btn {
     order: 1 !important;
-    width: 180px !important;          /* largeur fixe comme la maquette */
+    width: 180px !important;
     padding: 10px 0 !important;
   }
 
@@ -1344,5 +1345,6 @@ body {
     text-decoration: none !important;
   }
 }
+
 
 
