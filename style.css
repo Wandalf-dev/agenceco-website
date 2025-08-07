@@ -967,7 +967,7 @@ select:-webkit-autofill {
 
   /* ACTUS */
   .actus h2 {
-    font-size: 36px;
+    font-size: 33px;
   }
 
   .actus-card {
@@ -1022,7 +1022,7 @@ select:-webkit-autofill {
 
   /* GALERIE */
   .notre-galerie h2 {
-    font-size: 36px;
+    font-size: 33px;
   }
 
   .notre-galerie .intro {
@@ -1158,33 +1158,35 @@ body {
    HERO MOBILE
    ============================ */
 @media (max-width: 900px) {
-  .hero-overlay {
-    display: flex;
-    align-items: center;      /* Centre verticalement */
-    justify-content: center;  /* Centre horizontalement */
-    text-align: center;
-    padding: 40px 20px;
-  }
-
   .hero-text {
+    width: 100%;
     text-align: center;
+    margin: 0 auto;
   }
 
-  /* Titre sur deux lignes */
   .hero-text h1 {
-    font-size: 36px;
-    line-height: 1.3;
-    white-space: normal; /* Permet au <br> d'être pris en compte */
+    margin: 0;
+    font-size: clamp(22px, 7vw, 38px);   /* ↓ 8vw -> 7vw */
+    line-height: 1.25;
+    white-space: normal !important;
+    word-break: keep-all;
+    overflow-wrap: normal;
+    hyphens: none;
+    max-width: 100%;
   }
 
-  .hero-text span {
-    font-size: 45px;
-    display: block; /* Force la seconde ligne */
+  .hero-text h1 span {
+    display: block;
+    font-size: clamp(24px, 8vw, 44px);   /* ↓ 9vw -> 8vw */
+    line-height: 1.2;
   }
 }
 
+
+
+
 /* ============================
-   PARTIE "SERVICES" MOBILE
+   PARTIE "EQUIPE" MOBILE
    ============================ */
 @media (max-width: 900px) {
   .team-grid {
@@ -1193,28 +1195,61 @@ body {
     gap: 40px;                 /* Réduit l'espace vertical */
   }
 
+  .team-section h2 {
+    font-size: 33px;
+  }
+
   .member {
     width: 100%;
-    max-width: 300px;         /* Empêche les débordements */
+    max-width: 320px;         /* ↑ permet d'agrandir un peu le bloc */
     text-align: center;
   }
 
+  /* Cercle photo plus grand */
   .photo-wrapper {
-    width: 200px;
-    height: 200px;
+    width: 260px;             /* ↑ avant 200px */
+    height: 260px;
     margin: 0 auto 10px;      /* Centre l'image */
+  }
+
+  /* Ajuste la taille des images pour suivre le nouveau cercle */
+  .photo-julie,
+  .photo-romeo,
+  .photo-javier {
+    width: 100%;
+    height: 100%;
+  }
+
+  /* Adoucir le zoom de Roméo et Javier si nécessaire */
+  .photo-romeo {
+    transform: scale(1.4);
+  }
+  .photo-javier {
+    width: 140%;
+    height: 140%;
+    left: -20%;
+    top: -10%;
   }
 
   /* Paragraphe d'intro plus lisible */
   .team-section .intro {
-    max-width: 90%;      /* Réduit la largeur pour éviter l'effet bloc */
-    font-size: 18px;     /* Taille plus adaptée sur petit écran */
-    font-weight: 400;    /* Allège visuellement */
-    line-height: 1.6;    /* Aère le texte */
-    text-align: center;  /* Centre le texte */
-    margin: 0 auto 40px; /* Espace sous le texte */
+    max-width: 90%;      
+    font-size: 18px;     
+    font-weight: 400;    
+    line-height: 1.6;    
+    text-align: center;  
+    margin: 0 auto 40px; 
+  }
+
+  /* Nom et description plus grands */
+  .member h3 {
+    font-size: 24px; /* avant 26px sur desktop, mais adapté mobile */
+  }
+  .member p {
+    font-size: 18px;
   }
 }
+
 
 /* ============================
    PARTIE "STATS" MOBILE
@@ -1240,7 +1275,7 @@ body {
 @media (max-width: 900px) {
   /* Titre plus grand */
   .contact h2 {
-    font-size: 32px;
+    font-size: 33px;
   }
 
   /* Labels plus petits */
@@ -1251,7 +1286,7 @@ body {
   /* Champs plus petits + parfaitement alignés avec le texte */
   .contact input,
   .contact textarea {
-    font-size: 14px;
+    font-size: 1.1em;
     padding-left: 0; /* pas de padding gauche inutile */
     text-indent: 0;  /* force le texte à coller au bord gauche */
   }
@@ -1269,78 +1304,118 @@ body {
    ============================ */
 
 @media (max-width: 900px) {
-  .footer { padding-top: 40px !important; }
+  /* === Conteneur global === */
+  .footer {
+    padding-top: 40px !important;
+    overflow-x: hidden; /* évite tout scroll horizontal parasite */
+  }
 
-  /* marge latérale généreuse */
-  .footer .footer-top { padding: 0 40px !important; }
+  .footer .footer-top {
+    padding: 0 40px !important;
+  }
 
+  /* === Empilage vertical du layout principal === */
   .footer .footer-row {
+    display: flex !important;
     flex-direction: column !important;
     align-items: stretch !important;
     gap: 24px !important;
   }
 
-  /* Colonnes en 2x2 */
+  /* === Grille des colonnes (2 x 2) centrée === */
   .footer .footer-columns {
     display: grid !important;
     grid-template-columns: 1fr 1fr !important;
     gap: 18px 40px !important;
     margin-top: 0 !important;
-    justify-items: center !important;
-    text-align: center !important;
+    justify-items: center !important;  /* centre chaque colonne dans la grille */
   }
+
+  .footer .footer-column {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: flex-start !important; /* garde texte aligné sous le titre */
+    text-align: left !important;
+    max-width: 260px !important;
+    width: 100% !important;
+    gap: 6px !important;
+
+    /* centrage du bloc entier dans la grille */
+    justify-self: center !important;
+    margin: 0 auto !important;
+  }
+
 
   .footer .footer-column h3 {
     font-size: 22px !important;
-    margin-bottom: 6px !important;
+    margin: 0 0 6px 0 !important;       /* colle le texte juste en dessous */
   }
+
   .footer .footer-column p {
     font-size: 16px !important;
     line-height: 1.6 !important;
-    margin-top: 0 !important;
+    margin: 0 !important;
   }
 
-  /* Bloc contact */
+  /* Listes éventuelles dans les colonnes */
+  .footer .footer-column ul {
+    list-style: none !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    display: grid !important;
+    gap: 6px !important;
+  }
+
+  .footer .footer-column a {
+    text-decoration: none !important;
+  }
+
+  /* === Bloc Contact (carte dédiée) === */
   .footer .footer-contact {
     display: flex !important;
     flex-direction: column !important;
     align-items: center !important;
     justify-content: center !important;
     gap: 18px !important;
-    min-width: unset !important;
     margin-top: 8px !important;
-    margin-bottom: 40px !important; /* ↑ ajoute plus d'espace avec le bloc foncé */
+    margin-bottom: 40px !important; /* espace avec le bloc sombre du bas */
+    width: 100% !important;
   }
 
-  /* Chaque ligne avec même largeur pour alignement parfait des icônes */
+  /* Ligne contact : icône + texte parfaitement alignés */
   .footer .contact-item {
     display: flex !important;
-    align-items: center !important;
+    align-items: center !important;  /* centre verticalement texte + icône */
     justify-content: flex-start !important;
     gap: 14px !important;
     width: 220px !important;
   }
 
+
   .footer .contact-item .icon {
-    width: 34px !important;
-    height: 34px !important;
+    width: 40px !important;
+    height: 40px !important;
     flex-shrink: 0 !important;
+    display: flex !important;
+    align-items: center !important; /* centre le contenu de l’icône */
+    justify-content: center !important;
   }
 
   .footer .contact-item p {
     font-size: 16px !important;
-    line-height: 1.6 !important;
+    line-height: 1.2 !important; /* réduit la hauteur de ligne pour mieux centrer */
     margin: 0 !important;
-    text-align: left !important;
   }
 
-  /* Bas du footer */
+
+  /* === Bas du footer === */
   .footer .footer-bottom {
     padding: 24px 20px !important;
+    display: flex !important;
     flex-direction: column !important;
     align-items: center !important;
     text-align: center !important;
-    gap: 16px !important;
+    gap: 30px !important;
   }
 
   .footer .footer-bottom .login-btn {
@@ -1351,6 +1426,7 @@ body {
 
   .footer .footer-bottom .social-icons {
     order: 2 !important;
+    display: flex !important;
     gap: 18px !important;
   }
 
@@ -1359,12 +1435,16 @@ body {
     height: 40px !important;
     padding: 6px !important;
     border-radius: 12px !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
   }
 
   .footer .footer-bottom p {
     order: 3 !important;
     font-size: 12px !important;
     opacity: 0.8 !important;
+    margin: 0 !important;
   }
 
   /* Supprimer le bleu iOS sur numéros */
@@ -1373,6 +1453,7 @@ body {
     text-decoration: none !important;
   }
 }
+
 
 /* ============================
    PARTIE "NOTRE GALERIE" MOBILE
@@ -1419,4 +1500,15 @@ body {
   }
 
 }
+
+/* ============================
+   PARTIE "NOTRE GALERIE" MOBILE
+   ============================ */
+
+  @media (max-width: 900px) {
+
+  .services h2 {
+    font-size: 33px;
+  }
+    }
 
