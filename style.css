@@ -70,7 +70,7 @@ header .container {
 }
 
 /* =============================
-   NAVIGATION
+   PARTIE "NAVIGATION"
    ============================= */
 nav ul {
   list-style: none;         /* Supprime les puces */
@@ -129,7 +129,7 @@ nav ul li a:hover {
 }
 
 /* =============================
-   SECTION ÉQUIPE
+   PARTIE "ÉQUIPE"
    ============================= */
 .team-section {
   background-color: white;
@@ -263,7 +263,9 @@ nav ul li a:hover {
   font-weight: 550;
 }
 
-/* ===== Bloc Services ===== */
+/* =======================
+   PARTIE "SERVICES"
+   ======================= */
 .services {
   text-align: center;
   padding: 60px 20px;
@@ -329,7 +331,9 @@ nav ul li a:hover {
 }
 
 
-/* ===== Bloc Actualités ===== */
+/* =======================
+   PARTIE "ACTU"
+   ======================= */
 
 .actus {
   text-align: center;         
@@ -388,7 +392,9 @@ nav ul li a:hover {
 }
 
 
-/* ===== Partie contact ===== */
+/* =======================
+   PARTIE "CONTACTEZ-NOUS"
+   ======================= */
 .contact {
   background-color: #13353d;
   color: white;
@@ -880,7 +886,10 @@ select:-webkit-autofill {
   stroke: #fff !important;
 }
 
-/* Responsive */
+/* =======================
+   PARTIE "RESPONSIVE"
+   ======================= */
+
 @media (max-width: 900px) {
   /* HEADER */
   header .container {
@@ -1160,10 +1169,22 @@ body {
   .hero-text {
     text-align: center;
   }
+
+  /* Titre sur deux lignes */
+  .hero-text h1 {
+    font-size: 36px;
+    line-height: 1.3;
+    white-space: normal; /* Permet au <br> d'être pris en compte */
+  }
+
+  .hero-text span {
+    font-size: 45px;
+    display: block; /* Force la seconde ligne */
+  }
 }
 
 /* ============================
-   ÉQUIPE MOBILE
+   PARTIE "SERVICES" MOBILE
    ============================ */
 @media (max-width: 900px) {
   .team-grid {
@@ -1183,5 +1204,128 @@ body {
     height: 200px;
     margin: 0 auto 10px;      /* Centre l'image */
   }
+
+  /* Paragraphe d'intro plus lisible */
+  .team-section .intro {
+    max-width: 90%;      /* Réduit la largeur pour éviter l'effet bloc */
+    font-size: 18px;     /* Taille plus adaptée sur petit écran */
+    font-weight: 400;    /* Allège visuellement */
+    line-height: 1.6;    /* Aère le texte */
+    text-align: center;  /* Centre le texte */
+    margin: 0 auto 40px; /* Espace sous le texte */
+  }
+}
+
+/* ============================
+   PARTIE "STATS" MOBILE
+   ============================ */
+@media (max-width: 900px) {
+  .stats-bar {
+    gap: 40px;       /* espace réduit entre les stats */
+    padding: 20px 0; /* un peu moins de padding vertical */
+  }
+
+  .stat strong {
+    font-size: 36px; /* taille légèrement réduite pour mobile */
+  }
+
+  .stat span {
+    font-size: 16px;
+  }
+}
+
+/* ============================
+   PARTIE "CONTACTEZ-NOUS" MOBILE
+   ============================ */
+@media (max-width: 900px) {
+  /* Titre plus grand */
+  .contact h2 {
+    font-size: 32px; /* plus grand que la taille par défaut */
+  }
+
+  /* Labels plus petits */
+  .contact label {
+    font-size: 14px;
+  }
+
+  /* Champs plus petits */
+  .contact input,
+  .contact textarea {
+    font-size: 14px;
+    padding: 8px;
+  }
+}
+
+/* ============================
+   PARTIE "NAS DE PAGE" MOBILE
+   ============================ */
+
+@media (max-width: 900px) {
+  .footer { padding-top: 40px; }
+
+  .footer-top { padding: 0 20px; }
+
+  .footer-row {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 24px;
+  }
+
+  /* 2 colonnes de liens (2x2) */
+  .footer-columns {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 18px 40px;          /* espace lignes / colonnes */
+    margin-top: 0;
+  }
+
+  .footer-column h3 { font-size: 20px; margin-bottom: 6px; }
+  .footer-column p  { font-size: 15px; line-height: 1.6; }
+
+  /* Bloc contact sous les colonnes, aligné à gauche */
+  .footer-contact {
+    align-items: flex-start;
+    gap: 16px;
+    min-width: unset;
+    margin-top: 8px;
+  }
+
+  .contact-item { gap: 10px; }
+  .contact-item .icon { width: 28px; height: 28px; }
+  .contact-item p { font-size: 15px; line-height: 1.5; }
+
+  /* Barre du bas : bouton centré, icônes centrées en dessous */
+  .footer-bottom {
+    padding: 24px 20px;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+    text-align: center;
+  }
+
+  .footer-bottom .login-btn {
+    order: 1;
+    width: 180px;           /* largeur fixe comme la maquette */
+    padding: 10px 0;
+  }
+
+  .footer-bottom .social-icons {
+    order: 2;
+    gap: 18px;
+  }
+
+  .social-icons .icon {
+    width: 40px; height: 40px;
+    padding: 6px; border-radius: 12px;
+  }
+
+  .footer-bottom p {
+    order: 3;
+    font-size: 12px;
+    opacity: 0.8;
+  }
+  /* Pour cacher le copyright comme sur la maquette Figma :
+     .footer-bottom p { display:none; }
+  */
 }
 
