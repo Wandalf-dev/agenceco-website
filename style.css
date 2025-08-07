@@ -1276,27 +1276,49 @@ body {
   .footer .footer-columns {
     display: grid !important;
     grid-template-columns: 1fr 1fr !important;
-    gap: 18px 40px !important;          /* espace lignes / colonnes */
+    gap: 18px 40px !important;
     margin-top: 0 !important;
+
+    /* centrage global */
+    justify-content: center !important;
+    max-width: 500px !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
   }
 
   /* titres + textes un peu plus serrés */
-  .footer .footer-column h3 { font-size: 20px !important; margin-bottom: 4px !important; }
-  .footer .footer-column p  { font-size: 15px !important; line-height: 1.6 !important; margin-top: 0 !important; }
+  .footer .footer-column h3 {
+    font-size: 20px !important;
+    margin-bottom: 4px !important;
+  }
+  .footer .footer-column p {
+    font-size: 15px !important;
+    line-height: 1.6 !important;
+    margin-top: 0 !important;
+  }
 
-  /* Bloc contact sous les colonnes */
+  /* Bloc contact sous les colonnes : centré horizontalement */
   .footer .footer-contact {
-    align-items: flex-start !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
     gap: 16px !important;
     min-width: unset !important;
     margin-top: 8px !important;
+
+    /* même largeur max que les colonnes */
+    max-width: 500px !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
   }
 
-  /* icônes + texte parfaitement alignés au centre */
+  /* icônes + texte parfaitement centrés */
   .footer .contact-item {
     display: flex !important;
-    align-items: center !important;  /* centre verticalement icône + texte */
+    align-items: center !important;
+    justify-content: center !important;
     gap: 12px !important;
+    width: 100%;
   }
   .footer .contact-item .icon {
     width: 28px !important;
@@ -1304,7 +1326,12 @@ body {
     margin-top: 0 !important;
     flex-shrink: 0 !important;
   }
-  .footer .contact-item p { font-size: 15px !important; line-height: 1.5 !important; margin: 0 !important; }
+  .footer .contact-item p {
+    font-size: 15px !important;
+    line-height: 1.5 !important;
+    margin: 0 !important;
+    text-align: center !important;
+  }
 
   /* Barre du bas : espacement identique entre chaque élément */
   .footer .footer-bottom {
@@ -1313,6 +1340,11 @@ body {
     align-items: center !important;
     text-align: center !important;
     gap: 16px !important;
+
+    /* même largeur max */
+    max-width: 500px !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
   }
 
   .footer .footer-bottom .login-btn {
@@ -1339,33 +1371,9 @@ body {
     opacity: 0.8 !important;
   }
 
-    /* Centrer totalement les blocs contact sur mobile */
-  .footer .footer-contact {
-    display: flex !important;
-    flex-direction: column !important;
-    align-items: center !important; /* centre icônes + texte horizontalement */
-    gap: 16px !important;
-  }
-
-  .footer .contact-item {
-    justify-content: center !important; /* centre horizontalement chaque ligne */
-  }
-
-  .footer .contact-item p {
-    text-align: center !important; /* centre le texte */
-  }
-
-  .footer .footer-columns {
-    justify-content: center !important; /* centre horizontalement */
-    max-width: 500px !important; /* évite qu'elles s'étalent trop sur les côtés */
-    margin-left: auto !important;
-    margin-right: auto !important;
-  }
-
   /* Désactive le lien bleu automatique sur les numéros de téléphone */
   a[href^="tel"] {
     color: inherit !important;
     text-decoration: none !important;
   }
-
 }
