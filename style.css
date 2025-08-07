@@ -1339,6 +1339,23 @@ body {
     opacity: 0.8 !important;
   }
 
+    /* Centrer totalement les blocs contact sur mobile */
+  .footer .footer-contact {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important; /* centre icônes + texte horizontalement */
+    gap: 16px !important;
+  }
+
+  .footer .contact-item {
+    justify-content: center !important; /* centre horizontalement chaque ligne */
+  }
+
+  .footer .contact-item p {
+    text-align: center !important; /* centre le texte */
+  }
+
+
   /* Désactive le lien bleu automatique sur les numéros de téléphone */
   a[href^="tel"] {
     color: inherit !important;
