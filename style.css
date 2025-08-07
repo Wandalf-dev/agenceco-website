@@ -1263,7 +1263,7 @@ body {
 @media (max-width: 900px) {
   .footer { padding-top: 40px !important; }
 
-  /* plus de marge sur les côtés */
+  /* marge latérale plus généreuse mais footer reste pleine largeur */
   .footer .footer-top { padding: 0 40px !important; }
 
   .footer .footer-row {
@@ -1272,21 +1272,17 @@ body {
     gap: 24px !important;
   }
 
-  /* 2 colonnes de liens (2x2) */
+  /* Colonnes en 2x2, centrées visuellement */
   .footer .footer-columns {
     display: grid !important;
     grid-template-columns: 1fr 1fr !important;
     gap: 18px 40px !important;
     margin-top: 0 !important;
-
-    /* centrage global */
-    justify-content: center !important;
-    max-width: 500px !important;
-    margin-left: auto !important;
-    margin-right: auto !important;
+    justify-items: center !important; /* centre chaque colonne dans sa case */
+    text-align: center !important;    /* centre le texte */
   }
 
-  /* titres + textes un peu plus serrés */
+  /* titres + textes */
   .footer .footer-column h3 {
     font-size: 20px !important;
     margin-bottom: 4px !important;
@@ -1297,28 +1293,20 @@ body {
     margin-top: 0 !important;
   }
 
-  /* Bloc contact sous les colonnes : centré horizontalement */
+  /* Bloc contact sous les colonnes */
   .footer .footer-contact {
-    display: flex !important;
-    flex-direction: column !important;
-    align-items: center !important;
+    align-items: center !important; /* centre tout le bloc */
     gap: 16px !important;
     min-width: unset !important;
     margin-top: 8px !important;
-
-    /* même largeur max que les colonnes */
-    max-width: 500px !important;
-    margin-left: auto !important;
-    margin-right: auto !important;
   }
 
-  /* icônes + texte parfaitement centrés */
+  /* Icônes + texte alignés au centre */
   .footer .contact-item {
     display: flex !important;
     align-items: center !important;
     justify-content: center !important;
     gap: 12px !important;
-    width: 100%;
   }
   .footer .contact-item .icon {
     width: 28px !important;
@@ -1333,18 +1321,13 @@ body {
     text-align: center !important;
   }
 
-  /* Barre du bas : espacement identique entre chaque élément */
+  /* Bas du footer */
   .footer .footer-bottom {
     padding: 24px 20px !important;
     flex-direction: column !important;
     align-items: center !important;
     text-align: center !important;
     gap: 16px !important;
-
-    /* même largeur max */
-    max-width: 500px !important;
-    margin-left: auto !important;
-    margin-right: auto !important;
   }
 
   .footer .footer-bottom .login-btn {
