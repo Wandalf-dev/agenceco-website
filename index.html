@@ -13,6 +13,16 @@
   <link rel="stylesheet" href="style.css">
 </head>
 
+<script>
+  const burger = document.getElementById('burger');
+  const nav = document.getElementById('nav');
+
+  burger.addEventListener('click', () => {
+    nav.classList.toggle('active');
+  });
+</script>
+
+
 <body>
   <main class="main-wrapper"> <!-- Modification de "div" par "main" -->
 
@@ -23,9 +33,8 @@
       <div class="container">
         <div class="logo">Agenc<span>eco</span></div> <!-- Mot "eco" mis en italique via CSS -->
 
-        <nav>
+        <nav id="nav">
           <ul>
-            <!-- Liens de navigation internes -->
             <li><a href="#">Accueil</a></li>
             <li><a href="#equipe">Notre équipe</a></li>
             <li><a href="#services">Nos services</a></li>
@@ -34,8 +43,16 @@
             <li><a href="#actus">Actualités</a></li>
           </ul>
         </nav>
+
+        <!-- Bouton burger pour mobile -->
+        <button class="burger" id="burger" aria-label="Menu mobile">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
       </div>
     </header>
+
 
     <!-- ===========================
          HERO (image de fond + slogan)

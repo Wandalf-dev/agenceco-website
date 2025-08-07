@@ -1081,7 +1081,73 @@ body {
   flex-shrink: 0;
 }
 
+/* ===== Burger menu ===== */
+.burger {
+  display: none;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 25px;
+  height: 20px;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
 
+.burger span {
+  display: block;
+  height: 3px;
+  width: 100%;
+  background-color: #333;
+  border-radius: 3px;
+}
+
+/* ===== Responsive nav ===== */
+@media (max-width: 768px) {
+  nav {
+    position: absolute;
+    top: 80px;
+    right: 0;
+    background-color: white;
+    width: 100%;
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+  }
+
+  nav ul {
+    flex-direction: column;
+    gap: 20px;
+    padding: 20px 0;
+  }
+
+  .burger {
+    display: flex;
+  }
+
+  nav.active {
+    display: flex;
+  }
+}
+
+/* ===== Responsive équipe ===== */
+
+@media (max-width: 768px) {
+  .team-grid {
+    justify-content: center;      /* S'assure que les cercles restent centrés */
+    gap: 40px;                    /* Réduit l'espace entre les membres */
+  }
+
+  .member {
+    width: 100%;
+    max-width: 300px;             /* Empêche que ça déborde, mais reste centré */
+  }
+
+  .photo-wrapper {
+    width: 200px;
+    height: 200px;
+  }
+}
 
 
 
