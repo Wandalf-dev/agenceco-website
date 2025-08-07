@@ -1240,7 +1240,7 @@ body {
 @media (max-width: 900px) {
   /* Titre plus grand */
   .contact h2 {
-    font-size: 32px; /* plus grand que la taille par défaut */
+    font-size: 32px;
   }
 
   /* Labels plus petits */
@@ -1248,13 +1248,21 @@ body {
     font-size: 14px;
   }
 
-  /* Champs plus petits */
+  /* Champs plus petits + parfaitement alignés avec le texte */
   .contact input,
   .contact textarea {
     font-size: 14px;
-    padding: 8px;
+    padding-left: 0; /* pas de padding gauche inutile */
+    text-indent: 0;  /* force le texte à coller au bord gauche */
+  }
+
+  /* Ligne blanche alignée exactement sous le texte */
+  .form-group::after {
+    left: 0;
+    width: 100%;
   }
 }
+
 
 /* ============================
    PARTIE "BAS DE PAGE" MOBILE
@@ -1263,7 +1271,7 @@ body {
 @media (max-width: 900px) {
   .footer { padding-top: 40px !important; }
 
-  /* marge latérale plus généreuse mais footer reste pleine largeur */
+  /* marge latérale généreuse */
   .footer .footer-top { padding: 0 40px !important; }
 
   .footer .footer-row {
@@ -1272,53 +1280,58 @@ body {
     gap: 24px !important;
   }
 
-  /* Colonnes en 2x2, centrées visuellement */
+  /* Colonnes en 2x2 */
   .footer .footer-columns {
     display: grid !important;
     grid-template-columns: 1fr 1fr !important;
     gap: 18px 40px !important;
     margin-top: 0 !important;
-    justify-items: center !important; /* centre chaque colonne dans sa case */
-    text-align: center !important;    /* centre le texte */
+    justify-items: center !important;
+    text-align: center !important;
   }
 
-  /* titres + textes */
   .footer .footer-column h3 {
-    font-size: 20px !important;
-    margin-bottom: 4px !important;
+    font-size: 22px !important;
+    margin-bottom: 6px !important;
   }
   .footer .footer-column p {
-    font-size: 15px !important;
+    font-size: 16px !important;
     line-height: 1.6 !important;
     margin-top: 0 !important;
   }
 
-  /* Bloc contact sous les colonnes */
+  /* Bloc contact */
   .footer .footer-contact {
-    align-items: center !important; /* centre tout le bloc */
-    gap: 16px !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 18px !important;
     min-width: unset !important;
     margin-top: 8px !important;
+    margin-bottom: 40px !important; /* ↑ ajoute plus d'espace avec le bloc foncé */
   }
 
-  /* Icônes + texte alignés au centre */
+  /* Chaque ligne avec même largeur pour alignement parfait des icônes */
   .footer .contact-item {
     display: flex !important;
     align-items: center !important;
-    justify-content: center !important;
-    gap: 12px !important;
+    justify-content: flex-start !important;
+    gap: 14px !important;
+    width: 220px !important;
   }
+
   .footer .contact-item .icon {
-    width: 28px !important;
-    height: 28px !important;
-    margin-top: 0 !important;
+    width: 34px !important;
+    height: 34px !important;
     flex-shrink: 0 !important;
   }
+
   .footer .contact-item p {
-    font-size: 15px !important;
-    line-height: 1.5 !important;
+    font-size: 16px !important;
+    line-height: 1.6 !important;
     margin: 0 !important;
-    text-align: center !important;
+    text-align: left !important;
   }
 
   /* Bas du footer */
@@ -1354,9 +1367,56 @@ body {
     opacity: 0.8 !important;
   }
 
-  /* Désactive le lien bleu automatique sur les numéros de téléphone */
+  /* Supprimer le bleu iOS sur numéros */
   a[href^="tel"] {
     color: inherit !important;
     text-decoration: none !important;
   }
 }
+
+/* ============================
+   PARTIE "NOTRE GALERIE" MOBILE
+   ============================ */
+
+@media (max-width: 900px) {
+
+    .notre-galerie .intro {
+      font-size: 18px;          /* texte plus petit */
+      line-height: 1.8;         /* plus d'air entre les lignes */
+      max-width: 90%;           /* moins large, centré */
+      margin: 0 auto 40px auto; /* espace bas réduit */
+    }
+  
+  /* Agrandir l'image : elle prend quasiment toute la largeur */
+    .bloc-galerie {
+      width: 100%;
+      max-width: none;
+      margin: 0;
+    }
+
+    .img-galerie img {
+      width: 100%;
+      border-radius: 10px; /* petit arrondi pour un rendu propre */
+    }
+
+    /* Cacher les boutons en mobile */
+    .navigation-buttons {
+      display: none;
+    }
+  }
+
+/* ============================
+   PARTIE "A PROPOS" MOBILE
+   ============================ */
+
+  @media (max-width: 900px) {
+  .apropos {
+    padding-bottom: 20px; /* réduit l’espace par rapport à .intro de la partie "Notre galerie" */
+  }
+
+  .apropos-image {
+    display: none; /* Masque totalement le bloc image */
+  }
+
+}
+
