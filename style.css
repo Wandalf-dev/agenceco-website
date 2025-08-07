@@ -1279,8 +1279,9 @@ body {
     margin-top: 0;
   }
 
-  .footer-column h3 { font-size: 20px; margin-bottom: 6px; }
-  .footer-column p  { font-size: 15px; line-height: 1.6; }
+  /* titres + textes un peu plus serrés */
+  .footer-column h3 { font-size: 20px; margin-bottom: 4px; }
+  .footer-column p  { font-size: 15px; line-height: 1.6; margin-top: 0; }
 
   /* Bloc contact sous les colonnes, aligné à gauche */
   .footer-contact {
@@ -1290,22 +1291,31 @@ body {
     margin-top: 8px;
   }
 
-  .contact-item { gap: 10px; }
-  .contact-item .icon { width: 28px; height: 28px; }
-  .contact-item p { font-size: 15px; line-height: 1.5; }
+  /* icônes + texte parfaitement alignés */
+  .contact-item {
+    display: flex;
+    align-items: center;  /* centre verticalement icône + texte */
+    gap: 10px;
+  }
+  .contact-item .icon {
+    width: 28px; height: 28px;
+    margin-top: 0;        /* supprime le décalage vers le haut */
+    flex-shrink: 0;
+  }
+  .contact-item p { font-size: 15px; line-height: 1.5; margin: 0; }
 
-  /* Barre du bas : bouton centré, icônes centrées en dessous */
+  /* Barre du bas : espacement identique entre chaque élément */
   .footer-bottom {
     padding: 24px 20px;
     flex-direction: column;
     align-items: center;
-    gap: 16px;
     text-align: center;
+    gap: 16px;             /* même espace entre bouton / réseaux / copyright */
   }
 
   .footer-bottom .login-btn {
     order: 1;
-    width: 180px;           /* largeur fixe comme la maquette */
+    width: 180px;          /* largeur fixe comme la maquette */
     padding: 10px 0;
   }
 
@@ -1324,8 +1334,16 @@ body {
     font-size: 12px;
     opacity: 0.8;
   }
+
+  /* Désactive le lien bleu automatique sur les numéros de téléphone */
+  a[href^="tel"] {
+    color: inherit;
+    text-decoration: none;
+  }
+}
+
+
   /* Pour cacher le copyright comme sur la maquette Figma :
      .footer-bottom p { display:none; }
   */
-}
 
