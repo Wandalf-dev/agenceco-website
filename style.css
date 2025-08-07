@@ -1081,9 +1081,11 @@ body {
   flex-shrink: 0;
 }
 
-/* ===== Burger menu ===== */
+/* ============================
+   BURGER MENU
+   ============================ */
 .burger {
-  display: none;
+  display: none; /* Caché par défaut sur desktop */
   flex-direction: column;
   justify-content: space-between;
   width: 25px;
@@ -1097,18 +1099,35 @@ body {
   display: block;
   height: 3px;
   width: 100%;
-  background-color: #333;
+  background-color: #255219; /* Même vert que le logo */
   border-radius: 3px;
 }
 
-/* ===== Responsive nav ===== */
+/* ============================
+   HEADER MOBILE
+   ============================ */
+@media (max-width: 900px) {
+  header .container {
+    flex-direction: row;          /* Logo + burger en ligne */
+    align-items: center;
+    justify-content: space-between;
+    gap: 0;
+    padding: 0 20px;
+  }
+}
+
 @media (max-width: 768px) {
+  .burger {
+    display: flex; /* Affiche le burger en mobile */
+    margin-left: auto;
+  }
+
   nav {
     position: absolute;
     top: 80px;
+    left: 0;
     right: 0;
-    background-color: white;
-    width: 100%;
+    background-color: #fff;
     display: none;
     flex-direction: column;
     align-items: center;
@@ -1121,33 +1140,48 @@ body {
     padding: 20px 0;
   }
 
-  .burger {
-    display: flex;
-  }
-
   nav.active {
     display: flex;
   }
 }
 
-/* ===== Responsive équipe ===== */
+/* ============================
+   HERO MOBILE
+   ============================ */
+@media (max-width: 900px) {
+  .hero-overlay {
+    display: flex;
+    align-items: center;      /* Centre verticalement */
+    justify-content: center;  /* Centre horizontalement */
+    text-align: center;
+    padding: 40px 20px;
+  }
 
-@media (max-width: 768px) {
+  .hero-text {
+    text-align: center;
+  }
+}
+
+/* ============================
+   ÉQUIPE MOBILE
+   ============================ */
+@media (max-width: 900px) {
   .team-grid {
-    justify-content: center;      /* S'assure que les cercles restent centrés */
-    gap: 40px;                    /* Réduit l'espace entre les membres */
+    flex-direction: column;   /* 1 membre par ligne */
+    align-items: center;      /* Centre horizontalement */
+    gap: 40px;                 /* Réduit l'espace vertical */
   }
 
   .member {
     width: 100%;
-    max-width: 300px;             /* Empêche que ça déborde, mais reste centré */
+    max-width: 300px;         /* Empêche les débordements */
+    text-align: center;
   }
 
   .photo-wrapper {
     width: 200px;
     height: 200px;
+    margin: 0 auto 10px;      /* Centre l'image */
   }
 }
-
-
 
