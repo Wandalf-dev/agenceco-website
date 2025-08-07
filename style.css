@@ -1257,93 +1257,92 @@ body {
 }
 
 /* ============================
-   PARTIE "NAS DE PAGE" MOBILE
+   PARTIE "BAS DE PAGE" MOBILE
    ============================ */
 
 @media (max-width: 900px) {
-  .footer { padding-top: 40px; }
+  .footer { padding-top: 40px !important; }
 
-  .footer-top { padding: 0 20px; }
+  .footer .footer-top { padding: 0 20px !important; }
 
-  .footer-row {
-    flex-direction: column;
-    align-items: stretch;
-    gap: 24px;
+  .footer .footer-row {
+    flex-direction: column !important;
+    align-items: stretch !important;
+    gap: 24px !important;
   }
 
   /* 2 colonnes de liens (2x2) */
-  .footer-columns {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 18px 40px;          /* espace lignes / colonnes */
-    margin-top: 0;
+  .footer .footer-columns {
+    display: grid !important;
+    grid-template-columns: 1fr 1fr !important;
+    gap: 18px 40px !important;          /* espace lignes / colonnes */
+    margin-top: 0 !important;
   }
 
   /* titres + textes un peu plus serrés */
-  .footer-column h3 { font-size: 20px; margin-bottom: 4px; }
-  .footer-column p  { font-size: 15px; line-height: 1.6; margin-top: 0; }
+  .footer .footer-column h3 { font-size: 20px !important; margin-bottom: 4px !important; }
+  .footer .footer-column p  { font-size: 15px !important; line-height: 1.6 !important; margin-top: 0 !important; }
 
   /* Bloc contact sous les colonnes, aligné à gauche */
-  .footer-contact {
-    align-items: flex-start;
-    gap: 16px;
-    min-width: unset;
-    margin-top: 8px;
+  .footer .footer-contact {
+    align-items: flex-start !important;
+    gap: 16px !important;
+    min-width: unset !important;
+    margin-top: 8px !important;
   }
 
   /* icônes + texte parfaitement alignés */
-  .contact-item {
-    display: flex;
-    align-items: center;  /* centre verticalement icône + texte */
-    gap: 10px;
+  .footer .contact-item {
+    display: flex !important;
+    align-items: center !important;  /* centre verticalement icône + texte */
+    gap: 10px !important;
   }
-  .contact-item .icon {
-    width: 28px; height: 28px;
-    margin-top: 0;        /* supprime le décalage vers le haut */
-    flex-shrink: 0;
+  .footer .contact-item .icon {
+    width: 28px !important;
+    height: 28px !important;
+    margin-top: 0 !important;        /* supprime le décalage vers le haut */
+    flex-shrink: 0 !important;
   }
-  .contact-item p { font-size: 15px; line-height: 1.5; margin: 0; }
+  .footer .contact-item p { font-size: 15px !important; line-height: 1.5 !important; margin: 0 !important; }
 
   /* Barre du bas : espacement identique entre chaque élément */
-  .footer-bottom {
-    padding: 24px 20px;
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-    gap: 16px;             /* même espace entre bouton / réseaux / copyright */
+  .footer .footer-bottom {
+    padding: 24px 20px !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    text-align: center !important;
+    gap: 16px !important;             /* même espace entre bouton / réseaux / copyright */
   }
 
-  .footer-bottom .login-btn {
-    order: 1;
-    width: 180px;          /* largeur fixe comme la maquette */
-    padding: 10px 0;
+  .footer .footer-bottom .login-btn {
+    order: 1 !important;
+    width: 180px !important;          /* largeur fixe comme la maquette */
+    padding: 10px 0 !important;
   }
 
-  .footer-bottom .social-icons {
-    order: 2;
-    gap: 18px;
+  .footer .footer-bottom .social-icons {
+    order: 2 !important;
+    gap: 18px !important;
   }
 
-  .social-icons .icon {
-    width: 40px; height: 40px;
-    padding: 6px; border-radius: 12px;
+  .footer .social-icons .icon {
+    width: 40px !important;
+    height: 40px !important;
+    padding: 6px !important;
+    border-radius: 12px !important;
   }
 
-  .footer-bottom p {
-    order: 3;
-    font-size: 12px;
-    opacity: 0.8;
+  .footer .footer-bottom p {
+    order: 3 !important;
+    font-size: 12px !important;
+    opacity: 0.8 !important;
   }
 
   /* Désactive le lien bleu automatique sur les numéros de téléphone */
   a[href^="tel"] {
-    color: inherit;
-    text-decoration: none;
+    color: inherit !important;
+    text-decoration: none !important;
   }
 }
 
-
-  /* Pour cacher le copyright comme sur la maquette Figma :
-     .footer-bottom p { display:none; }
-  */
 
