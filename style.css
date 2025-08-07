@@ -1355,13 +1355,17 @@ body {
     text-align: center !important; /* centre le texte */
   }
 
+  .footer .footer-columns {
+    justify-content: center !important; /* centre horizontalement */
+    max-width: 500px !important; /* évite qu'elles s'étalent trop sur les côtés */
+    margin-left: auto !important;
+    margin-right: auto !important;
+  }
 
   /* Désactive le lien bleu automatique sur les numéros de téléphone */
   a[href^="tel"] {
     color: inherit !important;
     text-decoration: none !important;
   }
+
 }
-
-
-
