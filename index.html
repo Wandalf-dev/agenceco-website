@@ -295,19 +295,43 @@
       </p>
 
       <div class="bloc-galerie">
-        <div class="img-galerie">
-          <img src="assets/galerie.jpg" alt="Image galerie">
+        <!-- Slider -->
+        <div class="galerie-slider" aria-roledescription="carousel" aria-label="Galerie Agenceco">
+          <div class="galerie-track" role="group" aria-live="polite">
+            <div class="slide"><img src="assets/galerie-1.jpg" alt="Bureau végétalisé Agenceco"></div>
+            <div class="slide"><img src="assets/galerie-2.png" alt="Équipe Agenceco en réunion durable"></div>
+            <div class="slide"><img src="assets/galerie-3.png" alt="Bâtiment Agenceco moderne"></div>
+          </div>
+
+          <!-- Points -->
+          <div class="galerie-dots" aria-label="Navigation par points"></div>
+
+          <!-- Petits boutons internes (sur l'image) -->
+          <div class="slider-buttons">
+            <button class="btn prev" aria-label="Image précédente">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none"
+                  stroke="black" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="15 18 9 12 15 6" />
+              </svg>
+            </button>
+            <button class="btn next" aria-label="Image suivante">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none"
+                  stroke="#c6ff00" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="9 6 15 12 9 18" />
+              </svg>
+            </button>
+          </div>
         </div>
 
+        <!-- Gros boutons d’avant (sous l’image) -->
         <div class="navigation-buttons">
-          <button class="btn prev" aria-label="Image précédente">
+          <button class="btn prev" aria-label="Précédent (autre usage)">
             <svg width="28" height="28" viewBox="0 0 24 24" fill="none"
                 stroke="black" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round">
               <polyline points="15 18 9 12 15 6" />
             </svg>
           </button>
-
-          <button class="btn next" aria-label="Image suivante">
+          <button class="btn next" aria-label="Suivant (autre usage)">
             <svg width="28" height="28" viewBox="0 0 24 24" fill="none"
                 stroke="#c6ff00" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round">
               <polyline points="9 6 15 12 9 18" />
@@ -315,8 +339,9 @@
           </button>
         </div>
       </div>
-
     </section>
+
+
 
 
     <!-- ===========================
@@ -402,7 +427,10 @@
 
   </main> <!-- modification de "/div" par "/main" -->
 
-   <script src="js/burger.js"></script>
+
+    <script src="js/burger.js"></script>
+
+    <script src="js/slide.js"></script>
 
 </body>
 </html>
