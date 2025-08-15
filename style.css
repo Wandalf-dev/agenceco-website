@@ -1,3 +1,4 @@
+
 /* =============================
    Import de la police principale
    ============================= */
@@ -1238,7 +1239,7 @@ body {
     left: 0;
     right: 0;
     background-color: #fff;
-    display: none;
+    display: block;
     flex-direction: column;
     align-items: center;
     box-shadow: 0 4px 10px rgba(0,0,0,0.2);
@@ -1250,10 +1251,6 @@ body {
     padding: 20px 0;
   }
 
-  /* Quand JS ajoute .active sur <nav>, on l’affiche */
-  nav.active {
-    display: flex;
-  }
 }
 
 
@@ -1629,3 +1626,95 @@ body {
   .notre-galerie .slider-buttons { display: flex !important; }
   .notre-galerie .navigation-buttons { display: flex !important; }
 }
+
+/* ===================================================================
+   MOBILE — Menu burger "rideau" (SOLID : ouverture + fermeture animées)
+   =================================================================== */
+@media (max-width: 900px) {
+  :root { --header-h: 80px; --bar-color: #255219; }
+
+  header { position: sticky; top: 0; z-index: 3000; background: #fff; }
+
+  /* le nav n'est JAMAIS display:none (sinon pas d'animation) */
+  nav { display: block; }
+
+  /* Panneau nav (fermé par défaut) */
+  #nav {
+    position: fixed;
+    left: 0; right: 0;
+    top: var(--header-h);
+    background: #fff;
+    border-top: 3px solid var(--bar-color);
+    box-shadow: 0 6px 24px rgba(0,0,0,0.10);
+    z-index: 2500;
+
+    transform-origin: top;
+    transform: scaleY(0);  /* fermé */
+    opacity: 0;
+    max-height: 70vh;
+    overflow: hidden;
+    transition: transform .32s ease, opacity .20s linear;
+    pointer-events: none; /* évite les clics quand fermé */
+  }
+
+  /* OUVERT (déroulé top→bottom) */
+  #nav.active {
+    transform: scaleY(1);
+    opacity: 1;
+    pointer-events: auto;  /* cliquable uniquement quand ouvert */
+    overflow-y: auto;
+  }
+
+  /* Liens (style simple, texte noir) */
+  #nav ul { list-style: none; margin: 0; padding: 8px 0 10px; }
+  #nav li { margin: 0; padding: 0; border-bottom: 1px solid rgba(0,0,0,0.08); }
+  #nav a  { display: grid; grid-template-columns: 1fr auto; align-items: center; gap: 12px;
+            padding: 12px 20px; text-decoration: none; color: #000; font-size: 18px; font-weight: 500; }
+  #nav li.has-submenu > a::after { content: '+'; color: #000; font-weight: 600; font-size: 20px; line-height: 1; }
+
+  /* Burger 3 traits (aucune rotation) */
+  .burger[aria-expanded="true"] span { transform: none; opacity: 1; }
+}
+
+/* --- Finition bas du menu burger (mobile) --- */
+@media (max-width: 900px){
+  /* Panneau : coins inférieurs arrondis + ombre douce */
+  #nav{
+    border-bottom-left-radius: 14px;
+    border-bottom-right-radius: 14px;
+    box-shadow: 0 10px 30px rgba(0,0,0,.12);
+    overflow: hidden;                 /* applique bien les arrondis aux contenus */
+  }
+
+  /* Un peu d'air en bas du menu */
+  #nav ul{ padding-bottom: 12px; }
+
+  /* Retire le trait gris sous le dernier item */
+  #nav ul li:last-child{ border-bottom: none; }
+
+  /* Petite “lèvre” de finition pour éviter toute coupure visuelle */
+  #nav::after{
+    content: "";
+    display: block;
+    height: 10px;
+    background: linear-gradient(to bottom, rgba(0,0,0,.06), rgba(0,0,0,0));
+  }
+}
+
+/* — Fix double fond en bas du menu burger — */
+@media (max-width: 900px){
+  /* 1) Supprime la "lèvre" ajoutée sous le menu */
+  #nav::after{
+    content: none !important;
+    display: none !important;
+  }
+
+  /* 2) Pas de trait sous le dernier item */
+  #nav ul{ padding-bottom: 0 !important; }
+  #nav ul li:last-child{ border-bottom: none !important; }
+
+  /* 3) (optionnel) Si tu vois encore une ligne du contenu derrière,
+        force le panneau à couvrir l’écran sous le header */
+  /* #nav.active{ min-height: calc(100dvh - var(--header-h)) !important; } */
+}
+
