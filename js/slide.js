@@ -15,7 +15,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   /* ====== Réglages ====== */
   let index = 0;
-  const INTERVAL  = 3500; // ms entre deux slides (autoplay)
+  const INTERVAL  = 2500; // ms entre deux slides (autoplay)
   const DURATION  = 500;  // ms de l’animation; aligner avec le CSS (.galerie-track transition)
   const THRESHOLD = 40;   // px : distance minimale pour valider un swipe
   const isTouchDevice = window.matchMedia('(hover: none), (pointer: coarse)').matches;

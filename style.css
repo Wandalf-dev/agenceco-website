@@ -1,12 +1,45 @@
+/* ============================================================
+
+   NOTE PROJET — Usage de `!important`
+   ------------------------------------------------------------
+   Rôle : force une déclaration à l’emporter quand la cascade
+   (ordre, spécificité, media queries) ne suffit pas.
+
+   Cas d’usage dans cette feuille :
+   • Responsive : surcharges mobiles reprenant les mêmes sélecteurs
+     que le desktop → `!important` garantit l’écrasement.
+
+   • Burger menu : états `[aria-expanded="true"]` (transform/opacity)
+     doivent dominer les styles initiaux ou anciens resets.
+
+   • Styles navigateur : neutraliser des règles imposées (autofill
+     Chrome, numéros de tel iOS) qui « gagnent » sinon.
+
+   • Patches/doublons assumés : ex. répétitions `.footer-bottom`
+     pour verrouiller un rendu malgré l’ordre de chargement.
+
+   Bonnes pratiques :
+   • Réserver `!important` aux exceptions locales et contrôlées.
+
+   • Favoriser d’abord ordre/specificité, classes de modificateur
+      (ex. `.header--compact`), ou `@layer` si disponible.
+
+   • Avant d’ajouter `!important`, vérifier si un sélecteur
+     mieux ciblé ou une règle placée plus tard suffit.
+
+   ============================================================ */
+
 
 /* =============================
-   Import de la police principale
+   Import de la police principale — projet
+   (charger uniquement les graisses nécessaires pour limiter le poids)
    ============================= */
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
 
 
 /* =============================
-   Réinitialisation de base
+   Réinitialisation de base — projet
+   (uniformiser le modèle de boîte et neutraliser marges/paddings UA)
    ============================= */
 * {
   box-sizing: border-box;    /* Inclut padding et border dans les dimensions */
@@ -89,7 +122,7 @@ nav ul li a {
   color: #000;
   font-size: 20px;
   font-weight: 500;
-  transition: color 0.3s;   /* Lisse les changements d’état comme le hover */
+  transition: color 0.3s;   /* Animation douce au survol */
 }
 
 nav ul li a:hover {
@@ -111,7 +144,7 @@ nav ul li a:hover {
 .hero-overlay {
   width: 100%;
   height: 100%;
-  display: flex;                      /* Mise en page flexible (ligne ou colonne) */
+  display: flex;                      /* Mise en page en flex pour ancrer le texte */
   align-items: flex-end;              /* Texte en bas */
   justify-content: flex-end;          /* Aligné à droite */
   padding: 60px;
@@ -165,7 +198,7 @@ nav ul li a:hover {
 
 /* Grille contenant les membres */
 .team-grid {
-  display: flex;           /* Mise en page flexible (ligne ou colonne) */
+  display: flex;
   justify-content: center;
   gap: 180px;              /* Espace entre les cartes */
   flex-wrap: wrap;
@@ -175,7 +208,7 @@ nav ul li a:hover {
 /* Bloc individuel pour chaque membre */
 .member {
   width: 280px;
-  display: flex;           /* Mise en page flexible (ligne ou colonne) */
+  display: flex;
   flex-direction: column;
   align-items: center;
   text-align: center;
@@ -202,8 +235,8 @@ nav ul li a:hover {
 .photo-wrapper {
   width: 250px;
   height: 250px;
-  border-radius: 50%;      /* Rend un élément parfaitement circulaire */
-  overflow: hidden;        /* Masque tout dépassement visuel de l’élément */
+  border-radius: 50%;      /* Rend l’élément circulaire */
+  overflow: hidden;        /* Masque les débordements de l’image */
   margin: 0 auto 10px;     /* Centre l’image */
   position: relative;
 }
@@ -216,7 +249,7 @@ nav ul li a:hover {
   height: 100%;
 }
 
-/* Image de Romeo */
+/* Image de Romeo (zoom contrôlé) */
 .photo-romeo {
   width: 100%;
   height: 100%;
@@ -226,7 +259,7 @@ nav ul li a:hover {
   display: block;
 }
 
-/* Image de Javier */
+/* Image de Javier (recentrage manuel) */
 .photo-javier {
   width: 150%;
   height: 150%;
@@ -244,7 +277,7 @@ nav ul li a:hover {
    ============================= */
 .stats-bar {
   background-color: #183a43;
-  display: flex;            /* Mise en page flexible (ligne ou colonne) */
+  display: flex;
   justify-content: center;
   padding: 30px 0;
   gap: 160px;
@@ -314,10 +347,10 @@ nav ul li a:hover {
   align-items: center;
   justify-content: center;
   box-shadow: 0 4px 10px rgba(0,0,0,0.05);
-  transition: transform 0.3s ease;  /* Lisse les changements d’état comme le hover */
+  transition: transform 0.3s ease;  /* Animation douce au survol */
 }
 
-/* Effet hover : icônes qui bougent */
+/* Effet hover : élévation */
 .service-card:hover {
   transform: translateY(-10px);
 }
@@ -370,7 +403,7 @@ nav ul li a:hover {
   gap: 15px;
 }
 
-/* Supprime les marges internes : le gap les remplace */
+/* Les marges internes sont évitées : le gap gère l’espacement */
 .actus-card h3,
 .actus-card .date,
 .actus-card p {
@@ -462,23 +495,23 @@ nav ul li a:hover {
   margin-bottom: 4px;
   font-size: 1.3em;
   position: absolute;
-  left: -9999px;
+  left: -9999px;               /* Masqué visuellement, conservé pour l’accessibilité */
 }
 
 .form-group label:hover {
-  cursor: text;                 /* style du curseur */
+  cursor: text;                 /* Style du curseur */
 }
 
 /* Inputs et textarea */
 .form-group input,
 .form-group textarea {
   background: transparent;
-  border: none;                 /* Supprime toutes les bordures */
+  border: none;                 /* Retire toutes les bordures natives */
   padding: 8px 0;
   font-size: 1.3em;
   outline: none;
   position: relative;
-  font-family: 'Poppins', sans-serif; /* Ajout de la police pour "message" */
+  font-family: 'Poppins', sans-serif; /* Police cohérente pour le textarea */
   color: white;
   font-size: 1.4em;
 }
@@ -489,7 +522,7 @@ nav ul li a:hover {
   font-weight: 300;
   font-size: 1.1em;
   opacity: 1;
-  font-family: 'Poppins', sans-serif; /* Forcer la même police ici aussi */
+  font-family: 'Poppins', sans-serif; /* Conserver la même police */
 }
 
 .form-group textarea {
@@ -553,14 +586,14 @@ select:-webkit-autofill {
   align-items: center;
   max-width: 1300px;
   margin: 0 auto;                    /* Centre horizontalement */
-  flex-wrap: wrap;                   /* Permet l’adaptation sur petit écran */
+  flex-wrap: wrap;                   /* Adaptation en petit écran */
 }
 
 /* Bloc image (à gauche) */
 .apropos-image {
   flex: 1;
   display: flex;
-  align-items: flex-start;           /* Garde le haut aligné avec le texte */
+  align-items: flex-start;           /* Haut aligné avec le texte */
 }
 
 .apropos-image img {
@@ -568,7 +601,7 @@ select:-webkit-autofill {
   height: 100%;
   object-fit: cover;                 /* Remplit le conteneur sans déformation */
   border-radius: 25px;
-  align-self: flex-end;              /* Étire vers le bas si possible */
+  align-self: flex-end;              /* Étirement vertical si possible */
 }
 
 /* Bloc contenu texte + icônes (à droite) */
@@ -631,7 +664,7 @@ select:-webkit-autofill {
   display: flex;
   justify-content: center;
   align-items: center;
-  overflow: hidden;                  /* Masque tout dépassement visuel */
+  overflow: hidden;                  /* Masque les débordements */
   margin: 0 auto;                    /* Centre horizontalement */
   background-color: white;           /* Cercle blanc autour de l’image */
 }
@@ -785,7 +818,7 @@ select:-webkit-autofill {
   stroke: #c6ff00;
 }
 
-/* GROS BOUTONS SOUS L'IMAGE (PC seulement si tu les gardes) */
+/* GROS BOUTONS SOUS L'IMAGE (PC seulement si conservés) */
 .navigation-buttons {
   position: static;
   display: flex;
@@ -893,7 +926,7 @@ select:-webkit-autofill {
   gap: 20px;
   min-width: 200px;
   margin-top: -20px;
-  /* garde align-items à 'flex-end' ou 'flex-start', peu importe pour les icônes */
+  /* garder align-items 'flex-end' ou 'flex-start' selon besoin d’alignement */
 }
 
 .icon.phone,
@@ -903,12 +936,12 @@ select:-webkit-autofill {
 
 .contact-item {
   display: flex;
-  align-items: flex-start;          /* ← Important : aligne les icônes verticalement */
+  align-items: flex-start;          /* Aligne correctement les icônes */
   gap: 14px;
 }
 
 .contact-item .icon {
-  margin-top: 2px;                  /* ajuste si besoin pour bien centrer par rapport au bloc texte */
+  margin-top: 2px;                  /* Ajuste l’alignement vertical avec le texte */
   flex-shrink: 0;
 }
 
@@ -919,7 +952,9 @@ select:-webkit-autofill {
   margin: 0;
 }
 
-/* (doublon conservé comme dans ton fichier) */
+/* (doublon conservé) —
+   Répétition volontaire pour assurer la priorité de ces déclarations
+   lorsque d’autres blocs intermédiaires sont chargés après. */
 .footer-bottom {
   background-color: #0C2227;
   display: flex;
@@ -943,7 +978,7 @@ select:-webkit-autofill {
   font-weight: 500;
   cursor: pointer;
   color: #071d1f;
-  transition: background-color 0.3s;
+  transition: background-color 0.3s;  /* Peut être surchargé plus bas si besoin */
   font-size: 17px;
   font-family: 'Poppins', sans-serif;
 }
@@ -982,7 +1017,8 @@ select:-webkit-autofill {
 
 
 /* =======================
-   PARTIE "RESPONSIVE"
+   PARTIE "RESPONSIVE" —
+   Les règles ci-dessous surchargent volontairement celles du dessus.
    ======================= */
 @media (max-width: 900px) {
   /* HEADER */
@@ -1226,13 +1262,13 @@ body {
     padding: 0 20px;
   }
 
-  /* Affiche le burger en mobile (aligné au breakpoint 900px) */
+  /* Affichage du burger en mobile (breakpoint 900px) */
   .burger {
     display: flex;
     margin-left: auto;
   }
 
-  /* Menu mobile : caché par défaut */
+  /* Menu mobile : présent (l’animation est gérée plus bas via #nav) */
   nav {
     position: absolute;
     top: 80px;
@@ -1290,7 +1326,7 @@ body {
   .team-grid {
     flex-direction: column;         /* 1 membre par ligne */
     align-items: center;            /* Centre horizontalement */
-    gap: 40px;                      /* Réduit l'espace vertical */
+    gap: 40px;                      /* Réduction de l'espace vertical */
   }
 
   .team-section h2 {
@@ -1299,15 +1335,15 @@ body {
 
   .member {
     width: 100%;
-    max-width: 320px;               /* ↑ permet d'agrandir un peu le bloc */
+    max-width: 320px;               /* Permet d’agrandir légèrement le bloc */
     text-align: center;
   }
 
   /* Cercle photo plus grand */
   .photo-wrapper {
-    width: 260px;                   /* ↑ avant 200px */
+    width: 260px;
     height: 260px;
-    margin: 0 auto 10px;            /* Centre l'image */
+    margin: 0 auto 10px;
   }
 
   /* Ajuste la taille des images pour suivre le nouveau cercle */
@@ -1318,7 +1354,7 @@ body {
     height: 100%;
   }
 
-  /* Adoucir le zoom de Roméo et Javier si nécessaire */
+  /* Zoom contrôlé */
   .photo-romeo {
     transform: scale(1.4);
   }
@@ -1340,9 +1376,9 @@ body {
     margin: 0 auto 40px;
   }
 
-  /* Nom et description plus grands */
+  /* Nom et description adaptés */
   .member h3 {
-    font-size: 24px;               /* avant 26px sur desktop, mais adapté mobile */
+    font-size: 24px;
   }
 
   .member p {
@@ -1356,12 +1392,12 @@ body {
    ============================ */
 @media (max-width: 900px) {
   .stats-bar {
-    gap: 40px;                     /* espace réduit entre les stats */
-    padding: 20px 0;               /* un peu moins de padding vertical */
+    gap: 40px;                     /* Espace réduit entre les stats */
+    padding: 20px 0;               /* Un peu moins de padding vertical */
   }
 
   .stat strong {
-    font-size: 36px;               /* taille légèrement réduite pour mobile */
+    font-size: 36px;               /* Taille légèrement réduite */
   }
 
   .stat span {
@@ -1384,12 +1420,12 @@ body {
     font-size: 14px;
   }
 
-  /* Champs plus petits + parfaitement alignés avec le texte */
+  /* Champs plus petits et parfaitement alignés avec le texte */
   .contact input,
   .contact textarea {
     font-size: 1.1em;
-    padding-left: 0;               /* pas de padding gauche inutile */
-    text-indent: 0;                /* force le texte à coller au bord gauche */
+    padding-left: 0;               /* Pas de padding gauche inutile */
+    text-indent: 0;                /* Force le texte à coller au bord gauche */
   }
 
   /* Ligne blanche alignée exactement sous le texte */
@@ -1407,7 +1443,7 @@ body {
   /* === Conteneur global === */
   .footer {
     padding-top: 40px !important;
-    overflow-x: hidden;            /* évite tout scroll horizontal parasite */
+    overflow-x: hidden;            /* Évite tout scroll horizontal parasite */
   }
 
   .footer .footer-top {
@@ -1428,13 +1464,13 @@ body {
     grid-template-columns: 1fr 1fr !important;
     gap: 18px 40px !important;
     margin-top: 0 !important;
-    justify-items: center !important;  /* centre chaque colonne dans la grille */
+    justify-items: center !important;  /* Centre chaque colonne dans la grille */
   }
 
   .footer .footer-column {
     display: flex !important;
     flex-direction: column !important;
-    align-items: flex-start !important; /* garde texte aligné sous le titre */
+    align-items: flex-start !important; /* Aligne le texte sous le titre */
     text-align: left !important;
     max-width: 260px !important;
     width: 100% !important;
@@ -1445,7 +1481,7 @@ body {
 
   .footer .footer-column h3 {
     font-size: 22px !important;
-    margin: 0 0 6px 0 !important;       /* colle le texte juste en dessous */
+    margin: 0 0 6px 0 !important;
   }
 
   .footer .footer-column p {
@@ -1475,14 +1511,14 @@ body {
     justify-content: center !important;
     gap: 18px !important;
     margin-top: 8px !important;
-    margin-bottom: 40px !important;     /* espace avec le bloc sombre du bas */
+    margin-bottom: 40px !important;     /* Espace avec le bloc sombre du bas */
     width: 100% !important;
   }
 
   /* Ligne contact : icône + texte parfaitement alignés */
   .footer .contact-item {
     display: flex !important;
-    align-items: center !important;      /* centre verticalement texte + icône */
+    align-items: center !important;      /* Centre verticalement texte + icône */
     justify-content: flex-start !important;
     gap: 14px !important;
     width: 220px !important;
@@ -1493,13 +1529,13 @@ body {
     height: 40px !important;
     flex-shrink: 0 !important;
     display: flex !important;
-    align-items: center !important;      /* centre le contenu de l’icône */
+    align-items: center !important;
     justify-content: center !important;
   }
 
   .footer .contact-item p {
     font-size: 16px !important;
-    line-height: 1.2 !important;         /* réduit la hauteur de ligne pour mieux centrer */
+    line-height: 1.2 !important;         /* Réduction de la hauteur de ligne */
     margin: 0 !important;
   }
 
@@ -1542,7 +1578,7 @@ body {
     margin: 0 !important;
   }
 
-  /* Supprimer le bleu iOS sur numéros */
+  /* Supprimer la coloration iOS sur numéros de téléphone */
   a[href^="tel"] {
     color: inherit !important;
     text-decoration: none !important;
@@ -1555,13 +1591,13 @@ body {
    ============================ */
 @media (max-width: 900px) {
   .notre-galerie .intro {
-    font-size: 18px;               /* texte plus petit */
-    line-height: 1.8;              /* plus d'air entre les lignes */
-    max-width: 90%;                /* moins large, centré */
-    margin: 0 auto 40px auto;      /* espace bas réduit */
+    font-size: 18px;               /* Texte plus petit */
+    line-height: 1.8;              /* Plus d'air entre les lignes */
+    max-width: 90%;                /* Moins large, centré */
+    margin: 0 auto 40px auto;      /* Espace bas réduit */
   }
 
-  /* Agrandir l'image : elle prend quasiment toute la largeur */
+  /* Image quasi pleine largeur */
   .bloc-galerie {
     width: 100%;
     max-width: none;
@@ -1570,10 +1606,10 @@ body {
 
   .img-galerie img {
     width: 100%;
-    border-radius: 10px;           /* petit arrondi pour un rendu propre */
+    border-radius: 10px;           /* Petit arrondi pour un rendu propre */
   }
 
-  /* cacher gros boutons sous l'image en mobile */
+  /* Masquer les gros boutons sous l'image en mobile */
   .navigation-buttons {
     display: none;
   }
@@ -1585,7 +1621,7 @@ body {
    ============================ */
 @media (max-width: 900px) {
   .apropos {
-    padding-bottom: 20px;          /* réduit l’espace par rapport à .intro de la partie "Notre galerie" */
+    padding-bottom: 20px;          /* Réduction d’espace sous la section */
   }
 
   .apropos-image {
@@ -1611,9 +1647,9 @@ body {
 
 
 /* ============================
-   VISIBILITÉ DES BOUTONS GALERIE SELON LE TYPE D'APPAREIL
+   VISIBILITÉ DES BOUTONS GALERIE SELON L’APPAREIL
    ============================ */
-/* Mobile/Tablet (tactile) : pas de boutons (on garde seulement le swipe) */
+/* Mobile/Tablet (tactile) : pas de boutons (swipe uniquement) */
 @media (hover: none), (pointer: coarse), (max-width: 1024px) {
   .notre-galerie .slider-buttons,
   .notre-galerie .navigation-buttons {
@@ -1621,7 +1657,7 @@ body {
   }
 }
 
-/* Desktop (souris fine) : boutons actifs (petits sur l'image + gros sous l'image si présents) */
+/* Desktop (souris) : boutons visibles (petits sur l'image + gros sous l'image si présents) */
 @media (hover: hover) and (pointer: fine) {
   .notre-galerie .slider-buttons { display: flex !important; }
   .notre-galerie .navigation-buttons { display: flex !important; }
@@ -1629,13 +1665,14 @@ body {
 
 /* ===================================================================
    MOBILE — Menu burger "rideau" (SOLID : ouverture + fermeture animées)
+   (Remarque : ces règles surchargent le bloc "HEADER MOBILE" ci-dessus.)
    =================================================================== */
 @media (max-width: 900px) {
   :root { --header-h: 80px; --bar-color: #255219; }
 
   header { position: sticky; top: 0; z-index: 3000; background: #fff; }
 
-  /* le nav n'est JAMAIS display:none (sinon pas d'animation) */
+  /* Le nav n’est jamais display:none (sinon l’animation est coupée) */
   nav { display: block; }
 
   /* Panneau nav (fermé par défaut) */
@@ -1654,14 +1691,14 @@ body {
     max-height: 70vh;
     overflow: hidden;
     transition: transform .32s ease, opacity .20s linear;
-    pointer-events: none; /* évite les clics quand fermé */
+    pointer-events: none; /* Évite les clics quand fermé */
   }
 
   /* OUVERT (déroulé top→bottom) */
   #nav.active {
     transform: scaleY(1);
     opacity: 1;
-    pointer-events: auto;  /* cliquable uniquement quand ouvert */
+    pointer-events: auto;  /* Cliquable uniquement quand ouvert */
     overflow-y: auto;
   }
 
@@ -1672,9 +1709,10 @@ body {
             padding: 12px 20px; text-decoration: none; color: #000; font-size: 18px; font-weight: 500; }
   #nav li.has-submenu > a::after { content: '+'; color: #000; font-weight: 600; font-size: 20px; line-height: 1; }
 
-  /* Burger 3 traits (aucune rotation) */
+  /* Burger 3 traits (pas de rotation dans cette variante) */
   .burger[aria-expanded="true"] span { transform: none; opacity: 1; }
 }
+
 
 /* --- Finition bas du menu burger (mobile) --- */
 @media (max-width: 900px){
@@ -1686,13 +1724,13 @@ body {
     overflow: hidden;                 /* applique bien les arrondis aux contenus */
   }
 
-  /* Un peu d'air en bas du menu */
+  /* Un peu d’air en bas du menu */
   #nav ul{ padding-bottom: 12px; }
 
   /* Retire le trait gris sous le dernier item */
   #nav ul li:last-child{ border-bottom: none; }
 
-  /* Petite “lèvre” de finition pour éviter toute coupure visuelle */
+  /* Petite “lèvre” de finition pour éviter une coupure visuelle */
   #nav::after{
     content: "";
     display: block;
@@ -1703,7 +1741,7 @@ body {
 
 /* — Fix double fond en bas du menu burger — */
 @media (max-width: 900px){
-  /* 1) Supprime la "lèvre" ajoutée sous le menu */
+  /* 1) Supprimer la “lèvre” ajoutée sous le menu si nécessaire */
   #nav::after{
     content: none !important;
     display: none !important;
@@ -1713,8 +1751,148 @@ body {
   #nav ul{ padding-bottom: 0 !important; }
   #nav ul li:last-child{ border-bottom: none !important; }
 
-  /* 3) (optionnel) Si tu vois encore une ligne du contenu derrière,
-        force le panneau à couvrir l’écran sous le header */
+  /* 3) (optionnel) En cas de ligne résiduelle du contenu derrière,
+        forcer le panneau à couvrir l’écran sous le header */
   /* #nav.active{ min-height: calc(100dvh - var(--header-h)) !important; } */
 }
 
+
+/* --- PATCH MENU BURGER (mobile) ---
+   Variante : le panneau devient positionné en absolu (défile avec la page).
+   Ces règles s’appliquent APRÈS le bloc précédent et l’écrasent. */
+@media (max-width: 900px){
+  /* Le header défile comme le reste */
+  header{
+    position: relative !important;   /* pas de sticky */
+    top: auto !important;
+  }
+
+  /* Le panneau du burger s’ancre au bas du header et défile avec la page */
+  #nav{
+    position: absolute !important;   /* au lieu de fixed */
+    top: 100% !important;            /* juste sous le header */
+    left: 0; right: 0;
+    z-index: 2500 !important;
+  }
+}
+
+/* === PATCH Header compact (mobile) ===
+   Réduction visuelle du header en mobile (variante). */
+@media (max-width: 900px){
+  
+  header{
+    position: relative !important;
+    top: auto !important;
+    padding: 6px 0 !important;         /* ↓ avant 16px */
+    border-bottom: 1px solid #eee;
+  }
+
+  header .container{
+    padding: 0 14px !important;        /* ↓ avant 0 20/40px */
+    min-height: 48px;                   
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+  }
+
+  /* Logo en version texte ou image */
+  .logo{
+    font-size: 28px !important;        /* ↓ avant 42px */
+    line-height: 1 !important;
+    margin: 0 !important;
+    display: inline-block;
+  }
+  
+  .logo a, header h1{ 
+    margin: 0 !important; 
+    line-height: 1 !important; 
+    display: inline-block;
+  }
+  
+  .logo img{
+    height: 28px;                       /* Ajuster si besoin (selon la hauteur du logo) */
+    width: auto;
+    display: block;
+  }
+
+  /* Burger plus petit */
+  .burger{
+    width: 22px !important;             /* 25px si besoin d’un bouton plus grand */
+    height: 16px !important;            /* 20px si besoin d’un bouton plus haut */
+  }
+  .burger span{
+    height: 2px !important;             /* Mettre 3px pour une épaisseur supérieure */
+    border-radius: 2px;
+  }
+
+  /* Le menu s’ouvre sous le header qui défile (pas par-dessus) */
+  #nav{
+    position: absolute !important;      /* suit le header */
+    top: 100% !important;               /* directement sous le header */
+    left: 0; right: 0;
+    z-index: 2500 !important;
+    border-top-width: 2px;              /* Peut être affiné au besoin */
+  }
+}
+
+/* === Burger -> Croix quand le menu est ouvert ===
+   Variante d’animation sur le bouton (écrase la base). */
+@media (max-width:900px){
+  .burger span{
+    transition: transform .22s ease, opacity .18s ease; /* Lissage */
+    transform-origin: center;
+  }
+
+  /* Écrase une ancienne règle qui forçait “aucune transform” à l’ouverture */
+  .burger[aria-expanded="true"] span{ opacity: 1 !important; }
+
+  /* Pour un burger ~25x20 avec barres 3px (valeurs actuelles du composant) */
+  .burger[aria-expanded="true"] span:nth-child(1){
+    transform: translateY(8.5px) rotate(45deg) !important;
+  }
+  .burger[aria-expanded="true"] span:nth-child(2){
+    opacity: 0 !important;          /* La barre du milieu disparaît */
+    transform: scaleX(0.5);         /* Léger retrait, optionnel */
+  }
+  .burger[aria-expanded="true"] span:nth-child(3){
+    transform: translateY(-8.5px) rotate(-45deg) !important;
+  }
+}
+
+/* === Burger -> Croix centrée (X parfait) ===
+   Ajuster l’écartement avec --gap selon la taille du bouton. */
+.burger{
+  position: relative;
+  width: 22px;           /* 25px pour un bouton plus large */
+  height: 16px;          /* 20px pour un bouton plus haut */
+  --gap: 7px;            /* 8.5px pour des barres de 3px */
+}
+.burger span{
+  position: absolute;
+  left: 0;
+  top: 50%;
+  width: 100%;
+  height: 2px;           /* Mettre 3px pour une épaisseur supérieure */
+  background: #255219;
+  border-radius: 2px;
+  transform-origin: center;
+  transition: transform .22s ease, opacity .18s ease;
+  transform: translateY(-50%);   /* Base : centré verticalement */
+}
+
+/* ÉTAT FERMÉ : on écarte la 1ère et 3e barre autour du centre */
+.burger span:nth-child(1){ transform: translateY(calc(-50% - var(--gap))); }
+.burger span:nth-child(2){ transform: translateY(-50%); }
+.burger span:nth-child(3){ transform: translateY(calc(-50% + var(--gap))); }
+
+/* ÉTAT OUVERT : on forme un X parfait autour du même centre */
+.burger[aria-expanded="true"] span:nth-child(1){
+  transform: translateY(-50%) rotate(45deg) !important;
+}
+.burger[aria-expanded="true"] span:nth-child(2){
+  opacity: 0 !important;
+}
+.burger[aria-expanded="true"] span:nth-child(3){
+  transform: translateY(-50%) rotate(-45deg) !important;
+}
