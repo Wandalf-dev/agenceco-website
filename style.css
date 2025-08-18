@@ -757,7 +757,12 @@ select:-webkit-autofill {
   transform: translateX(-50%);
   display: flex;
   gap: 8px;
-  z-index: 1;
+  z-index: 2;                 /* IMPORTANT : au-dessus et sans fond */
+  background: transparent;
+  box-shadow: none;
+  padding: 0;
+  margin: 0;
+  top: auto; right: auto;
 }
 
 .galerie-dots button {
@@ -1268,8 +1273,9 @@ body {
     margin-left: auto;
   }
 
-  /* Menu mobile : présent (l’animation est gérée plus bas via #nav) */
-  nav {
+  /* Menu mobile : présent (l’animation est gérée plus bas via #nav)
+     >>> SCOPÉ AU HEADER UNIQUEMENT <<< */
+  header nav {
     position: absolute;
     top: 80px;
     left: 0;
@@ -1281,7 +1287,7 @@ body {
     box-shadow: 0 4px 10px rgba(0,0,0,0.2);
   }
 
-  nav ul {
+  header nav ul {
     flex-direction: column;
     gap: 20px;
     padding: 20px 0;
@@ -1672,8 +1678,9 @@ body {
 
   header { position: sticky; top: 0; z-index: 3000; background: #fff; }
 
-  /* Le nav n’est jamais display:none (sinon l’animation est coupée) */
-  nav { display: block; }
+  /* Le nav n’est jamais display:none (sinon l’animation est coupée)
+     >>> SCOPÉ AU HEADER UNIQUEMENT <<< */
+  header nav { display: block; }
 
   /* Panneau nav (fermé par défaut) */
   #nav {
@@ -1881,12 +1888,12 @@ body {
   transform: translateY(-50%);   /* Base : centré verticalement */
 }
 
-/* ÉTAT FERMÉ : on écarte la 1ère et 3e barre autour du centre */
+/* ÉTAT FERMÉ : Ecarte la 1ère et 3e barre autour du centre */
 .burger span:nth-child(1){ transform: translateY(calc(-50% - var(--gap))); }
 .burger span:nth-child(2){ transform: translateY(-50%); }
 .burger span:nth-child(3){ transform: translateY(calc(-50% + var(--gap))); }
 
-/* ÉTAT OUVERT : on forme un X parfait autour du même centre */
+/* ÉTAT OUVERT : forme un X autour du même centre */
 .burger[aria-expanded="true"] span:nth-child(1){
   transform: translateY(-50%) rotate(45deg) !important;
 }
@@ -1895,4 +1902,22 @@ body {
 }
 .burger[aria-expanded="true"] span:nth-child(3){
   transform: translateY(-50%) rotate(-45deg) !important;
+}
+
+/* ================================
+   Classe utilitaire .sr-only
+   --------------------------------
+   - Cache visuellement un élément
+   - Mais reste lu par les lecteurs d’écran
+   - Sert pour titres / labels d’accessibilité
+   ================================ */
+
+.sr-only {
+  position: absolute;
+  width: 1px; height: 1px;
+  padding: 0; margin: -1px;
+  overflow: hidden;
+  clip: rect(0,0,0,0);
+  white-space: nowrap;
+  border: 0;
 }
