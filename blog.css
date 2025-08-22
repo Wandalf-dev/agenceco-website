@@ -444,4 +444,183 @@ body {
   flex-shrink: 0;
 }
 
+/* ============================
+   PARTIE RESPONSIVE
+   ============================ */
+
+
+
+/* ============================
+   TABLETTE — ajustements doux
+   ============================ */
+@media (max-width: 1200px) {
+  /* Header */
+  header .container { padding: 0 24px; gap: 16px; }
+  nav ul { gap: 20px; }
+
+  /* Hero */
+  .hero { height: 600px; }
+  .hero-overlay { padding: 40px; }
+  .hero-text h1 { font-size: 44px; }
+  .hero-text span { font-size: 56px; }
+
+  /* Titres / Actu */
+  h1 { font-size: 40px; }
+
+  /* Actus list : 2 colonnes au format tablette */
+  #news-list {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 20px;
+    padding: clamp(20px, 4vw, 40px);
+  }
+
+  .news-card { --pad: 22px; border-radius: 12px; padding: var(--pad) var(--pad) 24px; }
+  .news-title { font-size: 24px; }
+  .news-desc, .news-content { font-size: 18px; }
+  .news-meta { font-size: 16px; }
+
+  /* Footer */
+  .footer-top { padding: 0 40px; }
+  .footer-columns { gap: 80px; }
+  .footer-bottom { padding: 30px 40px; }
+}
+
+/* ============================
+   BURGER — base (desktop caché)
+   ============================ */
+.burger {
+  display: none;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 24px; height: 18px;
+  background: none; border: 0; cursor: pointer;
+  position: relative;
+}
+.burger span {
+  position: absolute; left: 0; top: 50%;
+  width: 100%; height: 2px; background: #255219; border-radius: 2px;
+  transform-origin: center; transition: transform .22s ease, opacity .18s ease;
+  transform: translateY(-50%);
+}
+.burger span:nth-child(1){ transform: translateY(-9px); }
+.burger span:nth-child(2){ transform: translateY(-50%); }
+.burger span:nth-child(3){ transform: translateY(7px); }
+
+.burger[aria-expanded="true"] span:nth-child(1){ transform: translateY(-50%) rotate(45deg) !important; }
+.burger[aria-expanded="true"] span:nth-child(2){ opacity: 0 !important; }
+.burger[aria-expanded="true"] span:nth-child(3){ transform: translateY(-50%) rotate(-45deg) !important; }
+
+/* ============================
+   MOBILE (≤900px)
+   ============================ */
+@media (max-width: 900px) {
+  /* Header compact + burger */
+  header { position: relative; padding: 8px 0 !important; }
+  header .container {
+    padding: 0 16px !important;
+    min-height: 48px; display: flex; align-items: center; justify-content: space-between; gap: 10px;
+  }
+  .logo { font-size: 28px !important; line-height: 1; }
+  .burger { display: flex; margin-left: auto; }
+
+  /* Menu mobile déroulant (sous le header) */
+  header nav { display: block; }           /* jamais none, pour animer */
+  #nav {
+    position: absolute; top: 100%; left: 0; right: 0;
+    background: #fff; border-top: 2px solid #255219;
+    box-shadow: 0 6px 24px rgba(0,0,0,.10);
+    transform-origin: top; transform: scaleY(0);
+    opacity: 0; pointer-events: none; max-height: 70vh; overflow: hidden;
+    transition: transform .32s ease, opacity .20s linear;
+    z-index: 2500;
+  }
+  #nav.active { transform: scaleY(1); opacity: 1; pointer-events: auto; overflow-y: auto; }
+
+  header nav ul {
+    flex-direction: column !important; gap: 16px !important;
+    padding: 14px 0; margin: 0;
+  }
+  header nav li { border-bottom: 1px solid rgba(0,0,0,.08); }
+  header nav li:last-child { border-bottom: 0; }
+  header nav a {
+    display: block; padding: 10px 18px; font-size: 18px;
+    text-decoration: none; color: #000; font-weight: 500;
+  }
+
+  /* Patch des règles desktop (on neutralise l’alignement à droite) */
+  header nav { margin-left: 0 !important; width: auto !important; }
+  header nav ul { justify-content: flex-start !important; align-items: stretch !important; }
+
+  /* Hero */
+  .hero { height: auto; padding: 60px 16px; background-position: center; }
+  .hero-overlay { align-items: center; justify-content: center; padding: 24px 0; }
+  .hero-text { text-align: center; }
+  .hero-text h1 {
+    margin: 0; font-size: clamp(22px, 7vw, 36px); line-height: 1.25;
+    white-space: normal !important; word-break: keep-all; overflow-wrap: normal; hyphens: none;
+  }
+  .hero-text span { font-size: clamp(24px, 8vw, 42px); line-height: 1.2; }
+
+  /* Titres globaux */
+  h1 { font-size: 33px; padding-top: 20px; }
+
+  /* Liste d’actus */
+  #news-list {
+    grid-template-columns: 1fr !important;
+    gap: 16px; padding: 20px 16px;
+  }
+
+  .news-card {
+    --pad: 18px;
+    padding: var(--pad) var(--pad) 22px !important;
+    border-radius: 12px;
+    min-height: 0;
+    box-shadow: 0 4px 14px rgba(0,0,0,.10);
+  }
+  .news-title { font-size: 22px; line-height: 1.25; }
+  .news-body { margin-bottom: 22px; padding-top: 14px; gap: 14px; }
+  .news-desc, .news-content { font-size: 16px; line-height: 1.6; }
+  .news-meta { font-size: 14px; opacity: .9; }
+
+  /* Footer (empilage) */
+  .footer { padding-top: 40px !important; overflow-x: hidden; }
+  .footer-top { padding: 0 20px !important; }
+  .footer-row {
+    flex-direction: column !important; align-items: stretch !important; gap: 24px !important;
+  }
+  .footer-columns {
+    display: grid !important; grid-template-columns: 1fr 1fr !important;
+    gap: 18px 24px !important; margin-top: 0 !important; justify-items: center !important;
+  }
+  .footer-column { max-width: 260px !important; width: 100% !important; }
+  .footer-column h3 { font-size: 20px !important; margin: 0 0 6px !important; }
+  .footer-column p { font-size: 16px !important; line-height: 1.6 !important; margin: 0 !important; }
+
+  .footer-contact {
+    align-items: center !important; gap: 16px !important;
+    margin-top: 8px !important; margin-bottom: 32px !important; width: 100% !important;
+  }
+  .contact-item {
+    align-items: center !important; gap: 12px !important; width: 220px !important;
+  }
+  .contact-item .icon { width: 36px !important; height: 36px !important; }
+
+  .footer-bottom {
+    padding: 22px 20px !important; flex-direction: column !important;
+    gap: 22px !important; text-align: center !important;
+  }
+  .login-btn { width: 180px !important; padding: 10px 0 !important; }
+  .social-icons { justify-content: center; gap: 18px; }
+  .social-icons .icon { width: 40px !important; height: 40px !important; padding: 6px !important; border-radius: 12px !important; }
+
+  /* Utilitaire : bloque le scroll quand le menu est ouvert */
+  .no-scroll { overflow: hidden; }
+}
+
+/* ============================
+   Petites retouches ≥1024px tactile
+   ============================ */
+@media (hover: none) and (max-width: 1024px) {
+  /* (optionnel) rien de spécifique ici pour l’instant */
+}
 
