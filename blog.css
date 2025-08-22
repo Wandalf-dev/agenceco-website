@@ -1,0 +1,447 @@
+/* =============================
+   Import de la police principale
+   ============================= */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
+
+/* =============================
+   Réinitialisation de base
+   ============================= */
+* {
+  box-sizing: border-box;    /* Inclut padding et border dans les dimensions */
+  margin: 0;                 /* Supprime marges par défaut */
+  padding: 0;                /* Supprime paddings par défaut */
+}
+
+/* =============================
+   Corps de la page (fond global)
+   ============================= */
+body {
+  font-family: 'Poppins', sans-serif;
+  background-color: black;  /* Fond noir visible sur les côtés */
+  color: #000;
+  font-size: 16px;
+  line-height: 1.6;
+}
+
+html {
+  scroll-behavior: smooth;  /* Défilement fluide lors du scroll interne */
+}
+
+
+/* =============================
+   Conteneur principal (zone blanche centrée)
+   ============================= */
+.main-wrapper {
+  max-width: 1425px;         /* Largeur de la zone blanche */  /* Largeur fixe du contenu principal */
+  margin: 0 auto;            /* Centre horizontalement */  /* Centre horizontalement dans la page */
+  background-color: white;
+}
+
+/* =============================
+   HEADER : logo + menu de navigation
+   ============================= */
+header {
+  background-color: white;
+  padding: 16px 0;           /* Espacement haut/bas */
+  border-bottom: 1px solid #eee;
+  position: relative;
+  z-index: 10;               /* Passe devant l’image hero */
+}
+
+header .container {
+  max-width: 1440px;
+  margin: 0 auto;  /* Centre horizontalement dans la page */
+  padding: 0 40px;
+  display: flex;  /* Mise en page flexible (ligne ou colonne) */
+  justify-content: space-between; /* Logo à gauche, menu à droite */
+  align-items: center;            /* Centre verticalement */
+}
+
+/* Texte "AgenceEco" */
+.logo {
+  font-size: 42px;
+  font-weight: 700;
+  color: #255219;
+}
+
+/* Partie "eco" du logo en italique */
+.logo span {
+  font-style: italic;
+}
+
+/* =============================
+   PARTIE "NAVIGATION"
+   ============================= */
+nav ul {
+  list-style: none;         /* Supprime les puces */
+  display: flex;            /* Mise en page flexible (ligne ou colonne) */
+  gap: 28px;                /* Espacement horizontal entre les liens */  /* Espace entre les éléments flex */
+}
+
+nav ul li a {
+  text-decoration: none;
+  color: #000;
+  font-size: 20px;
+  font-weight: 500;
+  transition: color 0.3s;  /* Lisse les changements d’état comme le hover */
+}
+
+nav ul li a:hover {
+  color: #78be20;           /* Couleur au survol */
+}
+
+/* =============================
+   HERO : image de fond + texte d’intro
+   ============================= */
+.hero {
+  position: relative;
+  height: 800px;                      /* Hauteur du bloc hero */
+  background-image: url('assets/bg-leaf.jpg');
+  background-size: cover;
+  background-position: center;
+}
+
+.hero-overlay {
+  width: 100%;
+  height: 100%;
+  display: flex;  /* Mise en page flexible (ligne ou colonne) */
+  align-items: flex-end;              /* Texte en bas */
+  justify-content: flex-end;          /* Aligné à droite */
+  padding: 60px;
+}
+
+/* Bloc texte sur image */
+.hero-text {
+  text-align: right;
+  color: white;
+}
+
+.hero-text h1 {
+  font-size: 55px;
+  line-height: 1.3;
+  font-weight: 600;
+}
+
+.hero-text span {
+  color: #C8FF00;
+  font-weight: 700;
+  font-size: 70px;
+}
+
+
+/* ==== NAV à droite (patch) ==== */
+
+/* 1) S'assurer que le conteneur du header est en flex */
+header .container {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start; /* on laisse l'espace se gérer via margin-left:auto */
+}
+
+/* 2) Pousser le bloc nav complètement à droite */
+header nav {
+  margin-left: auto;   /* ⬅️ le nav se colle à droite */
+  width: auto;         /* évite un 100% accidentel */
+}
+
+/* 3) Les items dans le nav : rangés à droite, pas centrés */
+header nav ul {
+  display: flex;
+  gap: 28px;
+  justify-content: flex-end; /* ⬅️ si un style global mettait 'center' */
+  align-items: center;
+  margin: 0;                 /* annule tout margin auto horizontal */
+  padding: 0;
+  width: auto;
+}
+
+/* 4) Désactive un centrage hérité éventuel sur le header */
+header, header .container, header nav {
+  text-align: initial;
+}
+
+/* =======================
+   PARTIE "ACTU" DYNAMIQUES
+   ======================= */
+
+h1 {
+  color: #469B61;
+  font-size: 50px;
+  font-weight: 600;
+  margin-bottom: 20px;
+  text-align: center;
+  padding-top: 30px;
+}
+
+
+/* ======= Liste des actus (section) ======= */
+#news-list {
+  padding: clamp(24px, 4vw, 48px) clamp(24px, 5vw, 64px);
+  display: grid;
+  grid-template-columns: 1fr;       /* 1 carte par ligne (comme le visuel) */
+  gap: 24px;                        /* espace entre les cartes */
+}
+
+/* ======= Carte d’actualité ======= */
+.news-card {
+  --green: #469B61;
+  --radius: 14px;
+  --pad: 28px;
+
+  display: grid;                    /* 3 zones : titre / corps / méta */
+  grid-template-rows: auto 1fr auto;
+  gap: 12px;
+
+  min-height: 280px;
+  width: 100%;
+
+  background: var(--green);
+  color: #fff;
+  border-radius: var(--radius);
+  padding: var(--pad);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, .12);
+  font-family: 'Poppins', sans-serif; /* déjà importée dans ton projet */
+  padding-bottom: 28px;
+}
+
+/* Titre en haut à gauche */
+.news-title {
+  font-size: 29px;
+  font-weight: 500;
+  line-height: 1.2;
+  margin: 0;
+}
+
+/* Texte central */
+.news-body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    align-self: center;               /* centre verticalement la zone du corps */
+    justify-self: center;             /* centre horizontalement */
+    text-align: center;
+    margin-bottom: 40px;
+    padding-top: 40px;
+}
+
+.news-desc,
+.news-content {
+  font-size: 22px;
+  opacity: .95;
+  margin: 0;
+  line-height: 1.7;
+}
+
+.news-desc {
+  margin-bottom: 14px;
+}
+
+/* Date en bas à gauche */
+.news-meta {
+  align-self: end;
+  font-size: 20px;
+  opacity: .95;
+  
+}
+
+.news-meta strong {
+  font-weight: 600;
+}
+
+/* États de chargement / vide / erreur */
+#news-list .status {
+  text-align: center;
+  padding: 24px;
+  font-size: 18px;
+  color: #555;
+}
+#news-list .status.error { color: #b00020; }
+#news-list .status.empty  { color: #777; }
+.sr-only {
+  position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
+  overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0;
+}
+
+.news-desc, .news-content { 
+  overflow-wrap: anywhere; 
+}
+
+
+
+
+/* =======================
+   PARTIE "PIED-DE-PAGE"
+   ======================= */
+
+/* ==== FOOTER GENERAL ==== */
+/* Structure du footer */
+.footer {
+  display: flex;
+  flex-direction: column;
+  min-height: 350px;       /* agrandit le footer globalement */
+  background-color: #183a43;
+  color: #fff;
+  font-family: 'Poppins', sans-serif;
+  padding-top: 80px;       /* espace en haut */
+}
+
+/* Contenu principal du footer */
+.footer-top {
+  flex-grow: 1;            /* prend tout l’espace disponible */
+  padding: 0 80px;
+}
+
+/* Bas du footer toujours collé */
+.footer-bottom {
+  background-color: #0C2227;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 40px 80px;
+  flex-wrap: wrap;
+  border-top: 1px solid #0C2227;
+}
+
+
+.footer-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 40px;
+}
+
+.footer-columns {
+  display: flex;
+  gap: 160px;
+  margin-top: -20px;
+}
+
+.footer-column h3 {
+  font-size: 22px;
+  margin-bottom: 10px;
+  letter-spacing: 1px;
+  font-weight: 400;
+}
+
+.footer-column p {
+  font-size: 18px;
+  line-height: 1.7;
+}
+
+.footer-contact {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  min-width: 200px;
+  margin-top: -20px;
+  /* garde align-items à 'flex-end' ou 'flex-start', peu importe pour les icônes */
+}
+
+.icon.phone,
+.icon.geoloc {
+  fill: #c6ff00;
+}
+
+.contact-item {
+  display: flex;
+  align-items: flex-start; /* ← Important : aligne les icônes verticalement */
+  gap: 14px;
+}
+
+.contact-item .icon {
+  margin-top: 2px; /* ajuste si besoin pour bien centrer par rapport au bloc texte */
+  flex-shrink: 0;
+}
+
+.contact-item p {
+  font-size: 15px;
+  line-height: 1.5;
+  text-align: left;
+  margin: 0;
+}
+
+.footer-bottom {
+  background-color: #0C2227;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 40px 80px;
+  flex-wrap: wrap;
+}
+
+.footer-bottom p {
+  font-size: 15px;
+  margin: 10px 0;
+  color: #fff;
+}
+
+.login-btn {
+  background-color: #c6ff00;
+  border: none;
+  padding: 10px 30px;
+  border-radius: 10px;
+  font-weight: 500;
+  cursor: pointer;
+  color: #071d1f;
+  transition: background-color 0.3s;
+  font-size: 17px;
+  font-family: 'Poppins', sans-serif;
+}
+
+.login-btn:hover {
+  background-color: #b4eb00;
+  opacity: 0.5;
+}
+
+.social-icons {
+  display: flex;
+  gap: 40px;
+}
+
+.social-icons .icon {
+  width: 40px;
+  height: 40px;
+  color: #fff;
+  background: none;
+  padding: 5px;
+  border: 2px solid #fff;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: opacity 0.3s, border-color 0.3s;
+}
+
+.social-icons .icon:hover {
+  opacity: 0.8;
+  border-color: #c6ff00;
+}
+
+/* Instagram SVG stroke blanc */
+.social-icons .instagram g {
+  stroke: #fff !important;
+}
+
+
+html,
+body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.main-content {
+  flex: 1 0 auto;
+}
+
+/* Footer en bas */
+.footer {
+  flex-shrink: 0;
+}
+
+
