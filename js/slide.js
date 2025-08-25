@@ -1,4 +1,13 @@
-// js/slide.js
+/**
+ * ================================================================
+ *  AgenceEco — Galerie (Slider)
+ *  Fonctionnalités :
+ *    - Autoplay + navigation via dots + boutons du BAS
+ *    - Accessibilité : aria-current, aria-hidden, aria-label
+ *    - Desktop : pause au survol, flèches clavier
+ *    - Mobile/Tablet : swipe tactile
+ * ================================================================
+ */
 document.addEventListener('DOMContentLoaded', () => {
   const slider = document.querySelector('.notre-galerie .galerie-slider');
   if (!slider) return;
@@ -7,22 +16,22 @@ document.addEventListener('DOMContentLoaded', () => {
   const slides   = Array.from(track?.querySelectorAll('.slide') || []);
   const dotsWrap = slider.querySelector('.galerie-dots');
 
-  // Boutons internes (présents seulement sur PC, cachés en mobile via CSS)
-  const prevBtn  = slider.querySelector('.slider-buttons .prev');
-  const nextBtn  = slider.querySelector('.slider-buttons .next');
+  // 👉 Utiliser uniquement les BOUTONS DU BAS
+  const prevBtn  = document.querySelector('.notre-galerie .navigation-buttons .prev');
+  const nextBtn  = document.querySelector('.notre-galerie .navigation-buttons .next');
 
   if (!track || !slides.length || !dotsWrap) return;
 
-  /* ====== Réglages ====== */
+  // Réglages
   let index = 0;
-  const INTERVAL  = 2500; // ms entre deux slides (autoplay)
-  const DURATION  = 500;  // ms de l’animation; aligner avec le CSS (.galerie-track transition)
-  const THRESHOLD = 40;   // px : distance minimale pour valider un swipe
+  const INTERVAL  = 2500;  // autoplay
+  const DURATION  = 500;   // transition CSS
+  const THRESHOLD = 40;    // swipe min
   const isTouchDevice = window.matchMedia('(hover: none), (pointer: coarse)').matches;
 
   let timer = null;
 
-  /* ====== Dots ====== */
+  // Dots
   dotsWrap.innerHTML = '';
   slides.forEach((_, i) => {
     const dot = document.createElement('button');
@@ -32,35 +41,28 @@ document.addEventListener('DOMContentLoaded', () => {
   });
   const dots = Array.from(dotsWrap.children);
 
-  /* ====== Moteur ====== */
+  // Moteur d’affichage
   function update() {
     track.style.transform = `translateX(${-index * 100}%)`;
     dots.forEach((d, i) => d.setAttribute('aria-current', i === index ? 'true' : 'false'));
     slides.forEach((s, i) => s.setAttribute('aria-hidden', i === index ? 'false' : 'true'));
   }
 
-  function goTo(i) {
-    index = (i + slides.length) % slides.length;
-    update();
-  }
+  function goTo(i) { index = (i + slides.length) % slides.length; update(); }
   const next = () => goTo(index + 1);
   const prev = () => goTo(index - 1);
 
-  function start() {
-    stop();
-    timer = setInterval(next, INTERVAL);
-  }
-  function stop() {
-    if (timer) { clearInterval(timer); timer = null; }
-  }
+  // Autoplay
+  function start() { stop(); timer = setInterval(next, INTERVAL); }
+  function stop()  { if (timer) { clearInterval(timer); timer = null; } }
   const restart = () => { stop(); start(); };
 
-  /* ====== Dots + Boutons (si présents) ====== */
+  // Interactions
   dots.forEach((d, i) => d.addEventListener('click', () => { goTo(i); restart(); }));
   if (nextBtn) nextBtn.addEventListener('click', () => { next(); restart(); });
   if (prevBtn) prevBtn.addEventListener('click', () => { prev(); restart(); });
 
-  /* ====== Desktop : pause au survol + clavier ====== */
+  // Desktop : hover + clavier
   if (!isTouchDevice) {
     slider.addEventListener('mouseenter', stop);
     slider.addEventListener('mouseleave', start);
@@ -70,16 +72,9 @@ document.addEventListener('DOMContentLoaded', () => {
       if (e.key === 'ArrowRight') { next(); restart(); }
       if (e.key === 'ArrowLeft')  { prev(); restart(); }
     });
-
-    // Évite que le focus des boutons garde l’affichage après clic
-    const sliderBtns = slider.querySelectorAll('.slider-buttons .btn');
-    sliderBtns.forEach(btn => btn.addEventListener('mousedown', e => e.preventDefault()));
-    slider.addEventListener('mouseleave', () => {
-      sliderBtns.forEach(btn => btn.blur());
-    });
   }
 
-  /* ====== Mobile/Tablet : swipe au doigt (pas de drag souris) ====== */
+  // Mobile/Tablet : swipe tactile
   let startX = null, deltaX = 0, dragging = false;
 
   function onStartTouch(e) {
@@ -98,31 +93,22 @@ document.addEventListener('DOMContentLoaded', () => {
   function onEndTouch() {
     if (!dragging) return;
     track.style.transition = `transform ${DURATION}ms ease-in-out`;
-    if (Math.abs(deltaX) > THRESHOLD) {
-      deltaX > 0 ? prev() : next();
-    } else {
-      update();
-    }
-    dragging = false;
-    startX = null;
-    deltaX = 0;
-    start();
+    if (Math.abs(deltaX) > THRESHOLD) (deltaX > 0 ? prev() : next());
+    else update();
+    dragging = false; startX = null; deltaX = 0; start();
   }
 
-  // Tactile uniquement
   slider.addEventListener('touchstart', onStartTouch, { passive: true });
   slider.addEventListener('touchmove',  onMoveTouch,  { passive: true });
   slider.addEventListener('touchend',   onEndTouch);
   slider.addEventListener('touchcancel',onEndTouch);
 
-  // IMPORTANT : on n’attache PAS d’événements drag à la souris (interdit sur PC)
-
-  /* ====== Onglet caché : pause autoplay ====== */
+  // Onglet caché : pause autoplay
   document.addEventListener('visibilitychange', () => {
     if (document.hidden) stop(); else start();
   });
 
-  /* ====== Init ====== */
+  // Init
   update();
   start();
 });

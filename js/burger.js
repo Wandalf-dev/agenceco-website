@@ -1,49 +1,79 @@
+/**
+ * ================================================================
+ *  AgenceEco — Menu Burger (front)
+ *  Objectif exercice :
+ *    1) Gérer l’ouverture/fermeture du menu mobile (effet "rideau")
+ *    2) Maintenir la cohérence ARIA (accessibilité : aria-expanded)
+ *    3) Repositionner dynamiquement le menu sous le header
+ *    4) Couvrir tous les cas d’interaction (clic, clic extérieur,
+ *       touche Échap, resize/scroll, retour en desktop)
+ *
+ *  Pré-requis côté HTML :
+ *    <header>…<button id="burger">…</button></header>
+ *    <nav id="nav">…</nav>
+ *
+ *  Note UX :
+ *    - L’animation est assurée par CSS (.active).
+ *    - Pas de `visibility: hidden` pour laisser la transition s’exécuter.
+ * ================================================================
+ */
 
-// JS — Menu burger "rideau" (SOLID): ouverture + fermeture animées
 document.addEventListener('DOMContentLoaded', () => {
-  const burger = document.getElementById('burger');
-  const nav    = document.getElementById('nav');
-  const header = document.querySelector('header');
-  if (!burger || !nav || !header) return;
+  const burger = document.getElementById('burger') // Bouton déclencheur
+  const nav    = document.getElementById('nav')    // Menu cible
+  const header = document.querySelector('header')  // Header parent
+  if (!burger || !nav || !header) return
 
-  // État initial
-  nav.classList.remove('active');
-  burger.setAttribute('aria-expanded', 'false');
+  // ====== État initial ======
+  nav.classList.remove('active')
+  burger.setAttribute('aria-expanded', 'false')
 
+  // Calcule et applique la hauteur du header comme marge supérieure du menu
   const placeUnderHeader = () => {
-    const h = header.offsetHeight || 80;
-    document.documentElement.style.setProperty('--header-h', `${h}px`);
-    nav.style.top = `${h}px`;
-  };
+    const h = header.offsetHeight || 80
+    document.documentElement.style.setProperty('--header-h', `${h}px`)
+    nav.style.top = `${h}px`
+  }
 
-  const isOpen = () => nav.classList.contains('active');
-  const toggle = () => (isOpen() ? close() : open());
+  // Helpers
+  const isOpen = () => nav.classList.contains('active')
+  const toggle = () => (isOpen() ? close() : open())
 
+  // ====== Actions principales ======
   const open = () => {
-    placeUnderHeader();
-    requestAnimationFrame(() => {
-      nav.classList.add('active');                // transform 0 → 1 + opacity 0 → 1
-      burger.setAttribute('aria-expanded', 'true');
-    });
-  };
+    placeUnderHeader() // Position correcte sous le header
+    requestAnimationFrame(() => { // Assure le déclenchement de l’anim CSS
+      nav.classList.add('active')
+      burger.setAttribute('aria-expanded', 'true')
+    })
+  }
 
   const close = () => {
-    // retirer .active déclenche l'anim inverse 1 → 0 (pas de visibility qui coupe l'anim)
-    nav.classList.remove('active');
-    burger.setAttribute('aria-expanded', 'false');
-  };
+    nav.classList.remove('active') // L’anim CSS inverse se joue
+    burger.setAttribute('aria-expanded', 'false')
+  }
 
-  // Interactions
-  burger.addEventListener('click', (e) => { e.stopPropagation(); toggle(); });
-  nav.addEventListener('click', (e) => { if (e.target.closest('a')) close(); });
-  document.addEventListener('click', (e) => { if (isOpen() && !nav.contains(e.target) && !burger.contains(e.target)) close(); });
-  document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && isOpen()) close(); });
+  // ====== Interactions ======
+  burger.addEventListener('click', (e) => { e.stopPropagation(); toggle() })
+  nav.addEventListener('click', (e) => { if (e.target.closest('a')) close() })
+  document.addEventListener('click', (e) => {
+    if (isOpen() && !nav.contains(e.target) && !burger.contains(e.target)) close()
+  })
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && isOpen()) close() })
 
-  // Reste sous le header si la page bouge pendant que c'est ouvert
-  window.addEventListener('resize', () => { if (isOpen()) placeUnderHeader(); });
-  window.addEventListener('scroll', () => { if (isOpen()) placeUnderHeader(); }, { passive: true });
+  // ====== Ajustements dynamiques ======
+  window.addEventListener('resize', () => { if (isOpen()) placeUnderHeader() })
+  window.addEventListener('scroll', () => { if (isOpen()) placeUnderHeader() }, { passive: true })
 
-  // Repli si on repasse en desktop
-  const mq = window.matchMedia('(min-width: 901px)');
-  (mq.addEventListener ? mq.addEventListener('change', close) : mq.addListener(close));
-});
+  // ====== Cas desktop ======
+  // Si la largeur dépasse 900px (nav visible en plein), on force la fermeture
+  const mq = window.matchMedia('(min-width: 901px)')
+
+  // écoute le passage desktop/mobile
+  if (mq.addEventListener) {
+    mq.addEventListener('change', close)
+  } else {
+    mq.addListener(close) // compatibilité anciens navigateurs
+  }
+
+})

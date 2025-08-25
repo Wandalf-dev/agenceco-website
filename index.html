@@ -28,9 +28,9 @@
             <li><a href="#">Accueil</a></li>
             <li><a href="#equipe">Notre équipe</a></li>
             <li><a href="#services">Nos services</a></li>
-            <li><a href="blog.html">Témoignages</a></li>
+            <li><a href="">Témoignages</a></li>
             <li><a href="#contact">Contactez-nous</a></li>
-            <li><a href="#actus">Actualités</a></li>
+            <li><a href="blog.html">Actualités</a></li>
           </ul>
         </nav>
 
@@ -158,32 +158,18 @@
     </section>
 
     <!-- ===========================
-         BLOC "ACTUALITÉS"
+        BLOC "ACTUALITÉS" (via API)
     ============================ -->
-    <section class="actus" id="actus">
-      <h2>Dernières actualités</h2>
 
-      <div class="actus-card">
-        <h3>Le titre de mon actualité</h3>
-        <p class="date">05/04/2023</p>
-        <p>La description de l’actualité</p>
-        <p>Le contenu de l’actualité</p>
-      </div>
+    <h6>Dernières actualités</h6>
 
-      <div class="actus-card">
-        <h3>Le titre de mon actualité</h3>
-        <p class="date">05/04/2023</p>
-        <p>La description de l’actualité</p>
-        <p>Le contenu de l’actualité</p>
-      </div>
-
-      <div class="actus-card">
-        <h3>Le titre de mon actualité</h3>
-        <p class="date">05/04/2023</p>
-        <p>La description de l’actualité</p>
-        <p>Le contenu de l’actualité</p>
-      </div>
+    <section id="news-list" aria-labelledby="news-heading">
+    <h2 id="news-heading" class="sr-only">Actualités</h2>
     </section>
+
+
+    </section>
+
 
     <!-- ===========================
          BLOC "CONTACTEZ-NOUS"
@@ -284,9 +270,10 @@
       </div>
     </section>
 
-    <!-- ===========================
+<!-- ===========================
          BLOC "NOTRE GALERIE"
     ============================ -->
+    
     <section class="notre-galerie">
       <h2>Notre galerie</h2>
       <p class="intro">
@@ -307,44 +294,25 @@
 
           <!-- Points -->
           <nav class="galerie-dots" aria-label="Navigation par points"></nav>
-
-          <!-- Petits boutons internes (sur l'image) -->
-          <div class="slider-buttons">
-            <button class="btn prev" type="button" aria-label="Image précédente">
-              <svg width="28" height="28" viewBox="0 0 24 24" fill="none"
-                  stroke="black" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                <polyline points="15 18 9 12 15 6" />
-              </svg>
-            </button>
-            <button class="btn next" type="button" aria-label="Image suivante">
-              <svg width="28" height="28" viewBox="0 0 24 24" fill="none"
-                  stroke="#c6ff00" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                <polyline points="9 6 15 12 9 18" />
-              </svg>
-            </button>
-          </div>
         </section>
 
-        <!-- Gros boutons d’avant (sous l’image) -->
-        <div class="navigation-buttons">
-          <button class="btn prev" type="button" aria-label="Précédent (autre usage)">
+        <!-- Boutons de navigation (sous l’image) -->
+        <div class="navigation-buttons" aria-label="Navigation de la galerie">
+          <button class="btn prev" type="button" aria-label="Image précédente">
             <svg width="28" height="28" viewBox="0 0 24 24" fill="none"
                 stroke="black" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
               <polyline points="15 18 9 12 15 6" />
             </svg>
           </button>
-          <button class="btn next" type="button" aria-label="Suivant (autre usage)">
+          <button class="btn next" type="button" aria-label="Image suivante">
             <svg width="28" height="28" viewBox="0 0 24 24" fill="none"
-                stroke="#c6ff00" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                stroke="black" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
               <polyline points="9 6 15 12 9 18" />
             </svg>
           </button>
         </div>
       </div>
     </section>
-
-
-
 
 
     <!-- ===========================
@@ -434,6 +402,9 @@
     <script src="js/burger.js" defer></script>
 
     <script src="js/slide.js"></script>
+
+    <script src="js/actu.js" defer></script>
+
 
 </body>
 </html>
