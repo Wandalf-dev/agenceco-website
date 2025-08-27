@@ -59,9 +59,12 @@ header .container {
 
 /* Texte "AgenceEco" */
 .logo {
+  display: inline-block;          /* <a> prend la forme d’un bouton */
+  text-decoration: none;          /* enlève le soulignement par défaut */
   font-size: 42px;
   font-weight: 700;
   color: #255219;
+  
 }
 
 /* Partie "eco" du logo en italique */

@@ -1,4 +1,26 @@
-// js/auth-button.js
+/**
+ * ================================================================
+ *  AgenceEco — Auth Button (front)
+ *
+ *  Objectif :
+ *    1) Gérer dynamiquement le bouton d’authentification du footer
+ *    2) Afficher "Me connecter" si aucun token n’est stocké
+ *    3) Afficher "Se déconnecter" si un token est présent
+ *    4) Supprimer le token et rediriger vers index.html lors du logout
+ *
+ *  Pré-requis côté HTML :
+ *    - Un bouton ou lien avec id="auth-btn", placé dans le footer :
+ *      <a id="auth-btn" class="login-btn" href="login.html">Me connecter</a>
+ *
+ *  Notes UX :
+ *    - Le token JWT est lu/supprimé depuis localStorage (clé "auth_token").
+ *    - Après déconnexion, on redirige toujours vers index.html,
+ *      peu importe la page courante.
+ *    - Le script neutralise l’ancien bouton et recrée un nouveau
+ *      pour éviter l’empilement d’event listeners.
+ * ================================================================
+ */
+
 const LS_TOKEN_KEY = "auth_token";
 const REDIRECT_AFTER_LOGOUT = "index.html"; // toujours renvoyer vers index.html
 
@@ -15,19 +37,17 @@ const REDIRECT_AFTER_LOGOUT = "index.html"; // toujours renvoyer vers index.html
   if (token) {
     // Connecté -> "Se déconnecter"
     freshBtn.textContent = "Se déconnecter";
-    // On neutralise la navigation automatique de l'ancre
-    freshBtn.removeAttribute("href");
+    freshBtn.removeAttribute("href");     // neutralise le lien
     freshBtn.setAttribute("role", "button");
 
     freshBtn.addEventListener("click", (e) => {
       e.preventDefault();
       localStorage.removeItem(LS_TOKEN_KEY);
-      window.location.href = REDIRECT_AFTER_LOGOUT; // toujours index.html
+      window.location.href = REDIRECT_AFTER_LOGOUT;
     });
   } else {
-    // Pas connecté -> "Se connecter" vers login.html
+    // Pas connecté -> "Me connecter" vers login.html
     freshBtn.textContent = "Me connecter";
     freshBtn.setAttribute("href", "login.html");
-    // au besoin, on supprime tout listener existant
   }
 })();
