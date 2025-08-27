@@ -107,7 +107,7 @@ async function loadNews() {
     list.innerHTML = `<p class="status error">${
       err.name === 'AbortError'
         ? 'Temps de réponse dépassé. Réessaie plus tard.'
-        : 'Impossible de récupérer les actualités. Réessaie plus tard.'
+        : 'Impossible de récupérer les actualités. Réessayez plus tard.'
     }</p>`;
   } finally {
     clearTimeout(timeoutId);
