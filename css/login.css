@@ -82,7 +82,17 @@ header .container {
   text-decoration: none;          /* enlève le soulignement par défaut */
   font-size: 42px;
   font-weight: 700;
-  color: #255219;
+  color: #255919;
+  -webkit-tap-highlight-color: transparent; /* enlève le flash bleu/gris quand on clique via mobile*/
+}
+
+/* Pas d’outline au clic/tap… */
+.logo:focus { outline: none; }
+
+.logo:focus-visible {
+  outline: 2px solid #c8ff00;
+  outline-offset: 4px;
+  border-radius: 8px;              /* optionnel, joli avec ton style */
 }
 
 .logo span {
@@ -143,13 +153,21 @@ header nav a:hover {
   transition: transform .22s ease, opacity .18s ease;
 }
 
-.burger span:nth-child(1) { transform: translateY(-9px); }
-.burger span:nth-child(2) { transform: translateY(-50%); }
-.burger span:nth-child(3) { transform: translateY(7px);  }
+/* Position initiale des 3 barres */
+.burger span:nth-child(1) { transform: translateY(-9px); }  /* Barre du haut (remontée) */
+.burger span:nth-child(2) { transform: translateY(-50%); }  /* Barre du milieu (centrée) */
+.burger span:nth-child(3) { transform: translateY(7px);  }  /* Barre du bas (descendue) */
 
-.burger[aria-expanded="true"] span:nth-child(1) { transform: translateY(-50%) rotate(45deg); }
-.burger[aria-expanded="true"] span:nth-child(2) { opacity: 0; }
-.burger[aria-expanded="true"] span:nth-child(3) { transform: translateY(-50%) rotate(-45deg); }
+/* État "ouvert" du menu (aria-expanded="true") */
+.burger[aria-expanded="true"] span:nth-child(1) {
+  transform: translateY(-50%) rotate(45deg); /* La barre du haut se centre et tourne en diagonale ↘ */
+}
+.burger[aria-expanded="true"] span:nth-child(2) {
+  opacity: 0; /* Barre du milieu disparaît */
+}
+.burger[aria-expanded="true"] span:nth-child(3) {
+  transform: translateY(-50%) rotate(-45deg); /* La barre du bas se centre et tourne en diagonale ↙ */
+}
 
 
 /* ==========================================================================
@@ -397,7 +415,7 @@ header nav a:hover {
 
 .social-icons .icon:hover {
   opacity: .85;
-  border-color: #c6ff00;
+  border-color: #c8ff00;
 }
 
 /* Instagram : traits blancs */

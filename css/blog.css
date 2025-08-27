@@ -63,8 +63,17 @@ header .container {
   text-decoration: none;          /* enlève le soulignement par défaut */
   font-size: 42px;
   font-weight: 700;
-  color: #255219;
-  
+  color: #255919;
+  -webkit-tap-highlight-color: transparent; /* enlève le flash bleu/gris */
+}
+
+/* Pas d’outline au clic/tap… */
+.logo:focus { outline: none; }
+
+.logo:focus-visible {
+  outline: 2px solid #c8ff00;
+  outline-offset: 4px;
+  border-radius: 8px;              /* optionnel, joli avec ton style */
 }
 
 /* Partie "eco" du logo en italique */

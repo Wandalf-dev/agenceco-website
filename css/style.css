@@ -101,7 +101,17 @@ header .container {
   text-decoration: none;          /* enlève le soulignement par défaut */
   font-size: 42px;
   font-weight: 700;
-  color: #255219;
+  color: #255919;
+  -webkit-tap-highlight-color: transparent; /* enlève le flash bleu/gris */
+}
+
+/* Pas d’outline au clic/tap… */
+.logo:focus { outline: none; }
+
+.logo:focus-visible {
+  outline: 2px solid #c8ff00;
+  outline-offset: 4px;
+  border-radius: 8px;              /* optionnel, joli avec ton style */
 }
 
 /* Partie "eco" du logo en italique */
@@ -138,7 +148,7 @@ nav ul li a:hover {
 .hero {
   position: relative;
   height: 800px;                      /* Hauteur du bloc hero */
-  background-image: url('assets/bg-leaf.jpg');
+  background-image: url('../assets/bg-leaf.jpg');
   background-size: cover;
   background-position: center;
 }
@@ -486,7 +496,7 @@ h6 {
    PARTIE "CONTACTEZ-NOUS"
    ======================= */
 .contact {
-  background-color: #13353d;
+  background-color: #183A43;
   color: white;
   padding: 50px 20px;
   font-family: 'Poppins', sans-serif;
@@ -1045,7 +1055,7 @@ select:-webkit-autofill {
 
 .social-icons .icon:hover {
   opacity: 0.8;
-  border-color: #c6ff00;
+  border-color: #c8ff00;
 }
 
 /* Instagram SVG stroke blanc */
@@ -1707,7 +1717,7 @@ body {
    (Remarque : ces règles surchargent le bloc "HEADER MOBILE" ci-dessus.)
    =================================================================== */
 @media (max-width: 900px) {
-  :root { --header-h: 80px; --bar-color: #255219; }
+  :root { --header-h: 80px; --bar-color: #255919; }
 
   header { position: sticky; top: 0; z-index: 3000; background: #fff; }
 
