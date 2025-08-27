@@ -377,6 +377,8 @@ h1 {
 }
 
 .login-btn {
+  display: inline-block;          /* <a> prend la forme d’un bouton */
+  text-decoration: none;          /* enlève le soulignement par défaut */
   background-color: #c6ff00;
   border: none;
   padding: 10px 30px;

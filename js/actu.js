@@ -192,3 +192,17 @@ async function loadNews() {
 
 // Déclenche le chargement une fois le DOM prêt
 document.addEventListener('DOMContentLoaded', loadNews)
+
+import { fetchWithAuth } from "./auth.js";
+
+(async () => {
+  try {
+    const articles = await fetchWithAuth("http://localhost:3000/articles");
+    console.log("Articles sécurisés:", articles);
+    // ⚡ ici tu fais ton rendu dans le DOM
+    // ex: injecter les articles dans #news-list
+  } catch (err) {
+    console.error("Erreur de récupération articles:", err);
+  }
+})();
+

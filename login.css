@@ -1,0 +1,621 @@
+/* ==========================================================================
+   AgenceEco — login.css
+   Page de connexion (header/footer d’origine conservés)
+   Style clair, lisible, sans clamp() dans le bloc LOGIN
+   ========================================================================== */
+
+
+/* =============================
+   Import police principale
+   ============================= */
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap");
+
+
+/* =============================
+   Réinitialisation de base
+   ============================= */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+
+/* =============================
+   Corps de page (bandes noires)
+   ============================= */
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: "Poppins", sans-serif;
+  background: #000;                 /* bandes noires sur les côtés */
+  color: #000;
+  font-size: 16px;
+  line-height: 1.6;
+
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+
+/* =============================
+   Conteneur principal centré
+   ============================= */
+.main-wrapper {
+  background: #fff;
+  max-width: 1425px;                /* zone blanche centrée */
+  width: 100%;
+  margin: 0 auto;
+
+  flex: 1 0 auto;
+}
+
+
+/* ==========================================================================
+   HEADER — logo + navigation
+   ========================================================================== */
+
+header {
+  background: #fff;
+  border-bottom: 1px solid #eee;
+  padding: 16px 0;
+  position: relative;
+  z-index: 10;
+}
+
+header .container {
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 0 40px;
+
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;      /* nav poussé à droite via margin-left:auto */
+}
+
+/* Logo */
+.logo {
+  font-size: 42px;
+  font-weight: 700;
+  color: #255219;
+}
+
+.logo span {
+  font-style: italic;               /* “eco” en italique */
+}
+
+/* Navigation */
+header nav {
+  margin-left: auto;                /* colle la nav à droite */
+  width: auto;
+}
+
+header nav ul {
+  list-style: none;
+  display: flex;
+  gap: 28px;
+  align-items: center;
+}
+
+header nav a {
+  text-decoration: none;
+  color: #000;
+  font-size: 20px;
+  font-weight: 500;
+  transition: color .25s ease;
+}
+
+header nav a:hover {
+  color: #78be20;
+}
+
+
+/* ==========================================================================
+   BURGER (mobile)
+   ========================================================================== */
+
+.burger {
+  display: none;                    /* visible seulement en mobile */
+  width: 24px;
+  height: 18px;
+  background: none;
+  border: 0;
+  cursor: pointer;
+  position: relative;
+  margin-left: 12px;
+}
+
+.burger span {
+  position: absolute;
+  left: 0;
+  top: 50%;
+  width: 100%;
+  height: 2px;
+  background: #255219;
+  border-radius: 2px;
+  transform: translateY(-50%);
+  transform-origin: center;
+  transition: transform .22s ease, opacity .18s ease;
+}
+
+.burger span:nth-child(1) { transform: translateY(-9px); }
+.burger span:nth-child(2) { transform: translateY(-50%); }
+.burger span:nth-child(3) { transform: translateY(7px);  }
+
+.burger[aria-expanded="true"] span:nth-child(1) { transform: translateY(-50%) rotate(45deg); }
+.burger[aria-expanded="true"] span:nth-child(2) { opacity: 0; }
+.burger[aria-expanded="true"] span:nth-child(3) { transform: translateY(-50%) rotate(-45deg); }
+
+
+/* ==========================================================================
+   BLOC LOGIN — calqué sur la maquette, SANS clamp()
+   ========================================================================== */
+
+#login-page {
+  max-width: 760px;
+  margin: 30px auto 80px;           /* titre “Connexion” plus haut */
+  padding: 0 20px;
+  text-align: center;
+}
+
+/* Titre vert (desktop par défaut) */
+#login-page .login-title {
+  margin-top: 0;
+  font-size: 55px;
+  font-weight: 600;
+  color: #469B61;
+  margin-bottom: 40px;
+}
+
+/* Sous-titre centré */
+#login-page .login-subtitle {
+  margin-top: 12px;
+  font-size: 29px;
+  font-weight: 500;
+  color: #1b1b1b;
+  margin-bottom: 50px;
+}
+
+/* Formulaire */
+#login-page .login-form {
+  margin: 30px auto 0;
+  max-width: 600px;
+  display: grid;
+  gap: 18px;
+}
+
+/* Champs */
+#login-page .login-field input {
+  width: 100%;
+  background: #fff;
+  border: 3px solid #868686;
+  border-radius: 12px;
+  padding: 16px 18px;
+  font-size: 16px;
+  outline: none;
+  font-family: "Poppins", sans-serif;
+
+  transition: border-color .2s ease, box-shadow .2s ease;
+  box-shadow:
+    0 3px 0 rgba(0, 0, 0, .08),
+    0 8px 18px rgba(16, 33, 68, .08);
+}
+
+#login-page .login-field input:focus {
+  border-color: #469b61;
+  box-shadow:
+    0 3px 0 rgba(0, 0, 0, .08),
+    0 0 0 6px rgba(70, 155, 97, .15);
+}
+
+/* Bouton “pill” CENTRÉ */
+#login-page .login-btn {
+  display: block;
+  margin: 10px auto 0;
+  text-align: center;
+
+  border: 0;
+  border-radius: 9999px;     /* arrondi parfait */
+  padding: 16px 60px;
+
+  background: #c8ff00;
+  color: #0b120f;
+
+  font-size: 17px;
+  font-weight: 500;
+  font-family: "Poppins", sans-serif;
+  cursor: pointer;
+
+  box-shadow: 0 12px 30px rgba(200, 255, 0, .35);
+  transition: transform .02s ease, filter .2s ease, box-shadow .2s ease;
+}
+
+
+#login-page .login-btn:hover {
+  filter: saturate(1.05) brightness(.9);
+  box-shadow: 0 14px 40px rgba(200, 255, 0, .4);
+}
+
+#login-page .login-btn:active {
+  transform: translateY(1px);
+}
+
+/* Message de statut */
+#login-page .login-status {
+  min-height: 22px;
+  margin-top: 6px;
+  font-size: 15px;
+}
+
+#login-page .login-status.ok  { color: #0f7b3b; }
+#login-page .login-status.err { color: #b42318; }
+
+/* Label masqué (accessibilité) */
+#login-page .sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+
+/* ==========================================================================
+   FOOTER
+   ========================================================================== */
+
+.footer {
+  display: flex;
+  flex-direction: column;
+  background: #183a43;
+  color: #fff;
+  padding-top: 80px;
+  min-height: 350px;
+}
+
+.footer-top {
+  flex-grow: 1;
+  padding: 0 80px;
+}
+
+.footer-row {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 40px;
+}
+
+.footer-columns {
+  display: flex;
+  gap: 160px;
+  margin-top: -20px;
+}
+
+.footer-column h3 {
+  font-size: 22px;
+  font-weight: 400;
+  letter-spacing: 1px;
+  margin-bottom: 10px;
+}
+
+.footer-column p {
+  font-size: 18px;
+  line-height: 1.7;
+}
+
+.footer-contact {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  min-width: 200px;
+  margin-top: -20px;
+}
+
+.contact-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+}
+
+.contact-item .icon {
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.icon.phone,
+.icon.geoloc {
+  fill: #c6ff00;
+}
+
+.contact-item p {
+  margin: 0;
+  font-size: 15px;
+  line-height: 1.5;
+  text-align: left;
+}
+
+/* Bande basse */
+.footer-bottom {
+  background: #0c2227;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 40px 80px;
+  flex-wrap: wrap;
+  border-top: 1px solid #0c2227;
+}
+
+.footer-bottom p {
+  color: #fff;
+  font-size: 15px;
+  margin: 10px 0;
+}
+
+/* Bouton aussi présent dans le footer */
+.footer .login-btn {
+  display: none;
+  background: #c6ff00;
+  color: #071d1f;
+  border: none;
+  padding: 10px 30px;
+  border-radius: 10px;
+  font-weight: 500;
+  font-size: 17px;
+  font-family: "Poppins", sans-serif;
+  cursor: pointer;
+  transition: background-color .25s ease, opacity .25s ease;
+}
+
+.footer .login-btn:hover {
+  background: #b4eb00;
+  opacity: .85;
+}
+
+/* Réseaux sociaux */
+.social-icons {
+  display: flex;
+  gap: 40px;
+}
+
+.social-icons .icon {
+  width: 40px;
+  height: 40px;
+  color: #fff;
+  background: none;
+  padding: 5px;
+  border: 2px solid #fff;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: opacity .25s ease, border-color .25s ease;
+}
+
+.social-icons .icon:hover {
+  opacity: .85;
+  border-color: #c6ff00;
+}
+
+/* Instagram : traits blancs */
+.social-icons .instagram g {
+  stroke: #fff !important;
+}
+
+
+/* ==========================================================================
+   RESPONSIVE
+   ========================================================================== */
+
+/* ---- Tablette (≤ 1024px) ----------------------------------------------- */
+@media (max-width: 1024px) {
+
+  header .container {
+    padding: 0 24px;
+  }
+
+  /* Login — tailles réduites */
+  #login-page .login-title    { font-size: 40px; }
+  #login-page .login-subtitle { font-size: 18px; }
+
+  #login-page .login-form     { max-width: 560px; gap: 16px; }
+  #login-page .login-field input {
+    padding: 14px 16px;
+    box-shadow:
+      0 2px 0 rgba(0, 0, 0, .06),
+      0 6px 16px rgba(16, 33, 68, .08);
+  }
+
+  #login-page .login-btn { padding: 13px 24px; font-size: 15px; }
+}
+
+
+/* ---- Mobile (≤ 900px) : menu burger + footer empilé --------------------- */
+@media (max-width: 900px) {
+
+  /* Burger visible, header compact */
+  .burger { display: flex; }
+  header  { padding: 10px 0; }
+
+  header .container {
+    padding: 0 16px;
+    min-height: 48px;
+    justify-content: space-between;
+    gap: 10px;
+  }
+
+  .logo { font-size: 28px; line-height: 1; }
+
+  /* Menu déroulant sous le header */
+  #nav {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+
+    background: #fff;
+    border-top: 2px solid #255219;
+    box-shadow: 0 6px 24px rgba(0,0,0,.10);
+
+    transform-origin: top;
+    transform: scaleY(0);
+    opacity: 0;
+    pointer-events: none;
+
+    max-height: 70vh;
+    overflow: hidden;
+
+    transition: transform .32s ease, opacity .20s linear;
+    z-index: 2500;
+  }
+
+  #nav.active {
+    transform: scaleY(1);
+    opacity: 1;
+    pointer-events: auto;
+    overflow-y: auto;
+  }
+
+  header nav ul {
+    flex-direction: column;
+    gap: 16px;
+    padding: 14px 0;
+  }
+
+  header nav li { border-bottom: 1px solid rgba(0,0,0,.08); }
+  header nav li:last-child { border-bottom: 0; }
+
+  header nav a {
+    display: block;
+    padding: 10px 18px;
+    font-size: 18px;
+  }
+
+  /* Footer empilé */
+  .footer {
+    padding-top: 40px;
+    overflow-x: hidden;
+  }
+
+  .footer-top { padding: 0 20px; }
+
+  .footer-row {
+    flex-direction: column;
+    gap: 24px;
+  }
+
+  .footer-columns {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 18px 24px;
+    margin-top: 0;
+    justify-items: center;
+  }
+
+  .footer-column {
+    width: 100%;
+    max-width: 260px;
+  }
+
+  .footer-column h3 { font-size: 20px; margin-bottom: 6px; }
+  .footer-column p  { font-size: 16px; line-height: 1.6; }
+
+  .footer-contact {
+    align-items: center;
+    gap: 16px;
+    margin: 8px 0 32px;
+    width: 100%;
+  }
+
+  .contact-item { align-items: center; gap: 12px; width: 220px; }
+  .contact-item .icon { width: 36px; height: 36px; }
+
+  .footer-bottom {
+    padding: 22px 20px;
+    flex-direction: column;
+    gap: 22px;
+    text-align: center;
+  }
+
+  .social-icons { justify-content: center; gap: 18px; }
+}
+
+
+/* ---- Mobile (≤ 768px) : login plein largeur propre --------------------- */
+@media (max-width: 768px) {
+
+  #login-page {
+    margin: 26px auto 50px;
+    padding: 0 18px;
+  }
+
+  #login-page .login-title    { font-size: 32px; }
+  #login-page .login-subtitle { font-size: 16px; }
+
+  #login-page .login-form { margin-top: 24px; gap: 14px; }
+
+  #login-page .login-field input {
+    border-radius: 10px;
+    padding: 14px 14px;
+    font-size: 15.5px;
+  }
+
+  /* Bouton plein largeur mais CENTRÉ, limite à 340px */
+  #login-page .login-btn {
+    width: 100%;
+    max-width: 340px;
+    margin-left: auto;
+    margin-right: auto;
+    border-radius: 26px;
+    padding: 14px 16px;
+    font-size: 15px;
+    box-shadow: 0 10px 24px rgba(200, 255, 0, .32);
+  }
+
+  #login-page .login-status {
+    font-size: 14px;
+    min-height: 20px;
+  }
+}
+
+
+/* ---- Petit mobile (≤ 480px) -------------------------------------------- */
+@media (max-width: 480px) {
+
+  #login-page { padding: 0 14px; }
+
+  #login-page .login-title    { font-size: 26px; }
+  #login-page .login-subtitle { font-size: 15px; }
+
+  #login-page .login-field input {
+    padding: 13px 12px;
+    font-size: 15px;
+  }
+
+  #login-page .login-btn {
+    padding: 13px 16px;
+    font-size: 14.5px;
+    box-shadow: 0 8px 20px rgba(200, 255, 0, .28);
+  }
+}
+
+
+/* ---- Paysage très bas (clavier ouvert, petits écrans) ------------------ */
+@media (max-height: 420px) and (orientation: landscape) {
+
+  #login-page { margin: 18px auto 28px; }
+
+  #login-page .login-form { gap: 12px; }
+
+  #login-page .login-btn { padding: 12px 14px; }
+}
+
+
+/* ==========================================================================
+   Utilitaire
+   ========================================================================== */
+
+.no-scroll {
+  overflow: hidden;                  /* à appliquer au body quand le menu mobile est ouvert */
+}
