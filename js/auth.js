@@ -23,44 +23,44 @@
  * ================================================================
  */
 
-const LS_TOKEN_KEY = "auth_token"; // clé unique de stockage du token
+const LS_TOKEN_KEY = "auth_token" // clé unique de stockage du token
 
 // Retourne le token depuis localStorage (ou null si absent)
 export function getToken() {
-  return localStorage.getItem(LS_TOKEN_KEY);
+  return localStorage.getItem(LS_TOKEN_KEY)
 }
 
 // Supprime le token (utile pour la déconnexion)
 export function clearToken() {
-  localStorage.removeItem(LS_TOKEN_KEY);
+  localStorage.removeItem(LS_TOKEN_KEY)
 }
 
 // fetch sécurisé avec ajout automatique du JWT
 export async function fetchWithAuth(url, options = {}) {
-  const token = getToken();
-  if (!token) throw new Error("Pas de session");
+  const token = getToken()
+  if (!token) throw new Error("Pas de session")
 
-  const headers = new Headers(options.headers || {});
-  headers.set("Authorization", `Bearer ${token}`);
+  const headers = new Headers(options.headers || {})
+  headers.set("Authorization", `Bearer ${token}`)
 
   if (!headers.has("Content-Type") && options.body) {
-    headers.set("Content-Type", "application/json");
+    headers.set("Content-Type", "application/json")
   }
 
-  const res = await fetch(url, { ...options, headers });
+  const res = await fetch(url, { ...options, headers })
 
   // Si le serveur dit "non autorisé"
   if (res.status === 401) {
-    clearToken();
-    window.location.href = "login.html"; // renvoi direct
-    return;
+    clearToken()
+    window.location.href = "login.html" // renvoi direct
+    return
   }
 
-  if (!res.ok) throw new Error(`HTTP ${res.status}`);
+  if (!res.ok) throw new Error(`HTTP ${res.status}`)
 
   try {
-    return await res.json();
+    return await res.json()
   } catch {
-    return null;
+    return null
   }
 }

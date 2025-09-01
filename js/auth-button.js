@@ -21,33 +21,32 @@
  * ================================================================
  */
 
-const LS_TOKEN_KEY = "auth_token";
-const REDIRECT_AFTER_LOGOUT = "index.html"; // toujours renvoyer vers index.html
+const LS_TOKEN_KEY = "auth_token"
+const REDIRECT_AFTER_LOGOUT = "index.html" // toujours renvoyer vers index.html
 
-(function initAuthButton() {
-  const btn = document.getElementById("auth-btn");
-  if (!btn) return;
+;(function initAuthButton() {
+  const btn = document.getElementById("auth-btn")
+  if (!btn) return
 
-  const token = localStorage.getItem(LS_TOKEN_KEY);
+  const token = localStorage.getItem(LS_TOKEN_KEY)
 
   // Nettoie les anciens listeners (au cas où la page re-injecte le script)
-  btn.replaceWith(btn.cloneNode(true));
-  const freshBtn = document.getElementById("auth-btn");
+  btn.replaceWith(btn.cloneNode(true))
+  const freshBtn = document.getElementById("auth-btn")
 
   if (token) {
-    // Connecté -> "Se déconnecter"
-    freshBtn.textContent = "Se déconnecter";
-    freshBtn.removeAttribute("href");     // neutralise le lien
-    freshBtn.setAttribute("role", "button");
+    freshBtn.textContent = "Se déconnecter"
+    freshBtn.removeAttribute("href")
+    freshBtn.setAttribute("role", "button")
 
     freshBtn.addEventListener("click", (e) => {
-      e.preventDefault();
-      localStorage.removeItem(LS_TOKEN_KEY);
-      window.location.href = REDIRECT_AFTER_LOGOUT;
-    });
+      e.preventDefault()
+      localStorage.removeItem(LS_TOKEN_KEY)
+      window.location.href = REDIRECT_AFTER_LOGOUT
+    })
   } else {
-    // Pas connecté -> "Me connecter" vers login.html
-    freshBtn.textContent = "Me connecter";
-    freshBtn.setAttribute("href", "login.html");
+    freshBtn.textContent = "Me connecter"
+    freshBtn.setAttribute("href", "login.html")
   }
-})();
+})()
+
