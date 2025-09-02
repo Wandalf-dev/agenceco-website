@@ -167,42 +167,94 @@
       </div>
     </footer>
 
-
+    <!-- ===========================
+         PARTIE SCRIPT JS
+    ============================ -->
 
   <script src="js/actu.js" defer></script>
   <script src="js/burger.js" defer></script>
   <script src="js/auth-button.js" defer></script>
+  
 
-  <script>
-  (function(){
-    function getQueryParam(name){
-      const u = new URL(window.location.href);
-      return u.searchParams.get(name);
-    }
-    function showToast(msg){
-      const t = document.createElement('div');
-      t.textContent = msg;
-      t.setAttribute('role','status');
-      t.style.position='fixed';
-      t.style.right='16px';
-      t.style.bottom='16px';
-      t.style.padding='10px 14px';
-      t.style.background='#469B61';
-      t.style.color='#fff';
-      t.style.borderRadius='8px';
-      t.style.boxShadow='0 6px 16px rgba(0,0,0,.15)';
-      document.body.appendChild(t);
-      setTimeout(()=>t.remove(),3000);
-    }
-    if (getQueryParam('added') === '1') {
-      showToast('Article publié ✅');
-      // Optionnel : nettoyer l’URL
-      const url = new URL(window.location.href);
-      url.searchParams.delete('added');
-      window.history.replaceState({}, '', url);
-    }
-  })();
+<script>
+(function () {
+  function showToast(msg, color, icon) {
+    const t = document.createElement('div');
+    t.setAttribute('role', 'status');
+
+    // Styles communs
+    t.style.position = 'fixed';
+    t.style.top = '16px';
+    t.style.right = '16px';
+    t.style.display = 'flex';
+    t.style.alignItems = 'center';
+    t.style.gap = '10px';
+    t.style.padding = '12px 18px';
+    t.style.borderRadius = '8px';
+    t.style.fontSize = '15px';
+    t.style.fontWeight = '500';
+    t.style.color = '#fff';
+    t.style.zIndex = '9999';
+    t.style.boxShadow = '0 6px 16px rgba(0,0,0,.15)';
+    t.style.opacity = '0';
+    t.style.transform = 'translateY(-10px)';
+    t.style.transition = 'opacity .3s ease, transform .3s ease';
+    t.style.background = color;
+
+    // Icône + texte
+    t.innerHTML = `
+      <span style="width:20px;height:20px;display:flex;align-items:center;">${icon}</span>
+      <span>${msg}</span>
+    `;
+
+    document.body.appendChild(t);
+
+    // Apparition
+    requestAnimationFrame(() => {
+      t.style.opacity = '1';
+      t.style.transform = 'translateY(0)';
+    });
+
+    // Disparition
+    setTimeout(() => {
+      t.style.opacity = '0';
+      t.style.transform = 'translateY(-10px)';
+      setTimeout(() => t.remove(), 300);
+    }, 3200);
+  }
+
+  const url = new URL(window.location.href);
+  const p   = url.searchParams;
+
+  if (p.get('added') === '1') {
+    showToast('Article publié', '#469B61',
+      `<svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="white" stroke-width="2" viewBox="0 0 24 24">
+         <path d="M5 13l4 4L19 7"/>
+       </svg>`);
+  }
+
+  if (p.get('updated') === '1') {
+    showToast('Article mis à jour', '#FF9800',
+      `<svg xmlns="http://www.w3.org/2000/svg" fill="white" viewBox="0 0 24 24">
+         <path d="M3 17.25V21h3.75l11-11.03-3.75-3.75L3 17.25zM20.71 7.04a1 1 0 000-1.41l-2.34-2.34a1 1 0 00-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/>
+       </svg>`);
+  }
+
+  if (p.get('deleted') === '1') {
+    showToast('Article supprimé', '#D32F2F',
+      `<svg xmlns="http://www.w3.org/2000/svg" fill="white" viewBox="0 0 24 24">
+         <path d="M6 19a2 2 0 002 2h8a2 2 0 002-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/>
+       </svg>`);
+  }
+
+  // Nettoyage URL
+  ['added','updated','deleted'].forEach(k => p.delete(k));
+  window.history.replaceState({}, '', `${url.pathname}${p.toString() ? '?' + p.toString() : ''}`);
+})();
 </script>
+
+
+
 
 
 

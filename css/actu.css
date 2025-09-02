@@ -902,3 +902,73 @@ header nav a:hover {
 }
 
 }
+
+/* =========================
+   Overrides ACTU — propres
+   ========================= */
+
+/* Hauteur commune pour les 2 zones de texte */
+:root { --textarea-h: 120px; }
+#art-description,
+#art-content {
+  min-height: var(--textarea-h);
+  height: var(--textarea-h);
+  resize: vertical;
+}
+
+/* Plus d’air entre les champs du formulaire */
+.article-form .field {
+  margin: 26px 0;
+}
+
+/* Rangée des boutons — CENTRÉE */
+.actions{
+  display: flex;
+  justify-content: center;   /* les 2 boutons au centre */
+  align-items: center;
+  gap: 100px;                 /* espace entre eux */
+  margin-top: 70px;          /* marge au-dessus */
+  margin-bottom: 30px;       /* marge en dessous */
+  width: 100%;
+}
+
+/* Boutons — taille/forme unifiées */
+.btn-save,
+.btn-delete-form{
+  display: inline-block;
+  padding: 18px 50px;        /* agrandit le bouton */
+  font-family: "Poppins", system-ui, -apple-system, sans-serif;
+  font-weight: 500;
+  font-size: 18px;           /* taille du texte */
+  line-height: 1.1;
+  border: 0;
+  border-radius: 50px;       /* pilule */
+  cursor: pointer;
+  transition: transform .15s ease, box-shadow .2s ease, filter .2s ease;
+  box-shadow: 0 8px 24px rgba(16,33,68,.08);
+  margin: 0;                 /* évite les décalages */
+}
+
+/* Couleurs */
+.btn-save{ background: #C8FF00; color: #0b0b0b; }
+.btn-delete-form{ background: #FF0000; color: #fff; }
+
+/* Hover/Active */
+.btn-save:hover,
+.btn-delete-form:hover{
+  transform: translateY(-1px);
+  filter: saturate(1.05);
+  box-shadow: 0 12px 28px rgba(16,33,68,.12);
+}
+.btn-save:active,
+.btn-delete-form:active{
+  transform: translateY(0);
+  box-shadow: 0 6px 18px rgba(16,33,68,.10);
+}
+
+/* Mobile — boutons un peu plus compacts */
+@media (max-width: 640px){
+  .actions{ gap: 24px; margin-top: 40px; margin-bottom: 24px; }
+  .btn-save, .btn-delete-form{ padding: 14px 28px; font-size: 1rem; border-radius: 40px; }
+}
+

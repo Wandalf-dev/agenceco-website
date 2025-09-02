@@ -286,6 +286,7 @@ h1 {
   font-weight: 500;
   line-height: 1.2;
   margin: 0;
+  margin-bottom: auto;
 }
 
 /* Texte central */
@@ -303,7 +304,7 @@ h1 {
 
 .news-desc,
 .news-content {
-  font-size: 22px;
+  font-size: 20px;
   opacity: .95;
   margin: 0;
   line-height: 1.7;
@@ -730,4 +731,112 @@ body {
   align-self: center;             /* utile si le parent est display:flex */
 }
 
+}
+
+/* ======= Actions carte (Modifier / Supprimer) ======= */
+.news-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between; /* date à gauche, actions à droite */
+  margin-top: 10px;
+}
+
+.news-actions {
+  display: flex;
+  gap: 12px;
+}
+
+.btn-edit,
+.btn-delete {
+  padding: 10px 16px;
+  font-size: 16px;
+  line-height: 1;
+  border: 0;
+  border-radius: 10px;
+  color: #fff;
+  cursor: pointer;
+  transition: transform .12s ease, filter .2s ease, box-shadow .2s ease;
+}
+
+/* Couleurs proches de la maquette */
+.btn-edit { background: #F5A623; }     /* orange */
+.btn-delete { background: #E53935; }   /* rouge */
+
+.btn-edit:hover,
+.btn-delete:hover { transform: translateY(-1px); filter: saturate(1.05); }
+.btn-edit:active,
+.btn-delete:active { transform: translateY(0); }
+
+/* Harmonise l'ancienne règle .news-meta dans le footer */
+.news-footer .news-meta {
+  align-self: center;
+}
+
+/* Mobile : les actions passent sous la date */
+@media (max-width: 900px) {
+  .news-footer { flex-direction: column; align-items: flex-start; gap: 10px; }
+}
+
+/* ======= Actions carte (Modifier / Supprimer) ======= */
+.news-actions {
+  display: flex;
+  gap: 16px; /* un peu plus d’espace */
+}
+
+.btn-edit,
+.btn-delete {
+  padding: 5px 30px;       /* boutons plus étirés */
+  font-size: 18px;          /* texte plus grand */
+  font-weight: 600;         /* un peu plus marqué */
+  line-height: 1.2;
+  border: 0;
+  border-radius: 8px;      /* arrondis plus doux */
+  color: #fff;
+  cursor: pointer;
+  transition: transform .12s ease, filter .2s ease, box-shadow .2s ease;
+  font-family: 'Poppins', sans-serif;
+}
+
+/* Couleurs */
+.btn-edit { background: #F5A623; }     /* orange */
+.btn-delete { background: #E53935; }   /* rouge */
+
+/* Effets hover/active */
+.btn-edit:hover,
+.btn-delete:hover { 
+  transform: translateY(-2px); 
+  filter: saturate(1.1);
+  box-shadow: 0 4px 10px rgba(0,0,0,.15);
+}
+.btn-edit:active,
+.btn-delete:active { transform: translateY(0); box-shadow: none; }
+
+/* --- override: coller le footer au bas de la carte --- */
+.news-card {
+  display: flex !important;        /* remplace le grid */
+  flex-direction: column;          /* empile titre / body / footer */
+  padding-bottom: 12px;            /* petite marge basse */
+}
+
+.news-body {
+  margin-bottom: 50px;                /* on laisse le footer gérer l’espacement bas */
+}
+
+.news-footer {
+  margin-top: auto;                /* pousse le footer tout en bas */
+  display: flex;
+  justify-content: space-between;  /* date à gauche, actions à droite */
+  align-items: flex-end;           /* colle au bas visuel */
+  padding-bottom: 6px;             /* mini marge pour respirer */
+}
+
+.news-actions {
+  display: flex;
+  gap: 12px;
+  margin-left: auto;               /* colle à droite */
+}
+
+/* Ajuste la date dans le footer (au lieu du bas de la carte) */
+.news-footer .news-meta {
+  align-self: flex-end
 }
