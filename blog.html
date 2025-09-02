@@ -173,6 +173,38 @@
   <script src="js/burger.js" defer></script>
   <script src="js/auth-button.js" defer></script>
 
+  <script>
+  (function(){
+    function getQueryParam(name){
+      const u = new URL(window.location.href);
+      return u.searchParams.get(name);
+    }
+    function showToast(msg){
+      const t = document.createElement('div');
+      t.textContent = msg;
+      t.setAttribute('role','status');
+      t.style.position='fixed';
+      t.style.right='16px';
+      t.style.bottom='16px';
+      t.style.padding='10px 14px';
+      t.style.background='#469B61';
+      t.style.color='#fff';
+      t.style.borderRadius='8px';
+      t.style.boxShadow='0 6px 16px rgba(0,0,0,.15)';
+      document.body.appendChild(t);
+      setTimeout(()=>t.remove(),3000);
+    }
+    if (getQueryParam('added') === '1') {
+      showToast('Article publié ✅');
+      // Optionnel : nettoyer l’URL
+      const url = new URL(window.location.href);
+      url.searchParams.delete('added');
+      window.history.replaceState({}, '', url);
+    }
+  })();
+</script>
+
+
 
 
 

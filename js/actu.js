@@ -1,30 +1,61 @@
 /**
  * ================================================================
- *  AgenceEco — Actus (front)
- *  Charge GET /articles, gère chargement/erreur/vide, tri par date,
- *  et injecte les cartes dans #news-list.
+ *  AgenceEco — Actus (front) — LISTE (blog.html)
+ *
+ *  Objectif :
+ *    1) Appeler GET /articles et récupérer la liste des actualités
+ *    2) Gérer les états : chargement, erreur réseau, liste vide
+ *    3) Trier par date (desc) en s’adaptant à plusieurs clés possibles
+ *    4) Générer des cartes HTML accessibles dans #news-list
+ *
+ *  Pré-requis côté HTML :
+ *    - Un conteneur <section id="news-list" aria-live="polite"></section>
+ *
+ *  Notes techniques :
+ *    - Timeout client (8s) via AbortController pour éviter un écran figé
+ *    - Format date tolérant : publicationDate | publishedAt | createdAt | date
+ *    - API flexible : gère data.items / data.data / tableau brut
  * ================================================================
  */
 
 const API_BASE = 'http://localhost:3000'
 const NEWS_URL = `${API_BASE}/articles`
 
+/**
+ * Convertit une valeur en Date JS sûre.
+ * @param {string|number|Date} value
+ * @returns {Date|null}
+ */
 function parseDate(value) {
   if (!value) return null
   const d = new Date(value)
   return Number.isNaN(d.getTime()) ? null : d
 }
 
+/**
+ * Formate une date en { machine, human } pour <time>
+ * @param {any} value
+ * @returns {{machine:string,human:string}|null}
+ */
 function formatDateFR(value) {
   const d = parseDate(value)
   if (!d) return null
-  return { machine: d.toISOString().slice(0,10), human: d.toLocaleDateString('fr-FR') }
+  return { machine: d.toISOString().slice(0, 10), human: d.toLocaleDateString('fr-FR') }
 }
 
+/**
+ * Sélectionne la meilleure clé de date disponible sur un objet article
+ * @param {object} obj
+ */
 function pickDate(obj = {}) {
   return obj.publicationDate || obj.publishedAt || obj.createdAt || obj.date || null
 }
 
+/**
+ * Rend une carte d’article minimaliste et accessible
+ * @param {object} article
+ * @returns {HTMLElement}
+ */
 function renderArticle(article = {}) {
   const { title, description, content } = article
 
@@ -63,12 +94,17 @@ function renderArticle(article = {}) {
   return card
 }
 
+/**
+ * Charge et affiche la liste des actualités
+ */
 async function loadNews() {
   const list = document.getElementById('news-list')
   if (!list) return
 
+  // État chargement (ARIA)
   list.innerHTML = '<p class="status" role="status">Chargement…</p>'
 
+  // Timeout client de 8 secondes
   const controller = new AbortController()
   const timeoutId = setTimeout(() => controller.abort(), 8000)
 
@@ -79,6 +115,7 @@ async function loadNews() {
     })
     if (!res.ok) throw new Error(`HTTP ${res.status}`)
 
+    // Supporte plusieurs enveloppes API courantes
     let data = await res.json()
     if (data && Array.isArray(data.items)) data = data.items
     if (data && Array.isArray(data.data))  data = data.data
@@ -88,6 +125,7 @@ async function loadNews() {
       return
     }
 
+    // Tri descendant par date (les actus les plus récentes en premier)
     data.sort((a, b) => {
       const da = parseDate(pickDate(a))
       const db = parseDate(pickDate(b))
@@ -97,6 +135,7 @@ async function loadNews() {
       return db - da
     })
 
+    // Rendu DOM en fragment (perf)
     const frag = document.createDocumentFragment()
     data.forEach(item => frag.appendChild(renderArticle(item)))
 
