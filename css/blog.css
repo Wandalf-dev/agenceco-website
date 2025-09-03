@@ -840,3 +840,14 @@ body {
 .news-footer .news-meta {
   align-self: flex-end
 }
+
+.news-title {
+  display: inline-block;          /* <a> prend la forme d’un bouton */
+  text-decoration: none;          /* enlève le soulignement par défaut */
+  color: white;
+}
+
+.news-title:hover {
+  transform: translateY(-1px);
+
+}

@@ -1,0 +1,927 @@
+/* =============================
+   Import de la police principale
+   ============================= */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
+
+/* =============================
+   Réinitialisation de base
+   ============================= */
+* {
+  box-sizing: border-box;    /* Inclut padding et border dans les dimensions */
+  margin: 0;                 /* Supprime marges par défaut */
+  padding: 0;                /* Supprime paddings par défaut */
+}
+
+html { scroll-behavior: smooth; }
+
+/* =============================
+   Corps de la page (fond global)
+   ============================= */
+body {
+  font-family: 'Poppins', sans-serif;
+  background-color: black;   /* fond noir latéral */
+  color: #000;
+  font-size: 16px;
+  line-height: 1.6;
+
+  /* pour footer en bas (même logique que ton CSS) */
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* =============================
+   Conteneur principal (zone blanche centrée)
+   ============================= */
+.main-wrapper {
+  max-width: 1425px;
+  margin: 0 auto;
+  background-color: white;
+  width: 100%;
+}
+
+/* =============================
+   HEADER : logo + menu de navigation
+   ============================= */
+header {
+  background-color: white;
+  padding: 16px 0;
+  border-bottom: 1px solid #eee;
+  position: relative;
+  z-index: 10;
+}
+
+header .container {
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 0 40px;
+
+  display: flex;
+  align-items: center;
+  justify-content: flex-start; /* nav poussé à droite via margin-left:auto */
+}
+
+/* Logo */
+.logo {
+  display: inline-block;
+  text-decoration: none;
+  font-size: 42px;
+  font-weight: 700;
+  color: #255919;
+  -webkit-tap-highlight-color: transparent;
+}
+.logo span { font-style: italic; }
+.logo:focus { outline: none; }
+.logo:focus-visible {
+  outline: 2px solid #c8ff00;
+  outline-offset: 4px;
+  border-radius: 8px;
+}
+
+/* Navigation */
+header nav { margin-left: auto; width: auto; }
+header nav ul {
+  list-style: none;
+  display: flex;
+  gap: 28px;
+  align-items: center;
+  justify-content: flex-end;
+  margin: 0; padding: 0; width: auto;
+}
+header nav a {
+  text-decoration: none;
+  color: #000;
+  font-size: 20px;
+  font-weight: 500;
+  transition: color 0.3s;
+}
+header nav a:hover { color: #78be20; }
+
+/* =============================
+   BURGER — base (desktop caché)
+   ============================= */
+.burger {
+  display: none;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 24px; height: 18px;
+  background: none; border: 0; cursor: pointer;
+  position: relative;
+  margin-left: 12px;
+}
+.burger span {
+  position: absolute; left: 0; top: 50%;
+  width: 100%; height: 2px; background: #255219; border-radius: 2px;
+  transform-origin: center; transition: transform .22s ease, opacity .18s ease;
+  transform: translateY(-50%);
+}
+.burger span:nth-child(1){ transform: translateY(-9px); }
+.burger span:nth-child(2){ transform: translateY(-50%); }
+.burger span:nth-child(3){ transform: translateY(7px); }
+.burger[aria-expanded="true"] span:nth-child(1){ transform: translateY(-50%) rotate(45deg) !important; }
+.burger[aria-expanded="true"] span:nth-child(2){ opacity: 0 !important; }
+.burger[aria-expanded="true"] span:nth-child(3){ transform: translateY(-50%) rotate(-45deg) !important; }
+
+/* =============================
+   PAGE DÉTAIL — article
+   ============================= */
+
+/* zone centrale */
+#article-detail {
+  padding: 16px clamp(24px, 5vw, 64px) 28px;
+}
+#article-detail .article {
+  max-width: 860px;
+  margin: 0 auto;
+}
+
+/* lien retour (style simple) */
+.back-link{
+  display:inline-flex; align-items:center; gap:8px;
+  margin:8px 0 16px;
+  color:#255919; font-weight:600; text-decoration:none; font-size:18px;
+}
+.back-link:hover, .back-link:focus-visible{ text-decoration:underline; color:#1e3a1a; outline:none; }
+
+/* Titre + soulignement animé */
+.article-title{
+  text-align:center;
+  font-size: clamp(28px, 3.6vw, 44px);
+  font-weight: 800;
+  letter-spacing: .2px;
+  color: #255919;
+  margin: 12px 0 28px;
+  position: relative;
+}
+.article-title.fx-underline::after{
+  content:""; position:absolute; left:50%; bottom:-16px;
+  height:6px; width:min(560px, 64%); border-radius:999px;
+  background: linear-gradient(90deg, transparent 0 2%, #C8FF00 15% 85%, transparent 98% 100%);
+  transform: translateX(-50%) scaleX(0); transform-origin:center;
+  box-shadow: 0 10px 26px rgba(200,255,0,.28);
+  transition: transform .8s cubic-bezier(.2,.7,.2,1);
+}
+.article-title.fx-underline.is-on::after{ transform: translateX(-50%) scaleX(1); }
+
+/* Date : MASQUÉE comme demandé */
+#article-detail .article-date { display: none !important; }
+
+/* Extrait / chapo */
+.article-excerpt{
+  max-width: 780px;
+  margin: 18px auto 18px;
+  color:#334155;
+  font-size:18px;
+  line-height:1.75;
+  text-align:center;
+}
+
+/* Image principale */
+.article-cover{
+  display:block; width:100%; height:auto;
+  margin:10px 0 20px;
+  border-radius:14px; box-shadow:0 10px 28px rgba(0,0,0,.08);
+}
+
+/* Contenu */
+.article-content{
+  max-width:780px; margin:18px auto 0;
+  font-size:18px; line-height:1.8; color:#1f2937; text-align:center;
+}
+.article-content p{ margin:0 0 14px; }
+.article-content h2{ font-size:clamp(22px,2.6vw,28px); margin:26px 0 12px; color:#0b0b0b; }
+.article-content h3{ font-size:clamp(19px,2.4vw,24px); margin:20px 0 10px; color:#0b0b0b; }
+.article-content ul, .article-content ol{
+  display:inline-block; text-align:left; padding-left:22px; margin:0 0 14px;
+}
+.article-content li{ margin:4px 0; }
+
+/* Code inline lisible */
+.article-excerpt code, .article-content code{
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
+  font-size:.95em; background:#0b122006; border:1px solid #e5e7eb; border-radius:6px; padding:0 .35em; color:#0b1220;
+}
+
+/* Espaces accrus entre Titre/Desc/Contenu */
+#article-detail .article-title{ margin-bottom: clamp(20px, 3vw, 44px) !important; }
+#article-detail .article-title + .article-excerpt{ margin-top: clamp(18px, 3vw, 36px) !important; }
+#article-detail .article-title + .article-content{ margin-top: clamp(18px, 3vw, 36px) !important; }
+#article-detail .article-excerpt + .article-content{ margin-top: clamp(16px, 2.5vw, 32px) !important; }
+
+/* Galerie d’images sous l’article */
+.article-gallery{
+  max-width:860px; margin:30px auto 0;
+  display:grid; grid-template-columns:repeat(3, minmax(0,1fr));
+  gap:14px;
+}
+.article-gallery a{ display:block; border-radius:12px; overflow:hidden; box-shadow:0 6px 18px rgba(0,0,0,.06); }
+.article-gallery img{ display:block; width:100%; height:100%; object-fit:cover; transition:transform .25s ease; }
+.article-gallery a:hover img{ transform:scale(1.04); }
+
+/* éviter un bourrelet avant le footer */
+.article-content > :last-child, .article-excerpt > :last-child{ margin-bottom:0 !important; }
+
+/* =======================
+   PARTIE "PIED-DE-PAGE"
+   (repris de TON CSS)
+   ======================= */
+
+/* ---- FOOTER GENERAL ---- */
+.footer {
+  display: flex;
+  flex-direction: column;
+  min-height: 350px;       /* agrandit le footer globalement */
+  background-color: #183a43;
+  color: #fff;
+  font-family: 'Poppins', sans-serif;
+  padding-top: 80px;       /* espace en haut */
+}
+.footer-top { flex-grow: 1; padding: 0 80px; }
+
+.footer-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 40px;
+}
+
+.footer-columns {
+  display: flex;
+  gap: 160px;
+  margin-top: -20px;
+}
+
+.footer-column h3 {
+  font-size: 22px;
+  margin-bottom: 10px;
+  letter-spacing: 1px;
+  font-weight: 400;
+}
+.footer-column p {
+  font-size: 18px;
+  line-height: 1.7;
+}
+
+.footer-contact {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  min-width: 200px;
+  margin-top: -20px;
+}
+
+.icon.phone,
+.icon.geoloc { fill: #c6ff00; }
+
+.contact-item {
+  display: flex;
+  align-items: flex-start; /* aligne les icônes verticalement */
+  gap: 14px;
+}
+.contact-item .icon { margin-top: 2px; flex-shrink: 0; }
+.contact-item p { font-size: 15px; line-height: 1.5; text-align: left; margin: 0; }
+
+/* Bande basse (repris) */
+.footer-bottom {
+  background-color: #0C2227;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 40px 80px;
+  flex-wrap: wrap;
+  border-top: 1px solid #0C2227;
+}
+.footer-bottom p {
+  font-size: 15px;
+  margin: 10px 0;
+  color: #fff;
+}
+
+.login-btn {
+  display: inline-block;
+  text-decoration: none;
+  background-color: #c6ff00;
+  border: none;
+  padding: 10px 30px;
+  border-radius: 10px;
+  font-weight: 500;
+  cursor: pointer;
+  color: #071d1f;
+  transition: background-color 0.3s;
+  font-size: 17px;
+  font-family: 'Poppins', sans-serif;
+}
+.login-btn:hover { background-color: #b4eb00; opacity: 0.5; }
+
+.social-icons { display: flex; gap: 40px; }
+.social-icons .icon{
+  width: 40px; height: 40px; color: #fff; background: none; padding: 5px;
+  border: 2px solid #fff; border-radius: 12px; cursor: pointer;
+  transition: opacity 0.3s, border-color 0.3s;
+}
+.social-icons .icon:hover{ opacity: 0.8; border-color: #c6ff00; }
+.social-icons .instagram g { stroke: #fff !important; }
+
+/* ==== Footer collé en bas avec ta logique ==== */
+html, body { height: 100%; }
+.main-content { flex: 1 0 auto; } /* si tu enveloppes le contenu avec .main-content */
+.footer { flex-shrink: 0; }
+
+/* ==========================================================================
+   RESPONSIVE
+   ========================================================================== */
+
+/* ---- Tablette (≤ 1024px) ----------------------------------------------- */
+@media (max-width: 1024px) {
+
+  header .container {
+    padding: 0 24px;
+  }
+
+  /* Login — tailles réduites */
+  #login-page .login-title    { font-size: 40px; }
+  #login-page .login-subtitle { font-size: 18px; }
+
+  #login-page .login-form     { max-width: 560px; gap: 16px; }
+  #login-page .login-field input {
+    padding: 14px 16px;
+    box-shadow:
+      0 2px 0 rgba(0, 0, 0, .06),
+      0 6px 16px rgba(16, 33, 68, .08);
+  }
+
+  #login-page .login-btn { padding: 13px 24px; font-size: 15px; }
+}
+
+
+/* ---- Mobile (≤ 900px) : menu burger + footer empilé --------------------- */
+@media (max-width: 900px) {
+
+  /* Burger visible, header compact */
+  .burger { display: flex; }
+  header  { padding: 10px 0; }
+
+  header .container {
+    padding: 0 16px;
+    min-height: 48px;
+    justify-content: space-between;
+    gap: 10px;
+  }
+
+  .logo { font-size: 28px; line-height: 1; }
+
+  /* Menu déroulant sous le header */
+  #nav {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+
+    background: #fff;
+    border-top: 2px solid #255219;
+    box-shadow: 0 6px 24px rgba(0,0,0,.10);
+
+    transform-origin: top;
+    transform: scaleY(0);
+    opacity: 0;
+    pointer-events: none;
+
+    max-height: 70vh;
+    overflow: hidden;
+
+    transition: transform .32s ease, opacity .20s linear;
+    z-index: 2500;
+  }
+
+  #nav.active {
+    transform: scaleY(1);
+    opacity: 1;
+    pointer-events: auto;
+    overflow-y: auto;
+  }
+
+  header nav ul {
+    flex-direction: column;
+    gap: 16px;
+    padding: 14px 0;
+  }
+
+  header nav li { border-bottom: 1px solid rgba(0,0,0,.08); }
+  header nav li:last-child { border-bottom: 0; }
+
+  header nav a {
+    display: block;
+    padding: 10px 18px;
+    font-size: 18px;
+  }
+
+  /* Footer empilé */
+  .footer {
+    padding-top: 40px;
+    overflow-x: hidden;
+  }
+
+  .footer-top { padding: 0 20px; }
+
+  .footer-row {
+    flex-direction: column;
+    gap: 24px;
+  }
+
+  .footer-columns {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 18px 24px;
+    margin-top: 0;
+    justify-items: center;
+  }
+
+  .footer-column {
+    width: 100%;
+    max-width: 260px;
+  }
+
+  .footer-column h3 { font-size: 20px; margin-bottom: 6px; }
+  .footer-column p  { font-size: 16px; line-height: 1.6; }
+
+  .footer-contact {
+    align-items: center;
+    gap: 16px;
+    margin: 8px 0 32px;
+    width: 100%;
+  }
+
+  .contact-item { align-items: center; gap: 12px; width: 220px; }
+  .contact-item .icon { width: 36px; height: 36px; }
+
+  .footer-bottom {
+    padding: 22px 20px;
+    flex-direction: column;
+    gap: 22px;
+    text-align: center;
+  }
+
+  .social-icons { justify-content: center; gap: 18px; }
+}
+
+
+/* ---- Mobile (≤ 768px) : login plein largeur propre --------------------- */
+@media (max-width: 768px) {
+
+  #login-page {
+    margin: 26px auto 50px;
+    padding: 0 18px;
+  }
+
+  #login-page .login-title    { font-size: 32px; }
+  #login-page .login-subtitle { font-size: 16px; }
+
+  #login-page .login-form { margin-top: 24px; gap: 14px; }
+
+  #login-page .login-field input {
+    border-radius: 10px;
+    padding: 14px 14px;
+    font-size: 15.5px;
+  }
+
+  /* Bouton plein largeur mais CENTRÉ, limite à 340px */
+  #login-page .login-btn {
+    width: 100%;
+    max-width: 340px;
+    margin-left: auto;
+    margin-right: auto;
+    border-radius: 26px;
+    padding: 14px 16px;
+    font-size: 15px;
+    box-shadow: 0 10px 24px rgba(200, 255, 0, .32);
+  }
+
+  #login-page .login-status {
+    font-size: 14px;
+    min-height: 20px;
+  }
+}
+
+
+/* ---- Petit mobile (≤ 480px) -------------------------------------------- */
+@media (max-width: 480px) {
+
+  #login-page { padding: 0 14px; }
+
+  #login-page .login-title    { font-size: 26px; }
+  #login-page .login-subtitle { font-size: 15px; }
+
+  #login-page .login-field input {
+    padding: 13px 12px;
+    font-size: 15px;
+  }
+
+  #login-page .login-btn {
+    padding: 13px 16px;
+    font-size: 14.5px;
+    box-shadow: 0 8px 20px rgba(200, 255, 0, .28);
+  }
+}
+
+
+/* ---- Paysage très bas (clavier ouvert, petits écrans) ------------------ */
+@media (max-height: 420px) and (orientation: landscape) {
+
+  #login-page { margin: 18px auto 28px; }
+
+  #login-page .login-form { gap: 12px; }
+
+  #login-page .login-btn { padding: 12px 14px; }
+}
+
+
+/* ==========================================================================
+   Utilitaire
+   ========================================================================== */
+
+.no-scroll {
+  overflow: hidden;                  /* à appliquer au body quand le menu mobile est ouvert */
+}
+
+/* ============================
+   TABLETTE — ajustements doux
+   ============================ */
+@media (max-width: 1200px) {
+  /* Header */
+  header .container { padding: 0 24px; gap: 16px; }
+  nav ul { gap: 20px; }
+
+  /* Hero */
+  .hero { height: 600px; }
+  .hero-overlay { padding: 40px; }
+  .hero-text h1 { font-size: 44px; }
+  .hero-text span { font-size: 56px; }
+
+  /* Titres / Actu */
+  h1 { font-size: 40px; }
+
+  /* Actus list : 2 colonnes au format tablette */
+  #news-list {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 20px;
+    padding: clamp(20px, 4vw, 40px);
+  }
+
+  .news-card { --pad: 22px; border-radius: 12px; padding: var(--pad) var(--pad) 24px; }
+  .news-title { font-size: 24px; }
+  .news-desc, .news-content { font-size: 18px; }
+  .news-meta { font-size: 16px; }
+
+  /* Footer */
+  .footer-top { padding: 0 40px; }
+  .footer-columns { gap: 80px; }
+  .footer-bottom { padding: 30px 40px; }
+}
+
+/* ============================
+   BURGER — base (desktop caché)
+   ============================ */
+.burger {
+  display: none;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 24px; height: 18px;
+  background: none; border: 0; cursor: pointer;
+  position: relative;
+}
+.burger span {
+  position: absolute; left: 0; top: 50%;
+  width: 100%; height: 2px; background: #255219; border-radius: 2px;
+  transform-origin: center; transition: transform .22s ease, opacity .18s ease;
+  transform: translateY(-50%);
+}
+.burger span:nth-child(1){ transform: translateY(-9px); }
+.burger span:nth-child(2){ transform: translateY(-50%); }
+.burger span:nth-child(3){ transform: translateY(7px); }
+
+.burger[aria-expanded="true"] span:nth-child(1){ transform: translateY(-50%) rotate(45deg) !important; }
+.burger[aria-expanded="true"] span:nth-child(2){ opacity: 0 !important; }
+.burger[aria-expanded="true"] span:nth-child(3){ transform: translateY(-50%) rotate(-45deg) !important; }
+
+/* ============================
+   MOBILE (≤900px)
+   ============================ */
+@media (max-width: 900px) {
+  /* Header compact + burger */
+  header { position: relative; padding: 8px 0 !important; }
+  header .container {
+    padding: 0 16px !important;
+    min-height: 48px; display: flex; align-items: center; justify-content: space-between; gap: 10px;
+  }
+  .logo { font-size: 28px !important; line-height: 1; }
+  .burger { display: flex; margin-left: auto; }
+
+  /* Menu mobile déroulant (sous le header) */
+  header nav { display: block; }           /* jamais none, pour animer */
+  #nav {
+    position: absolute; top: 100%; left: 0; right: 0;
+    background: #fff; border-top: 2px solid #255219;
+    box-shadow: 0 6px 24px rgba(0,0,0,.10);
+    transform-origin: top; transform: scaleY(0);
+    opacity: 0; pointer-events: none; max-height: 70vh; overflow: hidden;
+    transition: transform .32s ease, opacity .20s linear;
+    z-index: 2500;
+  }
+  #nav.active { transform: scaleY(1); opacity: 1; pointer-events: auto; overflow-y: auto; }
+
+  header nav ul {
+    flex-direction: column !important; gap: 16px !important;
+    padding: 14px 0; margin: 0;
+  }
+  header nav li { border-bottom: 1px solid rgba(0,0,0,.08); }
+  header nav li:last-child { border-bottom: 0; }
+  header nav a {
+    display: block; padding: 10px 18px; font-size: 18px;
+    text-decoration: none; color: #000; font-weight: 500;
+  }
+
+  /* Patch des règles desktop (on neutralise l’alignement à droite) */
+  header nav { margin-left: 0 !important; width: auto !important; }
+  header nav ul { justify-content: flex-start !important; align-items: stretch !important; }
+
+  /* Hero */
+  .hero { height: auto; padding: 60px 16px; background-position: center; }
+  .hero-overlay { align-items: center; justify-content: center; padding: 24px 0; }
+  .hero-text { text-align: center; }
+  .hero-text h1 {
+    margin: 0; font-size: clamp(22px, 7vw, 36px); line-height: 1.25;
+    white-space: normal !important; word-break: keep-all; overflow-wrap: normal; hyphens: none;
+  }
+  .hero-text span { font-size: clamp(24px, 8vw, 42px); line-height: 1.2; }
+
+  /* Footer (empilage) */
+  .footer { padding-top: 40px !important; overflow-x: hidden; }
+  .footer-top { padding: 0 20px !important; }
+  .footer-row {
+    flex-direction: column !important; align-items: stretch !important; gap: 24px !important;
+  }
+  .footer-columns {
+    display: grid !important; grid-template-columns: 1fr 1fr !important;
+    gap: 18px 24px !important; margin-top: 0 !important; justify-items: center !important;
+  }
+  .footer-column { max-width: 260px !important; width: 100% !important; }
+  .footer-column h3 { font-size: 20px !important; margin: 0 0 6px !important; }
+  .footer-column p { font-size: 16px !important; line-height: 1.6 !important; margin: 0 !important; }
+
+  .footer-contact {
+    align-items: center !important; gap: 16px !important;
+    margin-top: 8px !important; margin-bottom: 32px !important; width: 100% !important;
+  }
+  .contact-item {
+    align-items: center !important; gap: 12px !important; width: 220px !important;
+  }
+  .contact-item .icon { width: 36px !important; height: 36px !important; }
+
+  .footer-bottom {
+    padding: 22px 20px !important; flex-direction: column !important;
+    gap: 22px !important; text-align: center !important;
+  }
+  .login-btn { width: 180px !important; padding: 10px 0 !important; }
+  .social-icons { justify-content: center; gap: 18px; }
+  .social-icons .icon { width: 40px !important; height: 40px !important; padding: 6px !important; border-radius: 12px !important; }
+
+  /* Utilitaire : bloque le scroll quand le menu est ouvert */
+  .no-scroll { overflow: hidden; }
+}
+
+/* ============================
+   Petites retouches ≥1024px tactile
+   ============================ */
+@media (hover: none) and (max-width: 1024px) {
+  /* (optionnel) rien de spécifique ici pour l’instant */
+}
+
+/* ===== agrandir le formulaire ===== */
+
+.create-heading {
+  font-size: 45px;
+  margin: 26px 0 60px;
+}
+
+.create-panel {
+  max-width: 1280px;                     /* était 1100px */
+  padding: clamp(28px, 4vw, 42px);       /* plus d’air autour */
+  border-radius: 16px;
+}
+
+.article-form .field {                   /* espaces entre les champs */
+  margin: 22px 0;
+}
+
+.article-form input,
+.article-form textarea {
+  padding: 18px 20px;                    /* champs plus hauts */
+  font-size: 1.2rem;                     /* texte un peu plus gros */
+  border-radius: 14px;
+}
+
+.article-form textarea#art-description { min-height: 140px; }  /* était 96px */
+.article-form textarea#art-content     { min-height: 220px; }  /* était 160px */
+
+.btn-save {
+  padding: 16px 36px;                    /* bouton plus grand */
+  font-size: 1.10rem;
+  font-family: "Poppins", sans-serif;
+  font-weight: 500;
+}
+
+/* mobile : on garde des proportions confortables */
+@media (max-width: 640px) {
+  .create-panel { padding: 20px; border-radius: 14px; }
+  .article-form input, .article-form textarea { padding: 14px 16px; font-size: 1rem; }
+  .btn-save { padding: 14px 28px; font-size: 1.05rem; }
+}
+
+
+/* ===== Marges internes plus petites dans le panneau ===== */
+
+/* Réduit le padding du bloc central */
+.create-panel {
+  padding: clamp(12px, 1.8vw, 20px); /* avant: 28–42px */
+}
+
+/* Réduit l’espace au-dessus/dessous des champs */
+.article-form .field { 
+  margin: 14px 0; /* avant: 18–22px */
+}
+
+/* Et serre encore le tout premier / dernier champ contre les bords du panneau */
+.article-form .field:first-child { margin-top: 6px; }
+.article-form .field:last-child  { margin-bottom: 6px; }
+
+/* Un peu moins d’air autour du bouton */
+.btn-save { 
+  margin: 14px auto 6px; /* avant: 18px auto 8px */
+}
+
+/* Sur mobile: gouttières encore un peu plus serrées */
+@media (max-width: 640px) {
+  .create-panel { padding: 10px 14px; }
+  .article-form .field { margin: 12px 0; }
+  .article-form .field:first-child { margin-top: 4px; }
+  .article-form .field:last-child  { margin-bottom: 4px; }
+}
+
+/* Un poil d'espace entre la page (fond blanc) et le gros bloc */
+.create-article {
+  padding-left: clamp(12px, 2.5vw, 32px);
+  padding-right: clamp(12px, 2.5vw, 32px);
+}
+
+.create-heading { 
+    margin-top: 28px; 
+}
+.create-panel   { 
+    margin-top: 12px; 
+    margin-bottom: 150px; 
+}
+
+/* Taille identique pour "Sa description" et "Son contenu" */
+:root {
+  --textarea-h: 120px; /* ajuste la valeur si tu veux plus/moins haut */
+}
+
+#art-description,
+#art-content {
+  min-height: var(--textarea-h);
+}
+
+#art-content {
+  height: var(--textarea-h);   /* force la même hauteur que la description */
+  resize: vertical;            /* l’utilisateur peut l’agrandir en hauteur si besoin */
+}
+
+:root {
+  --textarea-h: 120px; /* ajuste la hauteur commune ici */
+}
+
+#article-form #art-description,
+#article-form #art-content {
+  min-height: var(--textarea-h);
+  height: var(--textarea-h);
+  resize: vertical;
+}
+
+
+@media (max-width: 1024px) {
+.create-heading {
+    font-size: 30px;
+    margin-bottom: 30px;
+}
+
+.create-panel {
+    margin-bottom: 50px;
+
+}
+
+}
+
+/* =========================
+   Overrides ACTU — propres
+   ========================= */
+
+/* Hauteur commune pour les 2 zones de texte */
+:root { --textarea-h: 120px; }
+#art-description,
+#art-content {
+  min-height: var(--textarea-h);
+  height: var(--textarea-h);
+  resize: vertical;
+}
+
+/* Plus d’air entre les champs du formulaire */
+.article-form .field {
+  margin: 26px 0;
+}
+
+/* Rangée des boutons — CENTRÉE */
+.actions{
+  display: flex;
+  justify-content: center;   /* les 2 boutons au centre */
+  align-items: center;
+  gap: 100px;                 /* espace entre eux */
+  margin-top: 70px;          /* marge au-dessus */
+  margin-bottom: 30px;       /* marge en dessous */
+  width: 100%;
+}
+
+/* Boutons — taille/forme unifiées */
+.btn-save,
+.btn-delete-form{
+  display: inline-block;
+  padding: 18px 50px;        /* agrandit le bouton */
+  font-family: "Poppins", system-ui, -apple-system, sans-serif;
+  font-weight: 500;
+  font-size: 18px;           /* taille du texte */
+  line-height: 1.1;
+  border: 0;
+  border-radius: 50px;       /* pilule */
+  cursor: pointer;
+  transition: transform .15s ease, box-shadow .2s ease, filter .2s ease;
+  box-shadow: 0 8px 24px rgba(16,33,68,.08);
+  margin: 0;                 /* évite les décalages */
+}
+
+/* Couleurs */
+.btn-save{ background: #C8FF00; color: #0b0b0b; }
+.btn-delete-form{ background: #FF0000; color: #fff; }
+
+/* Hover/Active */
+.btn-save:hover,
+.btn-delete-form:hover{
+  transform: translateY(-1px);
+  filter: saturate(1.05);
+  box-shadow: 0 12px 28px rgba(16,33,68,.12);
+}
+.btn-save:active,
+.btn-delete-form:active{
+  transform: translateY(0);
+  box-shadow: 0 6px 18px rgba(16,33,68,.10);
+}
+
+/* Mobile — boutons un peu plus compacts */
+@media (max-width: 640px){
+  .actions{ gap: 24px; margin-top: 40px; margin-bottom: 24px; }
+  .btn-save, .btn-delete-form{ padding: 14px 28px; font-size: 1rem; border-radius: 40px; }
+}
+
+/* === STICKY FOOTER — force la zone blanche à prendre tout le viewport === */
+html, body { height: 100%; } /* base solide pour les 100vh */
+
+.main-wrapper{
+  /* occupe toujours toute la hauteur de l'écran */
+  min-height: 100vh;
+  min-height: 100dvh;        /* corrige les barres d'adresse mobiles */
+  display: flex;             /* layout vertical */
+  flex-direction: column;
+}
+
+.footer{
+  margin-top: auto;          /* pousse le footer en bas quand la page est courte */
+  flex-shrink: 0;            /* (ta règle existante peut rester) */
+}
+
+/* Si tu as un wrapper de contenu (.main-content), on le laisse étirer */
+.main-content{ flex: 1 0 auto; } /* sans effet si la classe n’existe pas */
+
+/* Mobile : plus d’air entre le titre (et sa barre) et le contenu */
+@media (max-width: 900px){
+  /* La barre est à bottom:-16px ; avec 56px de margin-bottom
+     tu obtiens ~40px d’espace visuel sous la barre. */
+  #article-detail .article-title{
+    margin-bottom: 56px !important;
+  }
+
+  /* Un petit rab pour l’élément qui suit, avec ou sans chapo */
+  #article-detail .article-title + .article-excerpt{
+    margin-top: 12px !important;
+  }
+  #article-detail .article-title + .article-content{
+    margin-top: 12px !important;
+  }
+}

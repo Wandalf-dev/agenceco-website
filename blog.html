@@ -1,11 +1,9 @@
 <!DOCTYPE html> <!-- Indique que c’est un document HTML5 -->
 <html lang="fr"> <!-- Langue du document -->
-
 <head>
   <meta charset="UTF-8"> <!-- Encodage UTF-8 pour les caractères spéciaux -->
   <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- Responsive : adapte le rendu aux écrans mobiles -->
   <title>AgenceEco</title> <!-- Titre de l’onglet -->
-
 
   <!-- Police Poppins importée depuis Google Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
@@ -24,19 +22,19 @@
       <div class="container">
         <a href="index.html" class="logo">Agenc<span>eco</span></a> <!-- Mot "eco" mis en italique via CSS -->
 
-    <nav id="nav">
-      <ul>
-        <li><a href="index.html">Accueil</a></li>
-        <li><a href="index.html#equipe">Notre équipe</a></li>
-        <li><a href="index.html#services">Nos services</a></li>
-        <li><a href="">Témoignages</a></li>
-        <li><a href="index.html#contact">Contactez-nous</a></li>
-        <li><a href="blog.html">Actualités</a></li>
-      </ul>
-    </nav>
+        <nav id="nav">
+          <ul>
+            <li><a href="index.html">Accueil</a></li>
+            <li><a href="index.html#equipe">Notre équipe</a></li>
+            <li><a href="index.html#services">Nos services</a></li>
+            <li><a href="detail.html">Témoignages</a></li>
+            <li><a href="index.html#contact">Contactez-nous</a></li>
+            <li><a href="blog.html" aria-current="page">Actualités</a></li>
+          </ul>
+        </nav>
 
         <!-- Bouton burger pour mobile -->
-        <button class="burger" id="burger" aria-label="Menu mobile">
+        <button class="burger" id="burger" aria-label="Menu mobile" aria-controls="nav" aria-expanded="false">
           <span></span>
           <span></span>
           <span></span>
@@ -51,9 +49,9 @@
     <h1>Nos actualités</h1>
 
     <a id="btn-add-article"
-      class="btn-add-article"
-      href="actu.html"
-      hidden>
+       class="btn-add-article"
+       href="actu.html"
+       hidden>
       Ajouter une actualité
     </a>
 
@@ -77,19 +75,16 @@
           // Nettoie l’URL
           params.delete("created")
           history.replaceState({}, "", `${location.pathname}${params.toString() ? "?" + params : ""}`)
-          // Tu peux aussi déclencher un rafraîchissement des actus ici si besoin:
+          // Eventuel rafraîchissement des actus :
           window.dispatchEvent(new CustomEvent("news:refresh"))
         }
       })
     </script>
 
-
-
-    <section id="news-list" aria-labelledby="news-heading">
-    <h2 id="news-heading" class="sr-only">Actualités</h2>
+    <section id="news-list" aria-labelledby="news-heading" aria-live="polite">
+      <h2 id="news-heading" class="sr-only">Actualités</h2>
+      <!-- Les cartes sont injectées par js/actu.js -->
     </section>
-
-    
 
     <!-- ===========================
          BLOC "PIED-DE-PAGE"
@@ -142,19 +137,19 @@
 
         <div class="social-icons">
           <!-- Facebook -->
-          <a href="https://facebook.com" target="_blank" aria-label="Facebook">
+          <a href="https://facebook.com" target="_blank" aria-label="Facebook" rel="noopener">
             <svg class="icon facebook" width="40" height="40" viewBox="0 0 24 24" fill="currentColor">
               <path d="M15.12,5.32H17V2.14A26.11,26.11,0,0,0,14.26,2C11.54,2,9.68,3.66,9.68,6.7V9.32H6.61v3.56H9.68V22h3.68V12.88h3.06l.46-3.56H13.36V7.05C13.36,6,13.64,5.32,15.12,5.32Z"></path>
             </svg>
           </a>
           <!-- Twitter -->
-          <a href="https://twitter.com" target="_blank" aria-label="Twitter">
+          <a href="https://twitter.com" target="_blank" aria-label="Twitter" rel="noopener">
             <svg class="icon twitter" width="40" height="40" viewBox="0 0 24 24" fill="currentColor">
               <path d="M22,5.8a8.49,8.49,0,0,1-2.36.64,4.13,4.13,0,0,0,1.81-2.27,8.21,8.21,0,0,1-2.61,1,4.1,4.1,0,0,0-7,3.74A11.64,11.64,0,0,1,3.39,4.62a4.16,4.16,0,0,0-.55,2.07A4.09,4.09,0,0,0,4.66,10.1,4.05,4.05,0,0,1,2.8,9.59v.05a4.1,4.1,0,0,0,3.3,4A3.93,3.93,0,0,1,5,13.81a4.9,4.9,0,0,1-.77-.07,4.11,4.11,0,0,0,3.83,2.84A8.22,8.22,0,0,1,3,18.34a7.93,7.93,0,0,1-1-.06,11.57,11.57,0,0,0,6.29,1.85A11.59,11.59,0,0,0,20,8.45c0-.17,0-.35,0-.53A8.43,8.43,0,0,0,22,5.8Z"></path>
             </svg>
           </a>
           <!-- Instagram -->
-          <a href="https://instagram.com" target="_blank" aria-label="Instagram">
+          <a href="https://instagram.com" target="_blank" aria-label="Instagram" rel="noopener">
             <svg class="icon instagram" width="40" height="40" viewBox="0 0 16 16" fill="currentColor">
               <g fill="none" stroke="currentColor" stroke-miterlimit="10">
                 <path d="M11.5 15.5h-7a4 4 0 0 1-4-4v-7a4 4 0 0 1 4-4h7a4 4 0 0 1 4 4v7a4 4 0 0 1-4 4z"></path>
@@ -171,95 +166,260 @@
          PARTIE SCRIPT JS
     ============================ -->
 
-  <script src="js/actu.js" defer></script>
-  <script src="js/burger.js" defer></script>
-  <script src="js/auth-button.js" defer></script>
-  
+    <script src="js/actu.js" defer></script>
+    <script src="js/burger.js" defer></script>
+    <script src="js/auth-button.js" defer></script>
 
-<script>
-(function () {
-  function showToast(msg, color, icon) {
-    const t = document.createElement('div');
-    t.setAttribute('role', 'status');
+    <!-- Toasts “publié / mis à jour / supprimé” -->
+    <script>
+      (function () {
+        function showToast(msg, color, icon) {
+          const t = document.createElement('div')
+          t.setAttribute('role', 'status')
 
-    // Styles communs
-    t.style.position = 'fixed';
-    t.style.top = '16px';
-    t.style.right = '16px';
-    t.style.display = 'flex';
-    t.style.alignItems = 'center';
-    t.style.gap = '10px';
-    t.style.padding = '12px 18px';
-    t.style.borderRadius = '8px';
-    t.style.fontSize = '15px';
-    t.style.fontWeight = '500';
-    t.style.color = '#fff';
-    t.style.zIndex = '9999';
-    t.style.boxShadow = '0 6px 16px rgba(0,0,0,.15)';
-    t.style.opacity = '0';
-    t.style.transform = 'translateY(-10px)';
-    t.style.transition = 'opacity .3s ease, transform .3s ease';
-    t.style.background = color;
+          // Styles communs
+          t.style.position = 'fixed'
+          t.style.top = '16px'
+          t.style.right = '16px'
+          t.style.display = 'flex'
+          t.style.alignItems = 'center'
+          t.style.gap = '10px'
+          t.style.padding = '12px 18px'
+          t.style.borderRadius = '8px'
+          t.style.fontSize = '15px'
+          t.style.fontWeight = '500'
+          t.style.color = '#fff'
+          t.style.zIndex = '9999'
+          t.style.boxShadow = '0 6px 16px rgba(0,0,0,.15)'
+          t.style.opacity = '0'
+          t.style.transform = 'translateY(-10px)'
+          t.style.transition = 'opacity .3s ease, transform .3s ease'
+          t.style.background = color
 
-    // Icône + texte
-    t.innerHTML = `
-      <span style="width:20px;height:20px;display:flex;align-items:center;">${icon}</span>
-      <span>${msg}</span>
-    `;
+          // Icône + texte
+          t.innerHTML = `
+            <span style="width:20px;height:20px;display:flex;align-items:center;">${icon}</span>
+            <span>${msg}</span>
+          `
 
-    document.body.appendChild(t);
+          document.body.appendChild(t)
 
-    // Apparition
-    requestAnimationFrame(() => {
-      t.style.opacity = '1';
-      t.style.transform = 'translateY(0)';
-    });
+          // Apparition
+          requestAnimationFrame(() => {
+            t.style.opacity = '1'
+            t.style.transform = 'translateY(0)'
+          })
 
-    // Disparition
-    setTimeout(() => {
-      t.style.opacity = '0';
-      t.style.transform = 'translateY(-10px)';
-      setTimeout(() => t.remove(), 300);
-    }, 3200);
-  }
+          // Disparition
+          setTimeout(() => {
+            t.style.opacity = '0'
+            t.style.transform = 'translateY(-10px)'
+            setTimeout(() => t.remove(), 300)
+          }, 3200)
+        }
 
-  const url = new URL(window.location.href);
-  const p   = url.searchParams;
+        const url = new URL(window.location.href)
+        const p   = url.searchParams
 
-  if (p.get('added') === '1') {
-    showToast('Article publié', '#469B61',
-      `<svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="white" stroke-width="2" viewBox="0 0 24 24">
-         <path d="M5 13l4 4L19 7"/>
-       </svg>`);
-  }
+        if (p.get('added') === '1') {
+          showToast('Article publié', '#469B61',
+            `<svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="white" stroke-width="2" viewBox="0 0 24 24">
+              <path d="M5 13l4 4L19 7"/>
+            </svg>`)
+        }
 
-  if (p.get('updated') === '1') {
-    showToast('Article mis à jour', '#FF9800',
-      `<svg xmlns="http://www.w3.org/2000/svg" fill="white" viewBox="0 0 24 24">
-         <path d="M3 17.25V21h3.75l11-11.03-3.75-3.75L3 17.25zM20.71 7.04a1 1 0 000-1.41l-2.34-2.34a1 1 0 00-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/>
-       </svg>`);
-  }
+        if (p.get('updated') === '1') {
+          showToast('Article mis à jour', '#FF9800',
+            `<svg xmlns="http://www.w3.org/2000/svg" fill="white" viewBox="0 0 24 24">
+              <path d="M3 17.25V21h3.75l11-11.03-3.75-3.75L3 17.25zM20.71 7.04a1 1 0 000-1.41l-2.34-2.34a1 1 0 00-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/>
+            </svg>`)
+        }
 
-  if (p.get('deleted') === '1') {
-    showToast('Article supprimé', '#D32F2F',
-      `<svg xmlns="http://www.w3.org/2000/svg" fill="white" viewBox="0 0 24 24">
-         <path d="M6 19a2 2 0 002 2h8a2 2 0 002-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/>
-       </svg>`);
-  }
+        if (p.get('deleted') === '1') {
+          showToast('Article supprimé', '#D32F2F',
+            `<svg xmlns="http://www.w3.org/2000/svg" fill="white" viewBox="0 0 24 24">
+              <path d="M6 19a2 2 0 002 2h8a2 2 0 002-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/>
+            </svg>`)
+        }
 
-  // Nettoyage URL
-  ['added','updated','deleted'].forEach(k => p.delete(k));
-  window.history.replaceState({}, '', `${url.pathname}${p.toString() ? '?' + p.toString() : ''}`);
-})();
-</script>
+        // Nettoyage URL
+        ['added','updated','deleted'].forEach(k => p.delete(k))
+        window.history.replaceState({}, '', `${url.pathname}${p.toString() ? '?' + p.toString() : ''}`)
+      })()
+    </script>
 
+    <!-- Boîte de confirmation custom (utilisée par actu.js si présente) -->
+    <script>
+      ;(() => {
+        if (window.confirmDialog) return
 
+        const styles = `
+        .cfx-overlay{
+          position:fixed; inset:0;
+          background:rgba(3,7,18,.72);
+          backdrop-filter:saturate(140%) blur(4px);
+          display:flex; align-items:center; justify-content:center;
+          z-index:100000; opacity:0; transition:opacity .22s ease;
+        }
+        .cfx-overlay.open{ opacity:1 }
+        .cfx-modal{
+          width:min(92vw,560px);
+          background:linear-gradient(180deg,#0b1220 0%,#0a1120 100%);
+          color:#fff; border-radius:14px;
+          border:1px solid rgba(255,255,255,.08);
+          box-shadow:0 24px 80px rgba(0,0,0,.5);
+          transform:translateY(10px) scale(.98);
+          opacity:.98; transition:transform .22s ease,opacity .22s ease;
+          font-family:Poppins,system-ui,-apple-system,Segoe UI,Roboto,sans-serif;
+        }
+        .cfx-overlay.open .cfx-modal{ transform:translateY(0) scale(1); opacity:1 }
+        .cfx-header{ display:flex; gap:14px; align-items:center; padding:20px 24px 10px }
+        .cfx-icon{
+          width:32px; height:32px; display:flex; align-items:center; justify-content:center;
+          border-radius:10px; background:rgba(148,163,184,.14);
+          border:1px solid rgba(255,255,255,.08);
+        }
+        .cfx-title{ font-size:20px; font-weight:700; letter-spacing:.01em; margin:0 }
+        .cfx-body{ padding:0 24px 18px; font-size:15px; line-height:1.6; color:rgba(255,255,255,.92) }
+        .cfx-actions{ display:flex; gap:12px; justify-content:flex-end; padding:16px 20px 20px; border-top:1px solid rgba(255,255,255,.08) }
+        .cfx-btn{
+          appearance:none; border:1px solid transparent;
+          border-radius:12px; padding:10px 16px;
+          min-height:44px; min-width:112px;
+          font-weight:700; font-size:14px; letter-spacing:.015em;
+          cursor:pointer; transition:background .15s ease, box-shadow .15s ease, transform .08s ease;
+        }
+        .cfx-btn:focus{ outline:2px solid #93c5fd; outline-offset:2px }
+        .cfx-btn:active{ transform:translateY(0.5px) }
+        .cfx-btn.cancel{ background:#0f172a; color:#e5e7eb; border-color:rgba(255,255,255,.08) }
+        .cfx-btn.cancel:hover{ background:#111827 }
+        .cfx-btn.primary{ background:#2563eb; color:#fff }
+        .cfx-btn.primary:hover{ background:#1e40af }
+        .cfx-btn.primary.danger{ background:#dc2626 }
+        .cfx-btn.primary.danger:hover{ background:#b91c1c }
+        .cfx-btn.primary.danger:focus{ outline-color:#fecaca }
+        @media (max-width: 520px){
+          .cfx-actions{ flex-direction:column-reverse }
+          .cfx-btn{ width:100% }
+        }
+        @media (prefers-reduced-motion: reduce){
+          .cfx-overlay, .cfx-modal{ transition:none }
+        }
+        @media (prefers-color-scheme: light){
+          .cfx-overlay{ background:rgba(0,0,0,.45) }
+          .cfx-modal{
+            background:#ffffff; color:#0b1220;
+            border:1px solid #e5e7eb; box-shadow:0 18px 60px rgba(0,0,0,.15);
+          }
+          .cfx-icon{ background:#f3f4f6; border-color:#e5e7eb }
+          .cfx-body{ color:#111827 }
+          .cfx-actions{ border-top-color:#e5e7eb }
+          .cfx-btn.cancel{ background:#f3f4f6; color:#111827; border-color:#e5e7eb }
+          .cfx-btn.cancel:hover{ background:#e5e7eb }
+        }`
 
+        const styleId = 'cfx-confirm-style'
+        if (!document.getElementById(styleId)) {
+          const s = document.createElement('style')
+          s.id = styleId
+          s.textContent = styles
+          document.head.appendChild(s)
+        }
 
+        const TRASH = `
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="white" viewBox="0 0 24 24" style="display:block">
+            <path d="M6 19a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/>
+          </svg>`
 
+        function lockScroll(lock) {
+          const html = document.documentElement
+          if (lock) {
+            html.dataset._cfxOverflow = html.style.overflow || ''
+            html.style.overflow = 'hidden'
+          } else {
+            html.style.overflow = html.dataset._cfxOverflow || ''
+            delete html.dataset._cfxOverflow
+          }
+        }
 
+        window.confirmDialog = function confirmDialog(opts = {}) {
+          const {
+            title = 'Confirmer la suppression',
+            message = 'Cette action est irréversible.',
+            confirmText = 'Supprimer',
+            cancelText = 'Annuler',
+            danger = true,
+            iconSvg = TRASH
+          } = opts
 
+          return new Promise(resolve => {
+            const overlay = document.createElement('div')
+            overlay.className = 'cfx-overlay'
+            overlay.setAttribute('role', 'presentation')
+
+            const modal = document.createElement('div')
+            modal.className = 'cfx-modal'
+            modal.setAttribute('role', 'dialog')
+            modal.setAttribute('aria-modal', 'true')
+
+            const titleId = `cfx-title-${Date.now()}`
+            const descId  = `cfx-desc-${Date.now()}`
+            modal.setAttribute('aria-labelledby', titleId)
+            modal.setAttribute('aria-describedby', descId)
+
+            modal.innerHTML = `
+              <div class="cfx-header">
+                <div class="cfx-icon">${iconSvg}</div>
+                <h2 id="${titleId}" class="cfx-title">${title}</h2>
+              </div>
+              <div id="${descId}" class="cfx-body">${message}</div>
+              <div class="cfx-actions">
+                <button type="button" class="cfx-btn cancel">${cancelText}</button>
+                <button type="button" class="cfx-btn primary ${danger ? 'danger' : ''}">${confirmText}</button>
+              </div>
+            `
+            overlay.appendChild(modal)
+            document.body.appendChild(overlay)
+            requestAnimationFrame(() => overlay.classList.add('open'))
+            lockScroll(true)
+
+            const btnCancel  = modal.querySelector('.cfx-btn.cancel')
+            const btnConfirm = modal.querySelector('.cfx-btn.primary')
+
+            function close(answer) {
+              overlay.classList.remove('open')
+              setTimeout(() => {
+                overlay.remove()
+                lockScroll(false)
+                resolve(answer)
+              }, 150)
+            }
+
+            btnCancel.addEventListener('click', () => close(false))
+            btnConfirm.addEventListener('click', () => close(true))
+            overlay.addEventListener('click', e => { if (e.target === overlay) close(false) })
+
+            overlay.addEventListener('keydown', e => {
+              if (e.key === 'Escape') { e.preventDefault(); close(false) }
+              if (e.key === 'Tab') {
+                const focusables = [btnCancel, btnConfirm]
+                const i = focusables.indexOf(document.activeElement)
+                if (e.shiftKey) {
+                  e.preventDefault()
+                  focusables[(i + focusables.length - 1) % focusables.length].focus()
+                } else {
+                  e.preventDefault()
+                  focusables[(i + 1) % focusables.length].focus()
+                }
+              }
+            })
+
+            btnCancel.focus()
+          })
+        }
+      })()
+    </script>
 
   </main> <!-- modification de "/div" par "/main" -->
 </body>
-</html> 
+</html>

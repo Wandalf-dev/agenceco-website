@@ -12,12 +12,24 @@
  *    - Envoie JWT via Authorization: Bearer <token>
  *    - Redirige vers blog.html?added=1 (create) ou ?updated=1 (update)
  *    - Gère erreurs 400/401/403/404 avec mapping des erreurs de champs
+ *    - Bouton Supprimer retiré en création (zéro flash), actif seulement en édition
  * ================================================================
  */
 
 ;(function () {
-  const API_BASE = 'http://localhost:3000'  // adapte si besoin
+  const API_BASE = 'http://localhost:3000'   // adapte si besoin
   const ARTICLES_URL = `${API_BASE}/articles`
+
+  // ===== Anti-flash immédiat (avant DOMContentLoaded) =====
+  const _params  = new URLSearchParams(location.search)
+  const _isEdit  = !!_params.get('id')
+  if (!_isEdit) {
+    // On supprime tout bouton "Supprimer" potentiel pour éviter toute apparition visuelle
+    const earlyDeleteButtons = document.querySelectorAll(
+      '#btn-delete-article, [data-action="delete-article"], .btn-delete-article, .btn-delete'
+    )
+    earlyDeleteButtons.forEach(btn => btn.remove())
+  }
 
   document.addEventListener('DOMContentLoaded', () => {
     const form = document.getElementById('article-form')
@@ -36,12 +48,36 @@
     const elImage     = document.getElementById('art-image')        || form.querySelector('[name="image"]')
     const elImageAlt  = document.getElementById('art-imageAlt')     || form.querySelector('[name="imageAlt"]')
     const btnSubmit   = form.querySelector('button[type="submit"], .btn-save')
-    const btnDelete   = document.getElementById('btn-delete-article') // si présent dans ton HTML
+
+    // Bouton Supprimer — sélection robuste (dans le form + global)
+    const deleteButtons = Array.from(new Set([
+      ...form.querySelectorAll('#btn-delete-article, [data-action="delete-article"], .btn-delete-article, .btn-delete'),
+      ...document.querySelectorAll('#btn-delete-article, [data-action="delete-article"], .btn-delete-article, .btn-delete')
+    ]))
 
     // Helpers URL/Token
     const params   = new URLSearchParams(location.search)
-    const editId   = params.get('id') // si présent ⇒ mode UPDATE
+    const editId   = params.get('id')      // si présent ⇒ mode UPDATE
+    const isEdit   = !!editId
     const token    = () => localStorage.getItem('auth_token')
+
+    // Libellé du bouton submit (création vs édition)
+    if (btnSubmit) btnSubmit.textContent = isEdit ? 'Mettre à jour' : 'Sauvegarder'
+
+
+    // 🔒 Supprimer : retiré en création, visible/accessible en édition
+    if (deleteButtons.length) {
+      if (!isEdit) {
+        deleteButtons.forEach(btn => btn.remove())
+      } else {
+        deleteButtons.forEach(btn => {
+          btn.hidden = false
+          btn.style.display = ''
+          btn.setAttribute('aria-hidden', 'false')
+          btn.tabIndex = 0
+        })
+      }
+    }
 
     // État soumission
     function setSubmitting(v) {
@@ -49,8 +85,9 @@
       btnSubmit.disabled = v
       const original = btnSubmit.dataset.originalText || btnSubmit.textContent
       if (!btnSubmit.dataset.originalText) btnSubmit.dataset.originalText = original
-      btnSubmit.textContent = v ? (editId ? 'Mise à jour…' : 'Publication…') : btnSubmit.dataset.originalText
+      btnSubmit.textContent = v ? (isEdit ? 'Mise à jour…' : 'Sauvegarde…') : btnSubmit.dataset.originalText
     }
+
 
     // Erreurs UI
     function showError(inputOrForm, message) {
@@ -112,13 +149,9 @@
 
     // ====== MODE ÉDITION : pré-remplissage ======
     let loadedArticle = null  // on garde l’article pour (ex: publicationDate)
-    if (editId) {
-      // UI
+    if (isEdit) {
       if (btnSubmit) btnSubmit.textContent = 'Mettre à jour'
-      // si tu veux afficher le bouton supprimer uniquement en édition
-      if (btnDelete) btnDelete.hidden = false
 
-      // fetch l’article pour pré-remplir
       ;(async () => {
         try {
           const res = await fetch(`${ARTICLES_URL}/${encodeURIComponent(editId)}`, {
@@ -140,9 +173,6 @@
           showError(form, 'Impossible de charger l’article pour édition.')
         }
       })()
-    } else {
-      // mode création : cacher le bouton supprimer si tu l’as dans le DOM
-      if (btnDelete) btnDelete.hidden = true
     }
 
     // ====== Submit (Create/Update) ======
@@ -169,8 +199,8 @@
       if (content.length < 10) errs.push([elContent, 'Le contenu doit contenir au moins 10 caractères.'])
 
       // Image : on valide seulement en création (ton PUT API est JSON pur)
-      const file = !editId ? (elImage?.files?.[0] || null) : null
-      if (!editId && file) {
+      const file = !isEdit ? (elImage?.files?.[0] || null) : null
+      if (!isEdit && file) {
         const allowed = ['image/jpeg','image/png','image/webp']
         if (!allowed.includes(file.type)) errs.push([elImage, 'Formats autorisés : JPG, PNG, WEBP.'])
         if (file.size > 5 * 1024 * 1024)  errs.push([elImage, 'Taille max 5 Mo.'])
@@ -185,7 +215,7 @@
         setSubmitting(true)
 
         // ====== CREATE (POST) avec éventuellement fichier ======
-        if (!editId) {
+        if (!isEdit) {
           let fetchOptions
           if (file) {
             const fd = new FormData()
@@ -256,7 +286,6 @@
         }
 
         // ====== UPDATE (PUT JSON) ======
-        // Schéma d’API (fourni) :
         // { id, title, description, content, publicationDate: "YYYY-MM-DD" }
         const publicationDate =
           loadedArticle?.publicationDate ||
@@ -327,32 +356,52 @@
       }
     }
 
-    // ====== (Optionnel) suppression en mode édition — branchement UI uniquement
-    if (btnDelete && editId) {
-      btnDelete.addEventListener('click', async () => {
-        const jwt = token()
-        if (!jwt) { showError(form, 'Vous devez être connecté pour supprimer.'); return }
-        if (!confirm('Supprimer définitivement cet article ?')) return
+    // ====== suppression en mode édition — branchement UI uniquement ======
+    if (deleteButtons.length && isEdit) {
+      deleteButtons.forEach(btn => {
+        btn.addEventListener('click', async () => {
+          const jwt = token()
+          if (!jwt) { showError(form, 'Vous devez être connecté pour supprimer.'); return }
 
-        try {
-          const res = await fetch(`${ARTICLES_URL}/${encodeURIComponent(editId)}`, {
-            method: 'DELETE',
-            headers: { 'Authorization': `Bearer ${jwt}` }
-          })
-          if (!res.ok) {
-            let raw = ''
-            try { raw = await res.text() } catch {}
-            let json = null
-            try { json = raw ? JSON.parse(raw) : null } catch {}
-            const msg = json?.message || `Suppression impossible (HTTP ${res.status}).`
-            showError(form, msg)
-            return
+          // ⬇️ remplace cette ligne :
+          // if (!confirm('Supprimer définitivement cet article ?')) return
+          // ⬆️ par le bloc suivant :
+          let ok
+          if (window.confirmDialog) {
+            ok = await confirmDialog({
+              title: 'Supprimer cet article ?',
+              message: 'Vous êtes sur le point de supprimer définitivement cet article.',
+              confirmText: 'Supprimer',
+              cancelText: 'Annuler',
+              danger: true
+            })
+          } else {
+            // fallback si le helper n’est pas chargé
+            ok = confirm('Supprimer définitivement cet article ?')
           }
-          window.location.href = '/blog.html?deleted=1'
-        } catch (err) {
-          console.error('[actu-create] DELETE failed:', err)
-          showError(form, 'Erreur réseau pendant la suppression.')
-        }
+          if (!ok) return
+          // ⬆️ fin remplacement
+
+          try {
+            const res = await fetch(`${ARTICLES_URL}/${encodeURIComponent(editId)}`, {
+              method: 'DELETE',
+              headers: { 'Authorization': `Bearer ${jwt}` }
+            })
+            if (!res.ok) {
+              let raw = ''
+              try { raw = await res.text() } catch {}
+              let json = null
+              try { json = raw ? JSON.parse(raw) : null } catch {}
+              const msg = json?.message || `Suppression impossible (HTTP ${res.status}).`
+              showError(form, msg)
+              return
+            }
+            window.location.href = '/blog.html?deleted=1'
+          } catch (err) {
+            console.error('[actu-create] DELETE failed:', err)
+            showError(form, 'Erreur réseau pendant la suppression.')
+          }
+        })
       })
     }
   })
