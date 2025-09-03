@@ -1,24 +1,22 @@
-// js/detail.js — hydrate #article-detail sans écraser le HTML
+// js/detail.js — rendu propre + "Chargement…" retardé + fetch parallèle
 (() => {
-  // --- 1) ID d'article ---
+  // --- 1) Récupération de l'ID depuis l'URL ---
   const params = new URLSearchParams(location.search);
   const id = params.get('id');
   if (!id) { location.replace('blog.html'); return; }
 
-  // --- 2) Ciblage DOM (doit correspondre à ton HTML) ---
-  const root = document.getElementById('article-detail');
-  const el = {
-    title:   document.getElementById('art-title'),
-    date:    document.getElementById('art-date'),
-    excerpt: document.getElementById('art-excerpt'),
-    cover:   document.getElementById('art-cover'),
-    content: document.getElementById('art-content'),
-    gallery: document.getElementById('art-gallery'),
-    status:  document.getElementById('art-status'),
-    back:    document.getElementById('back-link'),
-  };
+  // --- 2) Ciblage / racine ---
+  const root = document.querySelector('#article-detail') || (() => {
+    const s = document.createElement('section');
+    s.id = 'article-detail';
+    document.body.prepend(s);
+    return s;
+  })();
 
-  // --- 3) API endpoints possibles ---
+  // Si du HTML "Chargement…" était présent en dur, on le supprime pour éviter tout flash
+  root.querySelectorAll('.status').forEach(el => el.remove());
+
+  // --- 3) API : endpoints possibles (on prend le 1er qui répond) ---
   const API_BASE = window.API_BASE || 'http://localhost:3000';
   const urls = [
     `${API_BASE}/articles/${encodeURIComponent(id)}`,
@@ -31,29 +29,25 @@
   const esc = (s) => String(s ?? '')
     .replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
 
-  // Autorise seulement ces balises dans le HTML éditorial éventuel
+  // Autorise UNIQUEMENT ces balises si l'API renvoie déjà du HTML éditorial
   const ALLOWED_HTML_RE = /<(p|br|ul|ol|li|strong|em|b|i|u|a|blockquote|hr|code)\b[\s\S]*?>/i;
 
-  // Texte -> HTML block (génère des <p>…</p>)
-  function formatBlock(text) {
+  // Transforme du texte brut en HTML avec <p>…</p> et <br>
+  function formatText(text) {
     if (!text) return '';
     const str = String(text);
-    if (ALLOWED_HTML_RE.test(str)) return str;  // déjà du HTML éditorial
+    if (ALLOWED_HTML_RE.test(str)) return str;   // déjà du HTML "propre"
+
     let safe = esc(str.trim());
+    // escape de pseudo-tags pour les afficher proprement
     safe = safe.replace(/&lt;([a-z][a-z0-9-]*)&gt;/gi, '<code>&lt;$1&gt;</code>');
-    return safe.split(/\n{2,}/).map(p => `<p>${p.replace(/\n/g,'<br>')}</p>`).join('');
+
+    return safe.split(/\n{2,}/)                  // paragraphes
+      .map(p => `<p>${p.replace(/\n/g, '<br>')}</p>`)
+      .join('');
   }
 
-  // Texte -> inline (pas de <p> pour éviter <p> dans <p>)
-  function formatInline(text) {
-    if (!text) return '';
-    const str = String(text);
-    if (ALLOWED_HTML_RE.test(str)) return str;  // si l’API renvoie du HTML propre
-    let safe = esc(str.trim());
-    return safe.replace(/\n/g, '<br>');
-  }
-
-  // Unwrap réponses API variées
+  // Déroule les formats de réponse courants
   function unwrap(data) {
     if (Array.isArray(data)) return data[0] || null;
     if (data && typeof data === 'object') {
@@ -71,119 +65,73 @@
     const excerpt = a.description || a.excerpt || '';
     const body    = a.content || a.body || '';
 
-    const dateVal     = a.publicationDate || a.publishedAt || a.createdAt || a.date || null;
-    const d           = dateVal ? new Date(dateVal) : null;
+    const dateVal = a.publicationDate || a.publishedAt || a.createdAt || a.date || null;
+    const d = dateVal ? new Date(dateVal) : null;
     const dateMachine = d && !Number.isNaN(d) ? d.toISOString().slice(0,10) : '';
     const dateHuman   = d && !Number.isNaN(d) ? d.toLocaleDateString('fr-FR') : '';
 
-    // Titre
-    if (el.title) el.title.textContent = title;
+    root.innerHTML = `
+      <a class="back-link fx-fade delay-0" href="blog.html">← Retour aux actualités</a>
+      <article class="article">
+        <h1 class="article-title fx-fade fx-underline delay-1">${esc(title)}</h1>
+        ${dateHuman ? `<p class="article-date fx-fade delay-2">Publié le <time datetime="${dateMachine}">${dateHuman}</time></p>` : ''}
 
-    // Date (même si masquée par CSS, on la remplit pour l’accessibilité)
-    if (el.date) {
-      if (dateHuman) {
-        el.date.innerHTML = `Publié le <time datetime="${dateMachine}">${dateHuman}</time>`;
-        el.date.hidden = false;
-      } else {
-        el.date.hidden = true;
-      }
-    }
+        ${excerpt ? `<div class="article-excerpt fx-fade delay-3">${formatText(excerpt)}</div>` : ''}
 
-    // Extrait (inline, pas de <p> imbriqués)
-    if (el.excerpt) {
-      if (excerpt) {
-        el.excerpt.innerHTML = formatInline(excerpt);
-        el.excerpt.hidden = false;
-      } else {
-        el.excerpt.hidden = true;
-      }
-    }
+        ${img ? `<img class="article-cover fx-fade delay-4" src="${esc(img)}" alt="${esc(title)}">` : ''}
 
-    // Image
-    if (el.cover) {
-      if (img) {
-        el.cover.src = img;
-        el.cover.alt = title || '';
-        el.cover.hidden = false;
-      } else {
-        el.cover.hidden = true;
-      }
-    }
-
-    // Contenu
-    if (el.content) {
-      el.content.innerHTML = formatBlock(body);
-      // sécurise les liens ouverts par l’API
-      el.content.querySelectorAll('a[href]').forEach(a => {
-        a.target = '_blank';
-        a.rel = 'noopener noreferrer';
-      });
-    }
-
-    // Galerie (supporte a.images / a.gallery / a.photos : string[] ou [{src}] )
-    if (el.gallery) {
-      const arr = a.images || a.gallery || a.photos || [];
-      const urls = (Array.isArray(arr) ? arr : []).map(x => {
-        if (!x) return null;
-        if (typeof x === 'string') return x;
-        if (x.src) return x.src;
-        if (x.url) return x.url;
-        return null;
-      }).filter(Boolean);
-      if (urls.length) {
-        el.gallery.innerHTML = urls.map(u =>
-          `<a href="${esc(u)}" target="_blank" rel="noopener noreferrer">
-             <img src="${esc(u)}" alt="">
-           </a>`
-        ).join('');
-        el.gallery.hidden = false;
-      } else {
-        el.gallery.hidden = true;
-      }
-    }
-
-    // Title de l’onglet
-    document.title = `${title} — AgenceEco`;
+        <div class="article-content fx-fade delay-5">
+          ${formatText(body)}
+        </div>
+      </article>
+    `;
 
     // underline animé (après layout)
     requestAnimationFrame(() => {
-      el.title?.classList.add('is-on');
-      el.title?.focus?.(); // petit + accessibilité si focusable
+      root.querySelector('.article-title')?.classList.add('is-on');
     });
 
-    // back-link : history.back() si possible
-    if (el.back) {
-      el.back.addEventListener('click', (e) => {
-        if (history.length > 1) { e.preventDefault(); history.back(); }
-      }, { once: true });
-    }
-
-    // status off
-    if (el.status) el.status.hidden = true;
+    // Titre d’onglet
+    document.title = `${title} — AgenceEco`;
   }
 
   function fail(msg) {
-    if (el.status) {
-      el.status.textContent = msg;
-      el.status.classList.add('error');
-      el.status.hidden = false;
-    } else {
-      root.insertAdjacentHTML('afterbegin', `<p class="status error">${esc(msg)}</p>`);
-    }
+    root.innerHTML = `
+      <p class="status error" role="alert">${esc(msg)}</p>
+      <p><a class="back-link" href="blog.html">← Retour aux actualités</a></p>
+    `;
   }
 
-  // --- 6) Chargement ---
-  if (el.status) { el.status.hidden = false; el.status.textContent = 'Chargement…'; }
+  // --- 6) État de chargement — retardé (évite le flash si ça charge vite) ---
+  const statusEl = document.createElement('p');
+  statusEl.className = 'status';
+  statusEl.setAttribute('role', 'status');
+  statusEl.textContent = 'Chargement…';
+  statusEl.hidden = true;           // caché au départ
+  root.appendChild(statusEl);
 
+  const statusTimer = setTimeout(() => { statusEl.hidden = false; }, 250);
+  const clearStatus = () => { clearTimeout(statusTimer); statusEl.remove(); };
+
+  // --- 7) Chargement : fetch en parallèle, première réponse OK gagnante ---
   (async () => {
-    for (const url of urls) {
-      try {
-        const res = await fetch(url, { headers: { 'Accept': 'application/json' } });
-        if (!res.ok) continue;
-        const data = unwrap(await res.json());
-        if (data && typeof data === 'object') { render(data); return; }
-      } catch {/* try next */}
+    try {
+      const controller = new AbortController();
+      const { signal } = controller;
+
+      const attempts = urls.map(u =>
+        fetch(u, { headers: { 'Accept': 'application/json' }, signal })
+          .then(r => r.ok ? r.json() : Promise.reject())
+          .then(unwrap)
+      );
+
+      const data = await Promise.any(attempts);
+      controller.abort();          // stoppe les autres requêtes
+      render(data);
+      clearStatus();               // retire le “Chargement…”
+    } catch {
+      clearStatus();
+      fail(`Impossible de charger l’article (ID=${esc(id)}).`);
     }
-    fail(`Impossible de charger l’article (ID=${esc(id)}).`);
   })();
 })();

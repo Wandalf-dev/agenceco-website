@@ -851,3 +851,31 @@ body {
   transform: translateY(-1px);
 
 }
+
+/* Titre cliquable — couleur au survol/focus, sans soulignement */
+.news-title,
+.news-title a{
+  text-decoration: none;
+  transition: color .18s ease;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Survol souris + focus clavier */
+.news-title:hover,
+.news-title:focus-within,
+.news-title a:hover,
+.news-title a:focus-visible{
+  color: #C8FF00;                 /* couleur contrastée au hover */
+  outline: none;
+}
+
+/* Clic maintenu (petite variation) */
+.news-title a:active{
+  color: #b4eb00;
+}
+
+/* Optionnel : si ta carte est sur fond blanc, préfère un vert sombre pour le contraste
+.news-title:hover,
+.news-title a:hover{ color:#1e3a1a; }
+*/
+
