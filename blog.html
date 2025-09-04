@@ -1,71 +1,107 @@
-<!DOCTYPE html> <!-- Indique que c’est un document HTML5 -->
-<html lang="fr"> <!-- Langue du document -->
+<!DOCTYPE html> <!-- Document HTML5 -->
+<html lang="fr"> <!-- Langue principale du document -->
 <head>
-  <meta charset="UTF-8"> <!-- Encodage UTF-8 pour les caractères spéciaux -->
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- Responsive : adapte le rendu aux écrans mobiles -->
-  <title>AgenceEco</title> <!-- Titre de l’onglet -->
+  <meta charset="UTF-8"> <!-- Encodage -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- Responsive -->
+  <title>AgenceEco</title> <!-- Titre onglet -->
 
-  <!-- Police Poppins importée depuis Google Fonts -->
+  <!-- Typographie : Poppins (Google Fonts) pour cohérence visuelle -->
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
 
-  <!-- Lien vers la feuille de style principale -->
+  <!-- Feuille de styles spécifique à la page "blog/actualités" -->
   <link rel="stylesheet" href="css/blog.css">
-
 </head>
 
 <body>
-  <main class="main-wrapper"> <!-- Modification de "div" par "main" -->
+  <!--
+    Structure sémantique :
+    - header, main, footer = zones majeures.
+    - <main> encapsule le contenu principal de la page.
+  -->
+  <main class="main-wrapper">
 
-    <!-- ===========================
-         HEADER : logo + navigation
-    ============================ -->
+    <!-- =========================================================
+         HEADER — Logo, navigation principale, burger mobile
+         Accessibilité :
+         - <nav aria-label="Navigation principale">
+         - Bouton burger relié au menu via aria-controls/aria-expanded (mis à jour par JS)
+    ========================================================== -->
     <header>
       <div class="container">
-        <a href="index.html" class="logo">Agenc<span>eco</span></a> <!-- Mot "eco" mis en italique via CSS -->
+        <a href="index.html" class="logo">Agenc<span>eco</span></a> <!-- "eco" stylisé via CSS -->
 
-        <nav id="nav">
+        <nav id="nav" aria-label="Navigation principale">
           <ul>
             <li><a href="index.html">Accueil</a></li>
             <li><a href="index.html#equipe">Notre équipe</a></li>
             <li><a href="index.html#services">Nos services</a></li>
-            <li><a href="">Témoignages</a></li>
+            <li><a href="">Témoignages</a></li> <!-- TODO : compléter l’URL/ancre réelle -->
             <li><a href="index.html#contact">Contactez-nous</a></li>
             <li><a href="blog.html" aria-current="page">Actualités</a></li>
           </ul>
         </nav>
 
-        <!-- Bouton burger pour mobile -->
+        <!-- Burger (mobile) -->
         <button class="burger" id="burger" aria-label="Menu mobile" aria-controls="nav" aria-expanded="false">
-          <span></span>
-          <span></span>
-          <span></span>
+          <span></span><span></span><span></span>
         </button>
       </div>
     </header>
 
-    <!-- ===========================
-         BLOC "ACTU" DYNAMIQUE
-    ============================ -->
-
+    <!-- =========================================================
+         ACTUALITÉS — Titre + bouton "Ajouter" (visible si authentifié)
+    ========================================================== -->
     <h1>Nos actualités</h1>
 
-    <a id="btn-add-article"
-       class="btn-add-article"
-       href="actu.html"
-       hidden>
+    <!--
+      Bouton "Ajouter une actualité"
+      - Masqué par défaut (hidden).
+      - Rendu visible par script si un JWT valide est présent en localStorage.
+    -->
+    <a id="btn-add-article" class="btn-add-article" href="actu.html" hidden>
       Ajouter une actualité
     </a>
 
+    <!--
+      SCRIPT #1 — Affichage conditionnel du bouton "Ajouter"
+      Rôle :
+      - Exposer l’action "Ajouter une actualité" uniquement aux utilisateurs authentifiés.
+
+      Fonctionnement :
+      1) À DOMContentLoaded, récupérer la référence du bouton (#btn-add-article).
+      2) Lire le jeton JWT dans localStorage sous la clé "auth_token".
+      3) Si présent, retirer l’attribut "hidden" pour rendre le bouton visible.
+
+      Maintenabilité :
+      - La clé "auth_token" doit rester cohérente avec le module d’authentification.
+      - Le contrôle d’authentification côté client ne remplace pas les vérifications côté serveur.
+    -->
     <script>
-      // Affiche le bouton seulement si un JWT est présent
       document.addEventListener("DOMContentLoaded", () => {
         const btn = document.getElementById("btn-add-article")
         if (!btn) return
         const token = localStorage.getItem("auth_token")
         if (token) btn.hidden = false
       })
+    </script>
 
-      // (Optionnel) bandeau succès après création
+    <!--
+      SCRIPT #2 — Bandeau de confirmation après création
+      Rôle :
+      - Afficher un message non intrusif ("Article créé avec succès.") après une redirection post-création.
+
+      Fonctionnement :
+      1) Lire les paramètres d’URL via URLSearchParams.
+      2) Si "created=1" est présent :
+         - Créer un <p.status.success> et l’injecter après le <h1>.
+         - Supprimer le paramètre de l’URL via history.replaceState (évite la réapparition au rechargement).
+         - Émettre l’évènement personnalisé "news:refresh" pour déclencher un rechargement des actualités si un listener existe.
+
+      Bonnes pratiques :
+      - Les indicateurs d’état (?created=1) doivent être consommés puis retirés de l’URL.
+      - L’évènement "news:refresh" permet un couplage faible avec le module de liste (actu.js).
+    -->
+    <script>
       document.addEventListener("DOMContentLoaded", () => {
         const params = new URLSearchParams(location.search)
         if (params.get("created") === "1") {
@@ -73,24 +109,31 @@
           notice.className = "status success"
           notice.textContent = "Article créé avec succès."
           document.querySelector("h1")?.after(notice)
-          // Nettoie l’URL
+
           params.delete("created")
           history.replaceState({}, "", `${location.pathname}${params.toString() ? "?" + params : ""}`)
-          // Eventuel rafraîchissement des actus :
+
           window.dispatchEvent(new CustomEvent("news:refresh"))
         }
       })
     </script>
 
+    <!--
+      Conteneur dynamique des actualités :
+      - js/actu.js se charge d’injecter les états (chargement, vide, erreur) et les cartes d’articles.
+      - aria-live="polite" pour annoncer les mises à jour aux technologies d’assistance sans interrompre la lecture courante.
+    -->
     <section id="news-list" aria-labelledby="news-heading" aria-live="polite">
       <h2 id="news-heading" class="sr-only">Actualités</h2>
       <!-- Les cartes sont injectées par js/actu.js -->
     </section>
 
-    <!-- ===========================
-         BLOC "PIED-DE-PAGE"
-    ============================ -->
-
+    <!-- =========================================================
+         PIED-DE-PAGE
+         Remarques :
+         - Icônes SVG en "currentColor" pour hériter de la couleur de texte.
+         - Liens externes avec rel="noopener" pour des raisons de sécurité/performance.
+    ========================================================== -->
     <footer class="footer">
       <div class="footer-top">
         <div class="footer-row">
@@ -114,14 +157,14 @@
           </div>
           <div class="footer-contact">
             <div class="contact-item">
-              <!-- Phone SVG -->
+              <!-- Téléphone (SVG) -->
               <svg class="icon phone" width="40" height="40" viewBox="0 0 32 32" fill="currentColor" aria-hidden="true">
                 <path d="M13.216 8.064c-.382-4.394-4.966-6.55-5.16-6.638a.974.974 0 0 0-.582-.078c-5.292.878-6.088 3.958-6.12 4.086a.99.99 0 0 0 .02.54c6.312 19.584 19.43 23.214 23.742 24.408.332.092.606.166.814.234a.99.99 0 0 0 .722-.042c.132-.06 3.248-1.528 4.01-6.316a.997.997 0 0 0-.096-.612c-.068-.132-1.698-3.234-6.218-4.33a.977.977 0 0 0-.884.21c-1.426 1.218-3.396 2.516-4.246 2.65-5.698-2.786-8.88-8.132-9-9.146-.07-.57 1.236-2.572 2.738-4.2a.998.998 0 0 0 .26-.766z"/>
               </svg>
               <p>+33 00 00 00 00 00<br>+33 00 00 00 00 00</p>
             </div>
             <div class="contact-item">
-              <!-- Geoloc SVG -->
+              <!-- Géolocalisation (SVG) -->
               <svg class="icon geoloc" width="40" height="40" viewBox="0 0 64 64" fill="currentColor" aria-hidden="true">
                 <path d="M40 23c0-4.411-3.589-8-8-8s-8 3.589-8 8 3.589 8 8 8 8-3.589 8-8zm-12 0c0-2.206 1.794-4 4-4s4 1.794 4 4-1.794 4-4 4-4-1.794-4-4z"></path>
                 <path d="M31.966 64c.574 0 1.12-.247 1.5-.677.882-1 21.605-24.682 21.534-40.298C54.942 10.329 44.625 0 32 0 19.317 0 9 10.333 9 23.034c0 15.607 20.585 39.284 21.462 40.284.38.433.898.668 1.504.682zM32 4c10.429 0 18.952 8.543 19 19.043.054 11.824-14.281 30.122-19.029 35.855C27.246 53.161 13 34.872 13 23.034 13 12.539 21.523 4 32 4z"></path>
@@ -134,24 +177,29 @@
 
       <div class="footer-bottom">
         <p>Copyright © 2021 AGENCECO - All rights reserved</p>
+        <!--
+          Bouton d’authentification :
+          - Redirige vers login.html.
+          - Peut être remplacé/masqué côté client si la session est active (cf. auth-button.js).
+        -->
         <a id="auth-btn" class="login-btn" href="login.html">Se connecter</a>
 
-        <div class="social-icons">
+        <div class="social-icons" aria-label="Réseaux sociaux">
           <!-- Facebook -->
           <a href="https://facebook.com" target="_blank" aria-label="Facebook" rel="noopener">
-            <svg class="icon facebook" width="40" height="40" viewBox="0 0 24 24" fill="currentColor">
+            <svg class="icon facebook" width="40" height="40" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
               <path d="M15.12,5.32H17V2.14A26.11,26.11,0,0,0,14.26,2C11.54,2,9.68,3.66,9.68,6.7V9.32H6.61v3.56H9.68V22h3.68V12.88h3.06l.46-3.56H13.36V7.05C13.36,6,13.64,5.32,15.12,5.32Z"></path>
             </svg>
           </a>
           <!-- Twitter -->
           <a href="https://twitter.com" target="_blank" aria-label="Twitter" rel="noopener">
-            <svg class="icon twitter" width="40" height="40" viewBox="0 0 24 24" fill="currentColor">
+            <svg class="icon twitter" width="40" height="40" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
               <path d="M22,5.8a8.49,8.49,0,0,1-2.36.64,4.13,4.13,0,0,0,1.81-2.27,8.21,8.21,0,0,1-2.61,1,4.1,4.1,0,0,0-7,3.74A11.64,11.64,0,0,1,3.39,4.62a4.16,4.16,0,0,0-.55,2.07A4.09,4.09,0,0,0,4.66,10.1,4.05,4.05,0,0,1,2.8,9.59v.05a4.1,4.1,0,0,0,3.3,4A3.93,3.93,0,0,1,5,13.81a4.9,4.9,0,0,1-.77-.07,4.11,4.11,0,0,0,3.83,2.84A8.22,8.22,0,0,1,3,18.34a7.93,7.93,0,0,1-1-.06,11.57,11.57,0,0,0,6.29,1.85A11.59,11.59,0,0,0,20,8.45c0-.17,0-.35,0-.53A8.43,8.43,0,0,0,22,5.8Z"></path>
             </svg>
           </a>
           <!-- Instagram -->
           <a href="https://instagram.com" target="_blank" aria-label="Instagram" rel="noopener">
-            <svg class="icon instagram" width="40" height="40" viewBox="0 0 16 16" fill="currentColor">
+            <svg class="icon instagram" width="40" height="40" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true">
               <g fill="none" stroke="currentColor" stroke-miterlimit="10">
                 <path d="M11.5 15.5h-7a4 4 0 0 1-4-4v-7a4 4 0 0 1 4-4h7a4 4 0 0 1 4 4v7a4 4 0 0 1-4 4z"></path>
                 <circle cx="8" cy="8" r="3.5"></circle>
@@ -163,22 +211,38 @@
       </div>
     </footer>
 
-    <!-- ===========================
-         PARTIE SCRIPT JS
-    ============================ -->
-
+    <!-- =========================================================
+         SCRIPTS PRINCIPAUX (defer)
+         - actu.js        : récupération des actualités (fetch), états (chargement/erreur/vide),
+                            rendu des cartes, rafraîchissement sur "news:refresh".
+         - burger.js      : ouverture/fermeture du menu mobile + mise à jour aria-expanded.
+         - auth-button.js : adaptation du bouton d’authentification si session active.
+    ========================================================== -->
     <script src="js/actu.js" defer></script>
     <script src="js/burger.js" defer></script>
     <script src="js/auth-button.js" defer></script>
 
-    <!-- Toasts “publié / mis à jour / supprimé” -->
+    <!--
+      SCRIPT #3 — Toasts (notifications visuelles)
+      Rôle :
+      - Affiche une notification en haut à droite pour les actions "publié", "mis à jour", "supprimé".
+      - Couleur et icône spécifiques par type, fermeture automatique.
+
+      Fonctionnement :
+      1) Fonction showToast(msg, color, icon) : crée et injecte un conteneur avec styles inline et transitions CSS.
+      2) Lecture des paramètres d’URL (?added=1, ?updated=1, ?deleted=1).
+      3) Selon le paramètre, affiche le toast correspondant.
+      4) Retire ensuite les paramètres de l’URL via history.replaceState.
+
+      Remarque :
+      - Les styles inline peuvent être externalisés dans une feuille CSS dédiée si nécessaire.
+    -->
     <script>
       (function () {
         function showToast(msg, color, icon) {
           const t = document.createElement('div')
           t.setAttribute('role', 'status')
 
-          // Styles communs
           t.style.position = 'fixed'
           t.style.top = '16px'
           t.style.right = '16px'
@@ -197,7 +261,6 @@
           t.style.transition = 'opacity .3s ease, transform .3s ease'
           t.style.background = color
 
-          // Icône + texte
           t.innerHTML = `
             <span style="width:20px;height:20px;display:flex;align-items:center;">${icon}</span>
             <span>${msg}</span>
@@ -205,13 +268,11 @@
 
           document.body.appendChild(t)
 
-          // Apparition
           requestAnimationFrame(() => {
             t.style.opacity = '1'
             t.style.transform = 'translateY(0)'
           })
 
-          // Disparition
           setTimeout(() => {
             t.style.opacity = '0'
             t.style.transform = 'translateY(-10px)'
@@ -243,17 +304,45 @@
             </svg>`)
         }
 
-        // Nettoyage URL
         ['added','updated','deleted'].forEach(k => p.delete(k))
         window.history.replaceState({}, '', `${url.pathname}${p.toString() ? '?' + p.toString() : ''}`)
       })()
     </script>
 
-    <!-- Boîte de confirmation custom (utilisée par actu.js si présente) -->
+    <!--
+      SCRIPT #4 — Boîte de confirmation personnalisée (confirmDialog)
+      Rôle :
+      - Alternative accessible et stylée à window.confirm().
+      - API Promise : resolve(true) en cas de confirmation, resolve(false) sinon.
+      - Exposé globalement via window.confirmDialog pour réutilisation (ex. suppression d’article).
+
+      Fonctionnement :
+      1) Injection d’un bloc <style> (si absent) pour les styles du modal.
+      2) Définition de window.confirmDialog(opts) :
+         - Création d’un overlay (fond) et d’une modale (titre, message, actions).
+         - Verrouillage du scroll pendant l’ouverture.
+      3) Gestion des interactions :
+         - "Annuler" => resolve(false)
+         - "Supprimer" => resolve(true)
+         - Clic hors modale / touche Échap => resolve(false)
+         - Navigation clavier (Tab) : focus cyclé entre boutons.
+      4) Fermeture avec animation, nettoyage du DOM, restauration du scroll.
+
+      Notes :
+      - Les styles peuvent être migrés vers une feuille CSS partagée si nécessaire.
+      - L’API "opts" permet d’adapter titre, message, libellés et icône selon le contexte.
+    -->
+
     <script>
       ;(() => {
+
+        // Évite les doubles déclarations si ce script est inclus plusieurs fois.
         if (window.confirmDialog) return
 
+        // ----------------------------------------------------------------------
+        // Styles CSS de la modale (injectés une seule fois dans <head>).
+        // Externaliser dans un fichier .css si besoin de mutualiser.
+        // ----------------------------------------------------------------------
         const styles = `
         .cfx-overlay{
           position:fixed; inset:0;
@@ -288,12 +377,23 @@
           border-radius:12px; padding:10px 16px;
           min-height:44px; min-width:112px;
           font-weight:700; font-size:14px; letter-spacing:.015em;
-          cursor:pointer; transition:background .15s ease, box-shadow .15s ease, transform .08s ease;
+          cursor:pointer;
+          transition: background .15s ease, box-shadow .16s ease, transform .16s ease, opacity .16s ease; /* étendu */
+        }
+        /* Hover commun (Annuler + Supprimer) */
+        .cfx-btn:hover{
+          opacity:.9;
+          transform:translateY(-1px);
+          box-shadow:0 8px 20px rgba(0,0,0,.12);
+        }
+        /* Active commun (retour propre) */
+        .cfx-btn:active{
+          transform:translateY(0);
+          box-shadow:0 4px 12px rgba(0,0,0,.10);
         }
         .cfx-btn:focus{ outline:2px solid #93c5fd; outline-offset:2px }
-        .cfx-btn:active{ transform:translateY(0.5px) }
         .cfx-btn.cancel{ background:#0f172a; color:#e5e7eb; border-color:rgba(255,255,255,.08) }
-        .cfx-btn.cancel:hover{ background:#111827 }
+        .cfx-btn.cancel:hover{ background:#111827 } /* conserve la variation de fond */
         .cfx-btn.primary{ background:#2563eb; color:#fff }
         .cfx-btn.primary:hover{ background:#1e40af }
         .cfx-btn.primary.danger{ background:#dc2626 }
@@ -319,6 +419,7 @@
           .cfx-btn.cancel:hover{ background:#e5e7eb }
         }`
 
+        // Injection des styles si absents (évite duplications).
         const styleId = 'cfx-confirm-style'
         if (!document.getElementById(styleId)) {
           const s = document.createElement('style')
@@ -327,11 +428,16 @@
           document.head.appendChild(s)
         }
 
+        // Icône "poubelle" par défaut (affichée dans l’en-tête de la modale).
         const TRASH = `
           <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="white" viewBox="0 0 24 24" style="display:block">
             <path d="M6 19a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/>
           </svg>`
 
+        // ----------------------------------------------------------------------
+        // Verrouillage/déverrouillage du scroll de la page quand la modale est ouverte.
+        // - Empêche le contenu derrière la modale de défiler (meilleure UX).
+        // ----------------------------------------------------------------------
         function lockScroll(lock) {
           const html = document.documentElement
           if (lock) {
@@ -343,6 +449,9 @@
           }
         }
 
+        // ----------------------------------------------------------------------
+        // API publique : window.confirmDialog(opts)
+        // ----------------------------------------------------------------------
         window.confirmDialog = function confirmDialog(opts = {}) {
           const {
             title = 'Confirmer la suppression',
@@ -354,20 +463,23 @@
           } = opts
 
           return new Promise(resolve => {
+            // -----------------------------
+            // Structure DOM : overlay + modal
+            // -----------------------------
             const overlay = document.createElement('div')
             overlay.className = 'cfx-overlay'
-            overlay.setAttribute('role', 'presentation')
+            overlay.setAttribute('role', 'presentation') // élément décoratif (fond)
 
             const modal = document.createElement('div')
             modal.className = 'cfx-modal'
-            modal.setAttribute('role', 'dialog')
-            modal.setAttribute('aria-modal', 'true')
-
+            modal.setAttribute('role', 'dialog')         // composant de dialogue
+            modal.setAttribute('aria-modal', 'true')     // indique une modale
             const titleId = `cfx-title-${Date.now()}`
             const descId  = `cfx-desc-${Date.now()}`
             modal.setAttribute('aria-labelledby', titleId)
             modal.setAttribute('aria-describedby', descId)
 
+            // Contenu de la modale (titre, message, actions)
             modal.innerHTML = `
               <div class="cfx-header">
                 <div class="cfx-icon">${iconSvg}</div>
@@ -379,27 +491,46 @@
                 <button type="button" class="cfx-btn primary ${danger ? 'danger' : ''}">${confirmText}</button>
               </div>
             `
+
             overlay.appendChild(modal)
             document.body.appendChild(overlay)
+
+            // Animation d’apparition (classe "open" appliquée à la frame suivante).
             requestAnimationFrame(() => overlay.classList.add('open'))
             lockScroll(true)
 
+            // Références boutons
             const btnCancel  = modal.querySelector('.cfx-btn.cancel')
             const btnConfirm = modal.querySelector('.cfx-btn.primary')
 
+            // ----------------------------------------------------------
+            // Fermeture générique : animation + suppression DOM + resolve
+            // ----------------------------------------------------------
             function close(answer) {
               overlay.classList.remove('open')
               setTimeout(() => {
                 overlay.remove()
                 lockScroll(false)
-                resolve(answer)
+                resolve(answer) // true (confirmé) ou false (annulé)
               }, 150)
             }
 
+            // Bouton "Annuler" -> false
             btnCancel.addEventListener('click', () => close(false))
-            btnConfirm.addEventListener('click', () => close(true))
-            overlay.addEventListener('click', e => { if (e.target === overlay) close(false) })
 
+            // Bouton "Confirmer" -> true
+            btnConfirm.addEventListener('click', () => close(true))
+
+            // Clic sur le fond (overlay) -> annule
+            overlay.addEventListener('click', e => {
+              if (e.target === overlay) close(false)
+            })
+
+            // ----------------------------------------------------------
+            // Accessibilité clavier :
+            //  - Échap : annule
+            //  - Tab / Shift+Tab : piéger le focus entre les deux boutons
+            // ----------------------------------------------------------
             overlay.addEventListener('keydown', e => {
               if (e.key === 'Escape') { e.preventDefault(); close(false) }
               if (e.key === 'Tab') {
@@ -415,12 +546,14 @@
               }
             })
 
-            btnCancel.focus()
+            // 🔁 Focus initial : sur la modale (PAS sur "Annuler")
+            modal.setAttribute('tabindex', '-1')
+            modal.focus({ preventScroll: true })
           })
         }
       })()
     </script>
 
-  </main> <!-- modification de "/div" par "/main" -->
+  </main> <!-- Fin du contenu principal -->
 </body>
 </html>

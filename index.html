@@ -1,68 +1,89 @@
-<!DOCTYPE html> <!-- Indique que c’est un document HTML5 -->
-<html lang="fr"> <!-- Langue du document -->
-
+<!DOCTYPE html> <!-- Document HTML5 -->
+<html lang="fr"> <!-- Langue principale du document -->
 <head>
-  <meta charset="UTF-8"> <!-- Encodage UTF-8 pour les caractères spéciaux -->
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- Responsive : adapte le rendu aux écrans mobiles -->
+  <meta charset="UTF-8" /> <!-- Encodage UTF-8 -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" /> <!-- Responsive -->
   <title>AgenceEco</title> <!-- Titre de l’onglet -->
 
-  <!-- Police Poppins importée depuis Google Fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+  <!-- 
+    Typo
+    - Poppins (Google Fonts) : cohérence visuelle avec l’identité AgenceEco
+  -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet" />
 
-  <!-- Lien vers la feuille de style principale -->
-  <link rel="stylesheet" href="css/style.css">
+  <!-- 
+    Styles
+    - css/style.css : feuille de style principale du site
+  -->
+  <link rel="stylesheet" href="css/style.css" />
 </head>
 
 <body>
-  <main class="main-wrapper"> <!-- Modification de "div" par "main" -->
-
-    <!-- ===========================
-         HEADER : logo + navigation
-    ============================ -->
+  <!-- 
+    STRUCTURE SÉMANTIQUE
+    - header, main, footer = régions majeures de la page
+    - Le contenu principal est encapsulé dans <main>
+  -->
+  <main class="main-wrapper">
+    <!-- =========================================================
+         HEADER — Logo + Navigation primaire + Burger mobile
+         Rôle : orientation vers les sections clés du site
+         A11Y :
+         - <nav aria-label="Navigation principale">
+         - Bouton burger avec aria-controls/aria-expanded gérés par JS
+    ========================================================== -->
     <header>
       <div class="container">
-        <a href="index.html" class="logo">Agenc<span>eco</span></a> <!-- Mot "eco" mis en italique via CSS -->
+        <!-- Logo cliquable vers l’accueil ; "eco" en italique via CSS -->
+        <a href="index.html" class="logo">Agenc<span>eco</span></a>
 
-        <nav id="nav">
+        <!-- Navigation primaire du site -->
+        <nav id="nav" aria-label="Navigation principale">
           <ul>
             <li><a href="index.html">Accueil</a></li>
             <li><a href="#equipe">Notre équipe</a></li>
             <li><a href="#services">Nos services</a></li>
+            <!-- TODO: compléter l’URL/ancre réelle des témoignages -->
             <li><a href="">Témoignages</a></li>
             <li><a href="#contact">Contactez-nous</a></li>
             <li><a href="blog.html">Actualités</a></li>
           </ul>
         </nav>
 
-        <!-- Bouton burger pour mobile -->
-        <button class="burger" id="burger" aria-label="Menu mobile">
-          <span></span>
-          <span></span>
-          <span></span>
+        <!-- 
+          Bouton burger (affiché en mobile)
+          - aria-controls : cible le menu à ouvrir (#nav)
+          - aria-expanded : mis à jour dans js/burger.js
+        -->
+        <button class="burger" id="burger" aria-label="Menu mobile" aria-controls="nav" aria-expanded="false">
+          <span></span><span></span><span></span>
         </button>
       </div>
     </header>
 
-
-    <!-- ===========================
-         HERO (image de fond + slogan)
-    ============================ -->
-    <section class="hero">
-      <div class="hero-overlay"> <!-- Permet d’ajouter un fond + positionner texte -->
+    <!-- =========================================================
+         HERO — Image de fond + slogan
+         Objectif : message d’accueil fort, au-dessus de la ligne de flottaison
+         Technique : overlay pour lisibilité du texte
+    ========================================================== -->
+    <section class="hero" aria-label="Bannière d’accueil">
+      <div class="hero-overlay">
         <div class="hero-text">
           <h1>
-            Bienvenue dans votre<br>
+            Bienvenue dans votre<br />
             <span>agence web écologique</span>
           </h1>
         </div>
       </div>
     </section>
 
-    <!-- ===========================
-         BLOC "ÉQUIPE"
-    ============================ -->
-    <section class="team-section" id="equipe">
-      <h2>Notre équipe</h2>
+    <!-- =========================================================
+         ÉQUIPE — Présentation de l’équipe (photos + rôles)
+         A11Y :
+         - <img alt="Nom Prénom"> : utile si la photo ne charge pas
+    ========================================================== -->
+    <section class="team-section" id="equipe" aria-labelledby="team-title">
+      <h2 id="team-title">Notre équipe</h2>
 
       <p class="intro">
         Lorem ipsum dolor sit amet, consectetur adipiscing elit.
@@ -70,197 +91,213 @@
         Aliquam sit amet blandit nisi, sodales molestie.
       </p>
 
-      <div class="team-grid">
-        <!-- === Julie === -->
-        <div class="member">
+      <div class="team-grid" role="list">
+        <!-- Membre : Julie -->
+        <article class="member" role="listitem">
           <div class="photo-wrapper">
-            <img src="assets/person1.jpg" alt="Julie Dupond" class="photo-julie">
+            <img src="assets/person1.jpg" alt="Julie Dupond" class="photo-julie" />
           </div>
           <h3>Julie Dupond</h3>
           <p>
-            Consectetur adipiscing elit.<br>
-            Donec sed leo in nisi<br>
+            Consectetur adipiscing elit.<br />
+            Donec sed leo in nisi<br />
             vehicula bibendum
           </p>
-        </div>
+        </article>
 
-        <!-- === Romeo === -->
-        <div class="member">
+        <!-- Membre : Romeo -->
+        <article class="member" role="listitem">
           <div class="photo-wrapper">
-            <img src="assets/person2.jpg" alt="Romeo Sylla" class="photo-romeo">
+            <img src="assets/person2.jpg" alt="Romeo Sylla" class="photo-romeo" />
           </div>
           <h3>Romeo Sylla</h3>
           <p>
-            Consectetur adipiscing elit.<br>
-            Donec sed leo in nisi<br>
+            Consectetur adipiscing elit.<br />
+            Donec sed leo in nisi<br />
             vehicula bibendum
           </p>
-        </div>
+        </article>
 
-        <!-- === Javier === -->
-        <div class="member">
+        <!-- Membre : Javier -->
+        <article class="member" role="listitem">
           <div class="photo-wrapper">
-            <img src="assets/person3.jpg" alt="Javier Bardem" class="photo-javier">
+            <img src="assets/person3.jpg" alt="Javier Bardem" class="photo-javier" />
           </div>
           <h3>Javier Bardem</h3>
           <p>
-            Consectetur adipiscing elit.<br>
-            Donec sed leo in nisi<br>
+            Consectetur adipiscing elit.<br />
+            Donec sed leo in nisi<br />
             vehicula bibendum
           </p>
-        </div>
+        </article>
       </div>
 
-      <!-- ===========================
-          BLOC "STATS"
-      ============================ -->
-      <div class="stats-bar">
-        <div class="stat">
+      <!-- 
+        STATS — Preuves sociales / chiffres clés
+        NOTE : valeurs placeholder dupliquées (à personnaliser)
+      -->
+      <div class="stats-bar" role="list" aria-label="Chiffres clés">
+        <div class="stat" role="listitem">
           <strong>2500</strong>
           <span>Clients satisfaits</span>
         </div>
-        <div class="stat">
+        <div class="stat" role="listitem">
           <strong>2500</strong>
           <span>Clients satisfaits</span>
         </div>
-        <div class="stat">
+        <div class="stat" role="listitem">
           <strong>2500</strong>
           <span>Clients satisfaits</span>
         </div>
-        <div class="stat">
+        <div class="stat" role="listitem">
           <strong>2500</strong>
           <span>Clients satisfaits</span>
         </div>
       </div>
     </section>
 
-    <!-- ===========================
-         BLOC "SERVICES"
-    ============================ -->
-    <section class="services" id="services">
-      <h2>Nos services</h2>
+    <!-- =========================================================
+         SERVICES — Cartes de services
+         A11Y : alt explicites sur les icônes
+    ========================================================== -->
+    <section class="services" id="services" aria-labelledby="services-title">
+      <h2 id="services-title">Nos services</h2>
 
-      <div class="services-grid">
-        <div class="service-wrapper">
+      <div class="services-grid" role="list">
+        <article class="service-wrapper" role="listitem">
           <div class="service-card">
-            <img src="assets/icon1.jpg" alt="Icône site web">
+            <img src="assets/icon1.jpg" alt="Icône site web" />
           </div>
           <h3 class="service-label">Création de sites web</h3>
-        </div>
+        </article>
 
-        <div class="service-wrapper">
+        <article class="service-wrapper" role="listitem">
           <div class="service-card">
-            <img src="assets/icon2-transpa.png" alt="Icône audit qualité">
+            <img src="assets/icon2-transpa.png" alt="Icône audit qualité" />
           </div>
           <h3 class="service-label">Audit qualité</h3>
-        </div>
+        </article>
       </div>
     </section>
 
-    <!-- ===========================
-        BLOC "ACTUALITÉS" (via API)
-    ============================ -->
-
-    <h6>Dernières actualités</h6>
-
-    <section id="news-list" aria-labelledby="news-heading">
-    <h2 id="news-heading" class="sr-only">Actualités</h2>
+    <!-- =========================================================
+         ACTUALITÉS — Section remplie dynamiquement via API (actu.js)
+         A11Y :
+         - <section aria-labelledby="news-heading"> + h2 .sr-only
+         - #news-list : conteneur mis à jour en JS (loading/erreurs/vides)
+    ========================================================== -->
+    <section aria-labelledby="news-heading">
+      <h6>Dernières actualités</h6>
+      <section id="news-list" aria-labelledby="news-heading">
+        <h2 id="news-heading" class="sr-only">Actualités</h2>
+        <!-- Le JS insère ici : état "Chargement…", cartes d’actus, erreurs, etc. -->
+      </section>
     </section>
 
+    <!-- =========================================================
+         CONTACT — Formulaire de contact
+         Bonnes pratiques :
+         - Labels liés aux champs (for/id)
+         - Placeholders indicatifs (pas des labels)
+         - textarea avec maxlength + resize contrôlé
+    ========================================================== -->
+    <section class="contact" id="contact" aria-labelledby="contact-title">
+      <h2 id="contact-title">Contactez-nous</h2>
+      <p class="subtitle">
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit. donec sed leo in.
+      </p>
 
+      <form aria-label="Formulaire de contact">
+        <!-- Ligne 1 : Nom / Catégorie -->
+        <div class="form-row">
+          <div class="form-group">
+            <label for="nom">Nom</label>
+            <input type="text" id="nom" name="nom" placeholder="Nom" />
+          </div>
+          <div class="form-group">
+            <label for="categorie">Catégorie</label>
+            <input type="text" id="categorie" name="categorie" placeholder="Catégorie" />
+          </div>
+        </div>
+
+        <!-- Ligne 2 : Téléphone / Ville -->
+        <div class="form-row">
+          <div class="form-group">
+            <label for="telephone">Téléphone</label>
+            <input type="text" id="telephone" name="telephone" placeholder="Téléphone" />
+          </div>
+          <div class="form-group">
+            <label for="ville">Ville</label>
+            <input type="text" id="ville" name="ville" placeholder="Ville" />
+          </div>
+        </div>
+
+        <!-- Email -->
+        <div class="form-group">
+          <label for="email">Email</label>
+          <input type="email" id="email" name="email" placeholder="Email" />
+        </div>
+
+        <!-- Message -->
+        <div class="form-group">
+          <label for="message">Message</label>
+          <textarea
+            id="message"
+            name="message"
+            rows="10"
+            maxlength="500"
+            placeholder="Message"
+            style="resize: none;"
+          ></textarea>
+        </div>
+
+        <!-- Bouton envoyer -->
+        <div class="form-submit">
+          <button type="submit">Envoyer</button>
+        </div>
+      </form>
     </section>
 
-
-    <!-- ===========================
-         BLOC "CONTACTEZ-NOUS"
-    ============================ -->
-    <section class="contact" id="contact">
-      <h2>Contactez-nous</h2>
-      <p class="subtitle">Lorem ipsum dolor sit amet, consectetur adipiscing elit. donec sed leo in.</p>
-
-      <form>
-  <!-- Ligne 1 -->
-  <div class="form-row">
-    <div class="form-group">
-      <label for="nom">Nom</label>
-      <input type="text" id="nom" name="nom" placeholder="Nom">
-    </div>
-    <div class="form-group">
-      <label for="categorie">Catégorie</label>
-      <input type="text" id="categorie" name="categorie" placeholder="Catégorie">
-    </div>
-  </div>
-
-  <!-- Ligne 2 -->
-  <div class="form-row">
-    <div class="form-group">
-      <label for="telephone">Téléphone</label>
-      <input type="text" id="telephone" name="telephone" placeholder="Téléphone">
-    </div>
-    <div class="form-group">
-      <label for="ville">Ville</label>
-      <input type="text" id="ville" name="ville" placeholder="Ville">
-    </div>
-  </div>
-
-  <!-- Email -->
-  <div class="form-group">
-    <label for="email">Email</label>
-    <input type="email" id="email" name="email" placeholder="Email">
-  </div>
-
-  <!-- Message -->
-  <div class="form-group">
-    <label for="message">Message</label>
-    <textarea id="message" name="message" rows="10" maxlength="500" placeholder="Message" style="resize: none;"></textarea>
-  </div>
-
-  <!-- Bouton envoyer -->
-  <div class="form-submit">
-    <button type="submit">Envoyer</button>
-  </div>
-</form>
-    </section>
-
-    <!-- ===========================
-         BLOC "À PROPOS"
-    ============================ -->
-    <section class="apropos">
+    <!-- =========================================================
+         À PROPOS — Image à gauche / texte + icônes à droite
+         Objectif : présenter la valeur/mission de l’agence
+    ========================================================== -->
+    <section class="apropos" aria-labelledby="apropos-title">
       <div class="apropos-wrapper">
         <!-- Image à gauche -->
         <div class="apropos-image">
-          <img src="assets/meeting.jpg" alt="Photo d'équipe en réunion">
+          <img src="assets/meeting.jpg" alt="Photo d'équipe en réunion" />
         </div>
 
         <!-- Contenu à droite -->
         <div class="apropos-content">
-          <h2>À propos de nous</h2>
+          <h2 id="apropos-title">À propos de nous</h2>
           <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. donec sed leo in adipiscing</p>
 
-          <div class="apropos-icons">
-            <!-- Icône 1 -->
-            <div class="icon-box">
+          <div class="apropos-icons" role="list">
+            <!-- Valeur : Écologique -->
+            <div class="icon-box" role="listitem">
               <div class="icon-circle">
                 <div class="icon-stable">
-                  <img src="assets/icon4.jpg" alt="Icône Écologique">
+                  <img src="assets/icon4.jpg" alt="Icône Écologique" />
                 </div>
               </div>
               <p>Écologique</p>
             </div>
 
-            <!-- Icône 2 -->
-            <div class="icon-box">
+            <!-- Valeur : Responsable -->
+            <div class="icon-box" role="listitem">
               <div class="icon-circle">
-                <img src="assets/icon5.jpg" alt="Icône Responsable">
+                <img src="assets/icon5.jpg" alt="Icône Responsable" />
               </div>
               <p>Responsable</p>
             </div>
 
-            <!-- Icône 3 -->
-            <div class="icon-box">
+            <!-- Valeur : Assistance 24/7 -->
+            <div class="icon-box" role="listitem">
               <div class="icon-circle">
                 <div class="icon-stable">
-                  <img src="assets/icon6.jpg" alt="Icône Assistance">
+                  <img src="assets/icon6.jpg" alt="Icône Assistance" />
                 </div>
               </div>
               <p>24/7 Assistance</p>
@@ -270,12 +307,15 @@
       </div>
     </section>
 
-<!-- ===========================
-         BLOC "NOTRE GALERIE"
-    ============================ -->
-    
-    <section class="notre-galerie">
-      <h2>Notre galerie</h2>
+    <!-- =========================================================
+         NOTRE GALERIE — Slider accessible
+         A11Y :
+         - aria-roledescription="carousel"
+         - aria-live="polite" sur la piste
+         - Dots <nav> pour navigation par points (enrichie en JS)
+    ========================================================== -->
+    <section class="notre-galerie" aria-labelledby="galerie-heading">
+      <h2 id="galerie-heading">Notre galerie</h2>
       <p class="intro">
         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec sed leo in nisi vehicula bibendum.
         Aliquam sit amet blandit nisi, sodales molestie.
@@ -287,12 +327,12 @@
           <h3 id="galerie-titre" class="sr-only">Galerie Agenceco</h3>
 
           <div class="galerie-track" role="group" aria-live="polite">
-            <div class="slide"><img src="assets/galerie-1.jpg" alt="Bureau végétalisé Agenceco"></div>
-            <div class="slide"><img src="assets/galerie-2.png" alt="Équipe Agenceco en réunion durable"></div>
-            <div class="slide"><img src="assets/galerie-3.png" alt="Bâtiment Agenceco moderne"></div>
+            <div class="slide"><img src="assets/galerie-1.jpg" alt="Bureau végétalisé Agenceco" /></div>
+            <div class="slide"><img src="assets/galerie-2.png" alt="Équipe Agenceco en réunion durable" /></div>
+            <div class="slide"><img src="assets/galerie-3.png" alt="Bâtiment Agenceco moderne" /></div>
           </div>
 
-          <!-- Points -->
+          <!-- Points (remplis par JS) -->
           <nav class="galerie-dots" aria-label="Navigation par points"></nav>
         </section>
 
@@ -300,61 +340,66 @@
         <div class="navigation-buttons" aria-label="Navigation de la galerie">
           <button class="btn prev" type="button" aria-label="Image précédente">
             <svg width="28" height="28" viewBox="0 0 24 24" fill="none"
-                stroke="black" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-              <polyline points="15 18 9 12 15 6" />
+                 stroke="black" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <polyline points="15 18 9 12 15 6"></polyline>
             </svg>
           </button>
           <button class="btn next" type="button" aria-label="Image suivante">
             <svg width="28" height="28" viewBox="0 0 24 24" fill="none"
-                stroke="black" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-              <polyline points="9 6 15 12 9 18" />
+                 stroke="black" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <polyline points="9 6 15 12 9 18"></polyline>
             </svg>
           </button>
         </div>
       </div>
     </section>
 
-
-    <!-- ===========================
-         BLOC "PIED-DE-PAGE"
-    ============================ -->
-
-    <footer class="footer">
+    <!-- =========================================================
+         FOOTER — Infos, coordonnées, réseaux sociaux
+         Notes :
+         - Icônes en currentColor (héritent de la couleur du texte)
+         - Liens externes : rel="noopener" pour sécurité
+    ========================================================== -->
+    <footer class="footer" aria-label="Pied de page">
       <div class="footer-top">
         <div class="footer-row">
+          <!-- Colonnes d’infos -->
           <div class="footer-columns">
             <div class="footer-column">
               <h3>Content</h3>
-              <p>consectetur<br>adipiscing</p>
+              <p>consectetur<br />adipiscing</p>
             </div>
             <div class="footer-column">
               <h3>Informations</h3>
-              <p>consectetur<br>adipiscing</p>
+              <p>consectetur<br />adipiscing</p>
             </div>
             <div class="footer-column">
               <h3>Services</h3>
-              <p>consectetur<br>adipiscing</p>
+              <p>consectetur<br />adipiscing</p>
             </div>
             <div class="footer-column">
               <h3>Aide</h3>
-              <p>consectetur<br>adipiscing</p>
+              <p>consectetur<br />adipiscing</p>
             </div>
           </div>
+
+          <!-- Coordonnées -->
           <div class="footer-contact">
             <div class="contact-item">
-              <!-- Phone SVG -->
+              <!-- Téléphone (SVG) -->
               <svg class="icon phone" width="40" height="40" viewBox="0 0 32 32" fill="currentColor" aria-hidden="true">
-                <path d="M13.216 8.064c-.382-4.394-4.966-6.55-5.16-6.638a.974.974 0 0 0-.582-.078c-5.292.878-6.088 3.958-6.12 4.086a.99.99 0 0 0 .02.54c6.312 19.584 19.43 23.214 23.742 24.408.332.092.606.166.814.234a.99.99 0 0 0 .722-.042c.132-.06 3.248-1.528 4.01-6.316a.997.997 0 0 0-.096-.612c-.068-.132-1.698-3.234-6.218-4.33a.977.977 0 0 0-.884.21c-1.426 1.218-3.396 2.516-4.246 2.65-5.698-2.786-8.88-8.132-9-9.146-.07-.57 1.236-2.572 2.738-4.2a.998.998 0 0 0 .26-.766z"/>
+                <path d="M13.216 8.064c-.382-4.394-4.966-6.55-5.16-6.638a.974.974 0 0 0-.582-.078c-5.292.878-6.088 3.958-6.12 4.086a.99.99 0 0 0 .02.54c6.312 19.584 19.43 23.214 23.742 24.408.332.092.606.166.814.234a.99.99 0 0 0 .722-.042c.132-.06 3.248-1.528 4.01-6.316a.997.997 0 0 0-.096-.612c-.068-.132-1.698-3.234-6.218-4.33a.977.977 0 0 0-.884.21c-1.426 1.218-3.396 2.516-4.246 2.65-5.698-2.786-8.88-8.132-9-9.146-.07-.57 1.236-2.572 2.738-4.2a.998.998 0 0 0 .26-.766z"></path>
               </svg>
-              <p>+33 00 00 00 00 00<br>+33 00 00 00 00 00</p>
+              <p>+33 00 00 00 00 00<br />+33 00 00 00 00 00</p>
             </div>
+
             <div class="contact-item">
-              <!-- Geoloc SVG -->
+              <!-- Géolocalisation (SVG) -->
               <svg class="icon geoloc" width="40" height="40" viewBox="0 0 64 64" fill="currentColor" aria-hidden="true">
                 <path d="M40 23c0-4.411-3.589-8-8-8s-8 3.589-8 8 3.589 8 8 8 8-3.589 8-8zm-12 0c0-2.206 1.794-4 4-4s4 1.794 4 4-1.794 4-4 4-4-1.794-4-4z"></path>
                 <path d="M31.966 64c.574 0 1.12-.247 1.5-.677.882-1 21.605-24.682 21.534-40.298C54.942 10.329 44.625 0 32 0 19.317 0 9 10.333 9 23.034c0 15.607 20.585 39.284 21.462 40.284.38.433.898.668 1.504.682zM32 4c10.429 0 18.952 8.543 19 19.043.054 11.824-14.281 30.122-19.029 35.855C27.246 53.161 13 34.872 13 23.034 13 12.539 21.523 4 32 4z"></path>
               </svg>
-              <p>75001 Paris<br>France</p>
+              <p>75001 Paris<br />France</p>
             </div>
           </div>
         </div>
@@ -362,24 +407,33 @@
 
       <div class="footer-bottom">
         <p>Copyright © 2021 AGENCECO - All rights reserved</p>
+
+        <!-- 
+          Auth
+          - Bouton "Me connecter" : lien vers login.html
+          - Peut être remplacé/masqué si l’utilisateur est déjà connecté (via JS)
+        -->
         <a id="auth-btn" class="login-btn" href="login.html">Me connecter</a>
 
-        <div class="social-icons">
+        <!-- Réseaux sociaux -->
+        <div class="social-icons" aria-label="Réseaux sociaux">
           <!-- Facebook -->
-          <a href="https://facebook.com" target="_blank" aria-label="Facebook">
-            <svg class="icon facebook" width="40" height="40" viewBox="0 0 24 24" fill="currentColor">
+          <a href="https://facebook.com" target="_blank" rel="noopener" aria-label="Facebook">
+            <svg class="icon facebook" width="40" height="40" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
               <path d="M15.12,5.32H17V2.14A26.11,26.11,0,0,0,14.26,2C11.54,2,9.68,3.66,9.68,6.7V9.32H6.61v3.56H9.68V22h3.68V12.88h3.06l.46-3.56H13.36V7.05C13.36,6,13.64,5.32,15.12,5.32Z"></path>
             </svg>
           </a>
+
           <!-- Twitter -->
-          <a href="https://twitter.com" target="_blank" aria-label="Twitter">
-            <svg class="icon twitter" width="40" height="40" viewBox="0 0 24 24" fill="currentColor">
+          <a href="https://twitter.com" target="_blank" rel="noopener" aria-label="Twitter">
+            <svg class="icon twitter" width="40" height="40" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
               <path d="M22,5.8a8.49,8.49,0,0,1-2.36.64,4.13,4.13,0,0,0,1.81-2.27,8.21,8.21,0,0,1-2.61,1,4.1,4.1,0,0,0-7,3.74A11.64,11.64,0,0,1,3.39,4.62a4.16,4.16,0,0,0-.55,2.07A4.09,4.09,0,0,0,4.66,10.1,4.05,4.05,0,0,1,2.8,9.59v.05a4.1,4.1,0,0,0,3.3,4A3.93,3.93,0,0,1,5,13.81a4.9,4.9,0,0,1-.77-.07,4.11,4.11,0,0,0,3.83,2.84A8.22,8.22,0,0,1,3,18.34a7.93,7.93,0,0,1-1-.06,11.57,11.57,0,0,0,6.29,1.85A11.59,11.59,0,0,0,20,8.45c0-.17,0-.35,0-.53A8.43,8.43,0,0,0,22,5.8Z"></path>
             </svg>
           </a>
+
           <!-- Instagram -->
-          <a href="https://instagram.com" target="_blank" aria-label="Instagram">
-            <svg class="icon instagram" width="40" height="40" viewBox="0 0 16 16" fill="currentColor">
+          <a href="https://instagram.com" target="_blank" rel="noopener" aria-label="Instagram">
+            <svg class="icon instagram" width="40" height="40" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true">
               <g fill="none" stroke="currentColor" stroke-miterlimit="10">
                 <path d="M11.5 15.5h-7a4 4 0 0 1-4-4v-7a4 4 0 0 1 4-4h7a4 4 0 0 1 4 4v7a4 4 0 0 1-4 4z"></path>
                 <circle cx="8" cy="8" r="3.5"></circle>
@@ -390,25 +444,19 @@
         </div>
       </div>
     </footer>
+  </main>
 
-
-
-
-
-
-
-  </main> <!-- modification de "/div" par "/main" -->
-
-
-    <script src="js/burger.js" defer></script>
-
-    <script src="js/slide.js"></script>
-
-    <script src="js/actu.js" defer></script>
-
-    <script src="js/auth-button.js" defer></script>
-
-
-
+  <!-- =========================================================
+       SCRIPTS
+       - burger.js     : ouverture/fermeture du menu + aria-expanded
+       - slide.js      : slider de la galerie (dots, navigation, auto/drag…)
+       - actu.js       : fetch des actualités + rendu dynamique dans #news-list
+       - auth-button.js: remplace le bouton "Me connecter" si utilisateur loggé
+       NOTE : 'defer' => exécution après parsing du HTML (évite erreurs DOM null)
+  ========================================================== -->
+  <script src="js/burger.js" defer></script>
+  <script src="js/slide.js" defer></script>
+  <script src="js/actu.js" defer></script>
+  <script src="js/auth-button.js" defer></script>
 </body>
 </html>

@@ -248,7 +248,31 @@ header nav a:hover {
   box-shadow: 0 8px 24px rgba(16, 33, 68, .12);
   transition: transform .15s ease, box-shadow .2s ease, filter .2s ease;
 }
-.btn-save:hover  { transform: translateY(-1px); }
+
+.btn-save
+.btn-delete-form {
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-save::before,
+.btn-delete-form::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: #000;
+  opacity: 0;
+  border-radius: inherit;
+  transition: opacity 160ms ease;
+  pointer-events: none;
+}
+
+.btn-save:hover::before,
+.btn-delete-form:hover::before {
+  opacity: 0.3; /* ~12% plus sombre, ajuste entre 0.08 et 0.2 */
+}
+
+
 .btn-save:active { transform: translateY(0); box-shadow: 0 6px 18px rgba(16, 33, 68, .10); }
 .btn-save:focus-visible { outline: 3px solid #469B61; outline-offset: 3px; }
 
@@ -956,7 +980,7 @@ header nav a:hover {
 /* Hover/Active */
 .btn-save:hover,
 .btn-delete-form:hover{
-  transform: translateY(-1px);
+
   filter: saturate(1.05);
   box-shadow: 0 12px 28px rgba(16,33,68,.12);
 }
@@ -972,3 +996,21 @@ header nav a:hover {
   .btn-save, .btn-delete-form{ padding: 14px 28px; font-size: 1rem; border-radius: 40px; }
 }
 
+
+.btn-save,
+.btn-delete-form {
+  transition: transform 160ms ease, box-shadow 160ms ease;
+  will-change: transform; /* hint perf GPU */
+}
+
+.btn-save:hover,
+.btn-delete-form:hover {
+  transform: translateY(-1px);              /* monte de 2px */
+  box-shadow: 0 10px 20px rgba(0,0,0,.12);  /* ombre un peu plus forte */
+}
+
+.btn-save:active,
+.btn-delete-form:active {
+  transform: translateY(0);                 /* revient (clic) */
+  box-shadow: 0 6px 14px rgba(0,0,0,.10);
+}

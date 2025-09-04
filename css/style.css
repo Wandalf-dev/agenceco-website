@@ -2034,8 +2034,3 @@ body {
   transform: translateY(-1px);
 
 }
-
-/* Optionnel : si ta carte est sur fond blanc, préfère un vert sombre pour le contraste
-.news-title:hover,
-.news-title a:hover{ color:#1e3a1a; }
-*/

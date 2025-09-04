@@ -213,21 +213,18 @@ h1 {
   align-self: center;             /* utile si le parent est display:flex */
 }
 
-/* hover/active (si besoin) */
+/* hover/active (si besoin)
 .btn-add-article:hover {
   transform: translateY(-1px);
 }
+
+*/
 
 .btn-add-article:active {
   transform: translateY(0);
 }
 
-/* hover/focus pour feedback + accessibilité */
-.btn-add-article:hover {
-  transform: translateY(-1px);
-  filter: saturate(1.05);
-  box-shadow: 0 12px 28px rgba(16, 33, 68, .12);
-}
+
 .btn-add-article:active {
   transform: translateY(0);
   box-shadow: 0 6px 18px rgba(16, 33, 68, .10);
@@ -878,4 +875,27 @@ body {
 .news-title:hover,
 .news-title a:hover{ color:#1e3a1a; }
 */
+
+
+
+.btn-add-article {
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-add-article::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: #000;
+  opacity: 0;
+  border-radius: inherit;
+  transition: opacity 160ms ease;
+  pointer-events: none;
+}
+
+.btn-add-article:hover::before {
+  opacity: 0.12; /* ~12% plus sombre, ajuste entre 0.08 et 0.2 */
+}
+
 
