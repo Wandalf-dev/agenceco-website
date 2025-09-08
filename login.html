@@ -1,42 +1,31 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>AgenceEco — Connexion</title>
 
-  <!-- 
-    Fonts
-    - Poppins : identité visuelle homogène avec le reste du site
-  -->
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet" />
+  <!-- Fonts : Poppins pour cohérence visuelle -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
 
-  <!-- 
-    Styles spécifiques à la page de connexion 
-    (chargés après les styles globaux si existants)
-  -->
-  <link rel="stylesheet" href="css/login.css" />
+  <!-- Styles spécifiques à la page de connexion -->
+  <link rel="stylesheet" href="css/login.css">
 </head>
 
 <body>
-  <!-- 
-    NOTE SÉMANTIQUE
-    - Ici <header>, <main> (section login) et <footer> composent la page.
-    - Idéalement, <header> et <footer> sont frères de <main>. 
-      On conserve la structure existante, mais c’est un point d’amélioration possible.
+  <!--
+    IMPORTANT : on place header + section + footer
+    DANS .main-wrapper (zone blanche centrée).
+    Le body reste noir => bandes noires latérales visibles.
   -->
   <main class="main-wrapper">
 
-    <!-- =========================================================
-         HEADER — Logo + Navigation primaire + Burger mobile
-         Rôle : orientation et accès aux sections clés
-         A11Y : 
-         - <nav aria-label="Navigation principale">
-         - Bouton burger avec aria-controls/aria-expanded
-    ========================================================== -->
+    <!-- =========================
+         HEADER (dans .main-wrapper)
+         ========================= -->
     <header>
       <div class="container">
-        <!-- Logo : lien vers l’accueil, branding “Agenc(e)co” -->
+        <!-- Logo : lien vers l’accueil -->
         <a href="index.html" class="logo">Agenc<span>eco</span></a>
 
         <!-- Navigation principale -->
@@ -45,55 +34,30 @@
             <li><a href="index.html">Accueil</a></li>
             <li><a href="index.html#equipe">Notre équipe</a></li>
             <li><a href="index.html#services">Nos services</a></li>
-            <!-- TODO: renseigner l’ancre/URL réelle des témoignages -->
-            <li><a href="">Témoignages</a></li>
+            <li><a href="index.html#temoignages">Témoignages</a></li>
             <li><a href="index.html#contact">Contactez-nous</a></li>
             <li><a href="blog.html">Actualités</a></li>
           </ul>
         </nav>
 
-        <!-- 
-          Bouton burger (mobile)
-          A11Y :
-          - aria-controls pointe sur #nav
-          - aria-expanded mis à jour par js/burger.js
-        -->
+        <!-- Burger (mobile) -->
         <button class="burger" id="burger" aria-label="Menu mobile" aria-expanded="false" aria-controls="nav">
           <span></span><span></span><span></span>
         </button>
       </div>
     </header>
 
-    <!-- =========================================================
-         SECTION — Connexion (contenu principal de la page)
-         Objectif :
-         - Permettre l’authentification pour accéder aux actualités protégées
-         A11Y :
-         - <section aria-labelledby="login-title">
-         - <p id="login-status" aria-live="polite"> pour les messages dynamiques
-    ========================================================== -->
-    
+    <!-- ================
+         CONTENU PRINCIPAL
+         ================ -->
     <section id="login-page" aria-labelledby="login-title">
-      <!-- Titre de page (h1 unique) -->
       <h1 id="login-title" class="login-title">Connexion</h1>
+      <p class="login-subtitle">Pour voir les actualités, merci de vous connecter.</p>
 
-      <!-- Contexte : pourquoi se connecter -->
-      <p class="login-subtitle">
-        Pour voir les actualités, merci de vous connecter
-      </p>
-
-      <!-- 
-        Formulaire de connexion
-        - novalidate : on gère les messages d’erreur nous-mêmes côté JS (login.js)
-        - autocomplete activé pour UX
-      -->
+      <!-- Formulaire de connexion -->
       <form id="login-form" class="login-form" novalidate autocomplete="on">
         <!-- Champ e-mail -->
         <div class="login-field">
-          <!-- 
-            Label masqué visuellement mais présent pour les lecteurs d’écran
-            (classe .sr-only définie dans la base CSS)
-          -->
           <label class="sr-only" for="login-email">E-mail</label>
           <input
             id="login-email"
@@ -102,7 +66,7 @@
             inputmode="email"
             placeholder="E-mail"
             required
-            autocomplete="email" />
+            autocomplete="email">
         </div>
 
         <!-- Champ mot de passe -->
@@ -114,32 +78,22 @@
             type="password"
             placeholder="Mot de passe"
             required
-            autocomplete="current-password" />
+            autocomplete="current-password">
         </div>
 
-        <!-- 
-          Bouton d’envoi
-          A11Y : aria-label explicite (même si le texte est déjà clair)
-        -->
+        <!-- Bouton d’envoi -->
         <button id="btn-login" type="submit" class="login-btn" aria-label="Me connecter">
           Me connecter
         </button>
 
-        <!-- 
-          Zone de statut dynamique (erreurs/succès)
-          A11Y : aria-live="polite" => annonce non intrusive des changements
-        -->
+        <!-- Zone de statut dynamique -->
         <p id="login-status" class="login-status" aria-live="polite"></p>
       </form>
     </section>
 
-    <!-- =========================================================
-         FOOTER — Informations, liens, coordonnées, réseaux
-         Remarques :
-         - Garder un contenu concis et utile (SEO/UX)
-         - Les icônes SVG sont en "currentColor" pour hériter de la couleur
-    ========================================================== -->
-
+    <!-- =========================
+         FOOTER (dans .main-wrapper)
+         ========================= -->
     <footer class="footer">
       <div class="footer-top">
         <div class="footer-row">
@@ -168,7 +122,7 @@
             <div class="contact-item">
               <!-- Icône téléphone -->
               <svg class="icon phone" width="40" height="40" viewBox="0 0 32 32" fill="currentColor" aria-hidden="true">
-                <path d="M13.216 8.064c-.382-4.394-4.966-6.55-5.16-6.638a.974.974 0 0 0-.582-.078c-5.292.878-6.088 3.958-6.12 4.086a.99.99 0 0 0 .02.54c6.312 19.584 19.43 23.214 23.742 24.408.332.092.606.166.814.234a.99.99 0 0 0 .722-.042c.132-.06 3.248-1.528 4.01-6.316a.997.997 0 0 0-.096-.612c-.068-.132-1.698-3.234-6.218-4.33a.977.977 0 0 0-.884.21c-1.426 1.218-3.396 2.516-4.246 2.65-5.698-2.786-8.88-8.132-9-9.146-.07-.57 1.236-2.572 2.738-4.2a.998.998 0 0 0 .26-.766z"/>
+                <path d="M13.216 8.064c-.382-4.394-4.966-6.55-5.16-6.638a.974.974 0 0 0-.582-.078c-5.292.878-6.088 3.958-6.12 4.086a.99.99 0 0 0 .02.54c6.312 19.584 19.43 23.214 23.742 24.408.332.092.606.166.814.234a.99.99 0 0 0 .722-.042c.132-.06 3.248-1.528 4.01-6.316a.997.997 0 0 0-.096-.612c-.068-.132-1.698-3.234-6.218-4.33a.977.977 0 0 0-.884.21c-1.426 1.218-3.396 2.516-4.246 2.65-5.698-2.786-8.88-8.132-9-9.146-.07-.57 1.236-2.572 2.738-4.2a.998.998 0 0 0 .26-.766z"></path>
               </svg>
               <p>+33 00 00 00 00 00<br>+33 00 00 00 00 00</p>
             </div>
@@ -188,29 +142,24 @@
       <div class="footer-bottom">
         <p>Copyright © 2021 AGENCECO - All rights reserved</p>
 
-        <!-- 
-          Bouton “Me connecter” en pied de page
-          - Si doublon avec le bouton principal, décider soit de le masquer 
-            pour les utilisateurs déjà connectés (JS), soit de le rediriger 
-            vers une page “Mon compte”.
-        -->
+        <!-- Bouton “Me connecter” en pied de page -->
         <button class="login-btn" type="button">Me connecter</button>
 
-        <!-- Réseaux sociaux : liens externes avec aria-label -->
+        <!-- Réseaux sociaux -->
         <div class="social-icons">
-          <a href="https://facebook.com" target="_blank" aria-label="Facebook" rel="noopener">
+          <a href="https://facebook.com" target="_blank" aria-label="Facebook" rel="noopener noreferrer">
             <svg class="icon facebook" width="40" height="40" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
               <path d="M15.12,5.32H17V2.14A26.11,26.11,0,0,0,14.26,2C11.54,2,9.68,3.66,9.68,6.7V9.32H6.61v3.56H9.68V22h3.68V12.88h3.06l.46-3.56H13.36V7.05C13.36,6,13.64,5.32,15.12,5.32Z"></path>
             </svg>
           </a>
 
-          <a href="https://twitter.com" target="_blank" aria-label="Twitter" rel="noopener">
+          <a href="https://twitter.com" target="_blank" aria-label="Twitter" rel="noopener noreferrer">
             <svg class="icon twitter" width="40" height="40" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
               <path d="M22,5.8a8.49,8.49,0,0,1-2.36.64,4.13,4.13,0,0,0,1.81-2.27,8.21,8.21,0,0,1-2.61,1,4.1,4.1,0,0,0-7,3.74A11.64,11.64,0,0,1,3.39,4.62a4.16,4.16,0,0,0-.55,2.07A4.09,4.09,0,0,0,4.66,10.1,4.05,4.05,0,0,1,2.8,9.59v.05a4.1,4.1,0,0,0,3.3,4A3.93,3.93,0,0,1,5,13.81a4.9,4.9,0,0,1-.77-.07,4.11,4.11,0,0,0,3.83,2.84A8.22,8.22,0,0,1,3,18.34a7.93,7.93,0,0,1-1-.06,11.57,11.57,0,0,0,6.29,1.85A11.59,11.59,0,0,0,20,8.45c0-.17,0-.35,0-.53A8.43,8.43,0,0,0,22,5.8Z"></path>
             </svg>
           </a>
 
-          <a href="https://instagram.com" target="_blank" aria-label="Instagram" rel="noopener">
+          <a href="https://instagram.com" target="_blank" aria-label="Instagram" rel="noopener noreferrer">
             <svg class="icon instagram" width="40" height="40" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true">
               <g fill="none" stroke="currentColor" stroke-miterlimit="10">
                 <path d="M11.5 15.5h-7a4 4 0 0 1-4-4v-7a4 4 0 0 1 4-4h7a4 4 0 0 1 4 4v7a4 4 0 0 1-4 4z"></path>
@@ -223,13 +172,7 @@
       </div>
     </footer>
 
-    <!-- =========================================================
-         SCRIPTS
-         - burger.js : gère l’état aria-expanded du burger et l’ouverture du menu
-         - login.js  : soumission du formulaire, validation, messages (aria-live)
-         NOTE : 'defer' garantit l’exécution après le parsing du HTML
-    ========================================================== -->
-
+    <!-- SCRIPTS -->
     <script src="js/burger.js" defer></script>
     <script src="js/login.js" defer></script>
   </main>
