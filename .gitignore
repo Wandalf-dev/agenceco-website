@@ -1,0 +1,5 @@
+# Ignorer tout le contenu du dossier
+Maquette Figma/*
+
+# Mais garder un fichier "README" ou ".gitkeep" pour que le dossier existe
+!Maquette Figma/.gitkeep
