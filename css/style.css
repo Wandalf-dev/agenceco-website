@@ -2034,3 +2034,12 @@ body {
   transform: translateY(-1px);
 
 }
+
+
+#news-heading {
+  color: #469B61;
+  font-size: 55px;
+  font-weight: 600;
+  margin-bottom: 40px;
+  text-align: center;
+}

@@ -27,7 +27,7 @@
 
 // ===== Réglages =====
 const USE_MOCK_API = false                 // <-- active/désactive le mock
-const API_BASE = "http://localhost:3000"   // <-- ton backend
+const API_BASE = "http://localhost:3000"   // <-- backend local
 const LOGIN_PATH = "/login"                // <-- endpoint réel
 const LS_TOKEN_KEY = "auth_token"          // <-- clé de stockage
 const REDIRECT_AFTER = "index.html"        // <-- page de redirection après succès
