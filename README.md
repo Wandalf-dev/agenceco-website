@@ -18,8 +18,7 @@ Click on the green <> Code button and select Download ZIP.
 
 Once the ZIP file is downloaded, unzip it into the folder of your choice.
 
-Backend
-For the API calls (news, authentication, etc.) to work locally:
+### Backend :For the API calls (news, authentication, etc.) to work locally:
 
 Download the backend here: 
 
