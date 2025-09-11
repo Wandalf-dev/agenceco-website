@@ -1,31 +1,39 @@
-# AgenceEco — Site statique
+# AgenceEco — Static Website
 
-## Comment installer le site statique AgenceEco sur votre machine ?
+## How to install the AgenceEco static site on your machine?
 
-### Via VS Code (recommandé)
+### Via VS Code (recommended)
 
-1. Ouvrez un terminal et exécutez la commande suivante pour cloner le dépôt GitHub :  
+1. Open a terminal and run the following command to clone the GitHub repository:  
    ```bash
    git clone https://github.com/Wandalf-dev/agenceco-website.git
-Placez-vous dans le dossier souhaité avant de cloner avec cd mon_dossier.
+Make sure you are in the desired folder before cloning, using cd my_folder.
 
-👉 Conseil : installez l’extension Live Server dans VS Code pour lancer facilement le site localement.
+👉 Tip: install the Live Server extension in VS Code to easily launch the site locally.
 
-Installation manuelle
-Rendez-vous sur le dépôt GitHub.
+Manual installation
+Go to the GitHub repository.
 
-Cliquez sur le bouton vert <> Code puis sélectionnez Download ZIP.
+Click on the green <> Code button and select Download ZIP.
 
-Une fois le fichier ZIP téléchargé, décompressez-le dans un dossier de votre choix.
+Once the ZIP file is downloaded, unzip it into the folder of your choice.
 
 Backend
-Pour que les appels API (actualités, authentification, etc.) fonctionnent en local :
+For the API calls (news, authentication, etc.) to work locally:
 
-Téléchargez le backend ici : AgencEcoBackend
+Download the backend here: 
 
-Lisez attentivement le README du backend pour l’installer correctement.
+```bash
+https://github.com/gducampus/AgencEcoBackend.git
+```
 
-⚠️ Si vous n’installez pas le backend en local, le site utilisera automatiquement l’API déployée en ligne (Render).
+Carefully follow the backend README to install it properly.
 
-Démo en ligne
-🌍 Exemple du site complet publié ici : agenc-eco.alwaysdata.net
+⚠️ If you don’t install the backend locally, the site will automatically use the deployed API (Render).
+
+Live demo
+🌍 A complete demo of the site is available here: 
+
+```bash
+https://agenc-eco.alwaysdata.net/
+
