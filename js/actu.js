@@ -15,9 +15,6 @@ const API_BASE  = window.API_BASE || 'http://localhost:3000'
 const NEWS_URL  = `${API_BASE}/articles` // pour DELETE
 const NEWS_URLS = [
   `${API_BASE}/articles`,
-  `${API_BASE}/api/news`,
-  `${API_BASE}/api/articles`,
-  `${API_BASE}/news`,
 ]
 
 /* ---------- auth & toasts ---------- */

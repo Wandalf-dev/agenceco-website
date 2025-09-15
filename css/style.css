@@ -294,6 +294,9 @@ nav ul li a:hover {
   padding: 30px 0;
   gap: 160px;
   flex-wrap: wrap;
+  list-style: none; /* supprime les puces */
+  margin: 0;
+  padding-left: 0;
 }
 
 /* Bloc de stats */

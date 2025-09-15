@@ -1,28 +1,47 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="UTF-8"> <!-- Encodage UTF-8 (accents, ponctuation typographique) -->
+  <meta name="viewport" content="width=device-width, initial-scale=1"> <!-- Responsive/mobile-first -->
   <title>AgenceEco — Détail de l’actualité</title>
 
-  <!-- Typographie -->
+  <!--
+    Typographie : Poppins (cohérence avec le reste du site).
+    Astuce perf : preconnect sur fonts.googleapis.com et fonts.gstatic.com pour réduire la latence
+    au chargement des fontes (voir balises plus bas).
+  -->
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
-  <!-- Styles -->
+  <!--
+    Styles :
+    - blog.css : styles communs aux pages liées aux actualités (listes, cartes, typographie).
+    - detail.css : styles spécifiques au template de détail (titre, meta, galerie).
+  -->
   <link rel="stylesheet" href="css/blog.css">
   <link rel="stylesheet" href="css/detail.css">
 </head>
 <body>
+  <!--
+    Stratégie de layout :
+    - .main-wrapper = zone blanche centrée ; le <body> peut conserver un fond sombre (bandes latérales).
+    - Inclure header + contenu + footer dans ce wrapper garantit l’alignement visuel global.
+  -->
   <main class="main-wrapper">
-    <!-- ========================= HEADER ========================= -->
+    <!-- ========================= HEADER =========================
+         Contenu : logo (retour accueil), navigation principale, bouton burger.
+         Accessibilité :
+         - <nav id="nav"> reçoit aria-label descriptif.
+         - Le bouton burger expose son état via aria-expanded et référence le menu via aria-controls.
+         ======================================================== -->
     <header>
       <div class="container">
         <a href="index.html" class="logo">Agenc<span>eco</span></a>
 
         <nav id="nav" aria-label="Navigation principale">
           <ul>
+            <!-- Bonnes pratiques : sur index.html, ajouter aria-current="page" sur le lien Accueil -->
             <li><a href="index.html">Accueil</a></li>
             <li><a href="index.html#equipe">Notre équipe</a></li>
             <li><a href="index.html#services">Nos services</a></li>
@@ -32,30 +51,53 @@
           </ul>
         </nav>
 
+        <!--
+          Bouton menu mobile :
+          - aria-expanded basculé par js/burger.js (true/false).
+          - aria-controls = "nav" pour lier le contrôleur au conteneur de navigation.
+        -->
         <button class="burger" id="burger" aria-label="Menu mobile" aria-controls="nav" aria-expanded="false">
           <span></span><span></span><span></span>
         </button>
       </div>
     </header>
 
-    <!-- ====================== DÉTAIL ACTU ====================== -->
+    <!-- ====================== DÉTAIL ACTU ======================
+         Section de contenu dynamique :
+         - aria-live="polite" informe doucement des mises à jour (remplissage via JS).
+         - <h2 class="sr-only"> sert de titre sémantique de la section (exigence “section needs heading”).
+         - L’article contient des slots peuplés par js/detail.js (titre, date, extrait, contenu, galerie).
+         ======================================================== -->
     <section id="article-detail" class="main-content" aria-live="polite">
       <!-- Titre de section invisible pour W3C/lecteurs d'écran -->
       <h2 class="sr-only">Contenu de l’article</h2>
 
+      <!-- Lien retour : navigation secondaire, utile au clavier/lecteurs d’écran -->
       <a class="back-link" href="blog.html" id="back-link">← Retour aux actualités</a>
 
       <article class="article">
-        <!-- Titre principal de la page -->
+        <!--
+          Titre principal de la page (niveau h2 ici car la page comporte déjà un contexte global).
+          Rempli via JS (#art-title). Le <span class="sr-only"> fournit un libellé a11y quand vide.
+          Note : si vous souhaitez une hiérarchie stricte avec H1 unique par page,
+          vous pouvez promouvoir ce titre en <h1> côté CSS sans changer la taille visuelle.
+        -->
         <h2 class="article-title fx-underline" id="art-title">
-
           <span class="sr-only">Titre de l’article</span>
         </h2>
 
+        <!-- Métadonnées et résumé ; l’extrait est masqué par défaut (shown si fourni par l’API) -->
         <p class="article-date" id="art-date"></p>
         <p class="article-excerpt" id="art-excerpt" hidden></p>
 
-        <!-- Image de couverture (src minimal + hidden par défaut) -->
+        <!--
+          Image de couverture :
+          - placeholder 1x1 px (data URI) pour réserver l’emplacement (éviter layout shift).
+          - hidden tant qu’aucune URL valide n’est injectée par JS.
+          - decoding="async" + loading="lazy" pour améliorer le temps de rendu initial.
+          - alt="" car l’image est purement illustrative si le titre/texte porte déjà l’info.
+            (Si l’image est informative, JS peut définir un alt pertinent.)
+        -->
         <img
           id="art-cover"
           class="article-cover"
@@ -65,14 +107,27 @@
           loading="lazy"
           src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==">
 
+        <!--
+          Contenu riche de l’article (HTML contrôlé/sanitisé côté JS) :
+          - #art-content recevra du HTML généré (paragraphes, titres, listes, images inline).
+          - #art-gallery peut accueillir un ensemble d’images/figures (masqué si vide).
+          Sécurité : s’assurer dans js/detail.js que le HTML injecté a été nettoyé (XSS).
+        -->
         <div id="art-content" class="article-content"></div>
         <div id="art-gallery" class="article-gallery" hidden></div>
       </article>
 
+      <!-- Zone de statut (chargement/erreurs) ; hidden jusqu’à usage par JS -->
       <p id="art-status" class="status" hidden>Chargement…</p>
     </section>
 
-    <!-- ========================= FOOTER ========================= -->
+    <!-- ========================= FOOTER =========================
+         Deux blocs :
+         - .footer-top (colonnes + contact)
+         - .footer-bottom (mentions, CTA login, réseaux)
+         Accessibilité :
+         - Icônes SVG décoratives => aria-hidden="true", le texte adjacent transmet l’info utile.
+         ======================================================== -->
     <footer class="footer">
       <div class="footer-top">
         <div class="footer-row">
@@ -97,6 +152,7 @@
 
           <div class="footer-contact">
             <div class="contact-item">
+              <!-- Icône téléphone (décoratif) -->
               <svg class="icon phone" width="40" height="40" viewBox="0 0 32 32" fill="currentColor" aria-hidden="true">
                 <path d="M13.216 8.064c-.382-4.394-4.966-6.55-5.16-6.638a.974.974 0 0 0-.582-.078c-5.292.878-6.088 3.958-6.12 4.086a.99.99 0 0 0 .02.54c6.312 19.584 19.43 23.214 23.742 24.408.332.092.606.166.814.234a.99.99 0 0 0 .722-.042c.132-.06 3.248-1.528 4.01-6.316a.997.997 0 0 0-.096-.612c-.068-.132-1.698-3.234-6.218-4.33a.977.977 0 0 0-.884.21c-1.426 1.218-3.396 2.516-4.246 2.65-5.698-2.786-8.88-8.132-9-9.146-.07-.57 1.236-2.572 2.738-4.2a.998.998 0 0 0 .26-.766z"></path>
               </svg>
@@ -104,6 +160,7 @@
             </div>
 
             <div class="contact-item">
+              <!-- Icône géolocalisation (décoratif) -->
               <svg class="icon geoloc" width="40" height="40" viewBox="0 0 64 64" fill="currentColor" aria-hidden="true">
                 <path d="M40 23c0-4.411-3.589-8-8-8s-8 3.589-8 8 3.589 8 8 8 8-3.589 8-8zm-12 0c0-2.206 1.794-4 4-4s4 1.794 4 4-1.794 4-4 4-4-1.794-4-4z"></path>
                 <path d="M31.966 64c.574 0 1.12-.247 1.5-.677.882-1 21.605-24.682 21.534-40.298C54.942 10.329 44.625 0 32 0 19.317 0 9 10.333 9 23.034c0 15.607 20.585 39.284 21.462 40.284.38.433.898.668 1.504.682zM32 4c10.429 0 18.952 8.543 19 19.043.054 11.824-14.281 30.122-19.029 35.855C27.246 53.161 13 34.872 13 23.034 13 12.539 21.523 4 32 4z"></path>
@@ -117,9 +174,13 @@
       <div class="footer-bottom">
         <p>Copyright © 2021 AGENCECO - All rights reserved</p>
 
+        <!-- CTA authentification : sur cette page, lien vers /login.html (gestion état via js/auth-button.js) -->
         <a id="auth-btn" class="login-btn" href="login.html">Se connecter</a>
 
-        <!-- Groupe de liens = navigation -->
+        <!--
+          Groupe de liens sociaux : usage d’un <nav> pour exposer un bloc cohérent aux technologies d’assistance.
+          target="_blank" + rel="noopener noreferrer" pour sécurité (empêche window.opener) et perf.
+        -->
         <nav class="social-icons" aria-label="Réseaux sociaux">
           <a href="https://facebook.com" target="_blank" aria-label="Facebook" rel="noopener noreferrer">
             <svg class="icon facebook" width="40" height="40" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
@@ -144,10 +205,22 @@
       </div>
     </footer>
 
-    <!-- ======================= CONFIG/API ======================= -->
+    <!-- ======================= CONFIG/API =======================
+         IMPORTANT :
+         - window.API_BASE sert de point d’entrée à js/detail.js (fallback dans le script si absent).
+         - En production, ce jeton peut être surchargé par le serveur (ex. <script>window.API_BASE='https://…'</script>)
+           ou via un bundle distinct selon l’environnement (env dev/prod).
+         - Si on utilise une URL potentiellement terminée par '/', il faut penser à normaliser côté JS
+           (ex. .replace(/\/$/, '') ou new URL()) pour éviter les doubles '//' dans les requêtes.
+         ======================================================== -->
     <script>window.API_BASE = 'http://localhost:3000';</script>
 
-    <!-- ========================= SCRIPTS ======================== -->
+    <!-- ========================= SCRIPTS ========================
+         Ordre de chargement (defer) :
+         - detail.js : hydrate la page (fetch article, met à jour titres/cover/contenu/galerie, gère erreurs).
+         - burger.js : contrôle l’ouverture/fermeture du menu mobile (met à jour aria-expanded).
+         - auth-button.js : ajuste le CTA “Se connecter” selon l’état d’authentification (texte/lien).
+         ======================================================== -->
     <script src="js/detail.js" defer></script>
     <script src="js/burger.js" defer></script>
     <script src="js/auth-button.js" defer></script>

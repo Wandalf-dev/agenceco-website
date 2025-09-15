@@ -1,34 +1,37 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8"> <!-- Encodage UTF-8 pour gérer les accents et symboles -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- Mise à l’échelle responsive sur mobile -->
   <title>AgenceEco — Connexion</title>
 
-  <!-- Fonts : Poppins pour cohérence visuelle -->
+  <!-- Police : Poppins pour cohérence visuelle avec le reste du site (poids 400/600/700) -->
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
 
-  <!-- Styles spécifiques à la page de connexion -->
+  <!-- Feuille de styles spécifique à la page de connexion (layout formulaire, états, erreurs) -->
   <link rel="stylesheet" href="css/login.css">
 </head>
 
 <body>
   <!--
-    IMPORTANT : on place header + section + footer
-    DANS .main-wrapper (zone blanche centrée).
-    Le body reste noir => bandes noires latérales visibles.
+    Stratégie de layout :
+    - L’ensemble header + contenu + footer est encapsulé dans .main-wrapper (fond blanc centré).
+    - Le <body> conserve le fond noir => “bandes” latérales visibles, cohérence avec l’index.
   -->
   <main class="main-wrapper">
 
-    <!-- =========================
-         HEADER (dans .main-wrapper)
-         ========================= -->
+    <!-- ========================= HEADER =========================
+         Rôle : zone d’identification du site, navigation primaire et bouton burger.
+         Accessibilité :
+         - <nav> reçoit aria-label="Navigation principale" pour expliciter sa fonction.
+         - Le bouton burger expose l’état d’ouverture via aria-expanded (mis à jour en JS).
+         ======================================================== -->
     <header>
       <div class="container">
-        <!-- Logo : lien vers l’accueil -->
+        <!-- Logo : lien retour accueil (réassurance et repère constant) -->
         <a href="index.html" class="logo">Agenc<span>eco</span></a>
 
-        <!-- Navigation principale -->
+        <!-- Navigation de premier niveau ; penser à aria-current="page" côté index.html si besoin -->
         <nav id="nav" aria-label="Navigation principale">
           <ul>
             <li><a href="index.html">Accueil</a></li>
@@ -40,23 +43,36 @@
           </ul>
         </nav>
 
-        <!-- Burger (mobile) -->
+        <!--
+          Bouton burger (mobile) :
+          - aria-controls pointe vers #nav pour lier contrôle et contenu.
+          - aria-expanded = false par défaut ; bascule gérée dans js/burger.js.
+        -->
         <button class="burger" id="burger" aria-label="Menu mobile" aria-expanded="false" aria-controls="nav">
           <span></span><span></span><span></span>
         </button>
       </div>
     </header>
 
-    <!-- ================
-         CONTENU PRINCIPAL
-         ================ -->
+    <!-- ==================== CONTENU PRINCIPAL ====================
+         Page de connexion :
+         - <h1> unique pour la hiérarchie sémantique.
+         - Texte introductif pour contextualiser l’action attendue.
+         - Le formulaire est "novalidate" pour déléguer la logique de validation à JS (messages custom),
+           tout en conservant les attributs HTML (required, type="email") pour l’ergonomie de base.
+         ========================================================= -->
     <section id="login-page" aria-labelledby="login-title">
       <h1 id="login-title" class="login-title">Connexion</h1>
       <p class="login-subtitle">Pour voir les actualités, merci de vous connecter.</p>
 
-      <!-- Formulaire de connexion -->
+      <!--
+        Formulaire :
+        - id="login-form" pour le ciblage JS (soumission, validations, feedback).
+        - autocomplete="on" pour laisser le navigateur proposer les identifiants (UX).
+        - Les <label> existent (classe .sr-only) : visibles pour lecteurs d’écran, discrets visuellement.
+      -->
       <form id="login-form" class="login-form" novalidate autocomplete="on">
-        <!-- Champ e-mail -->
+        <!-- Champ e-mail : type=email + inputmode=email -> clavier adapté mobile et validation de format -->
         <div class="login-field">
           <label class="sr-only" for="login-email">E-mail</label>
           <input
@@ -69,7 +85,7 @@
             autocomplete="email">
         </div>
 
-        <!-- Champ mot de passe -->
+        <!-- Champ mot de passe : autocomplete=current-password pour l’auto-remplissage sécurisé -->
         <div class="login-field">
           <label class="sr-only" for="login-password">Mot de passe</label>
           <input
@@ -81,23 +97,35 @@
             autocomplete="current-password">
         </div>
 
-        <!-- Bouton d’envoi -->
+        <!--
+          Bouton d’envoi :
+          - libellé explicite (et aria-label redondant choisi pour cohérence avec les autres boutons).
+          - La gestion d’état (chargement, succès/échec) est traitée côté js/login.js.
+        -->
         <button id="btn-login" type="submit" class="login-btn" aria-label="Me connecter">
           Me connecter
         </button>
 
-        <!-- Zone de statut dynamique -->
+        <!--
+          Zone de statut dynamique :
+          - aria-live="polite" : annonce les messages (erreurs/succès) sans interrompre la lecture.
+          - Peuvent s’y afficher : “Connexion en cours…”, “Identifiants invalides”, etc.
+        -->
         <p id="login-status" class="login-status" aria-live="polite"></p>
       </form>
     </section>
 
-    <!-- =========================
-         FOOTER (dans .main-wrapper)
-         ========================= -->
+    <!-- ========================= FOOTER =========================
+         Structure :
+         - .footer-top : colonnes de liens et coordonnées.
+         - .footer-bottom : mentions légales, CTA secondaire, réseaux sociaux.
+         Accessibilité :
+         - Les SVG sont marqués aria-hidden="true" car décoratifs ; le texte adjacent porte l’info utile.
+         ======================================================== -->
     <footer class="footer">
       <div class="footer-top">
         <div class="footer-row">
-          <!-- Colonnes d’informations -->
+          <!-- Colonnes d’informations (contenu statique / navigation secondaire) -->
           <div class="footer-columns">
             <div class="footer-column">
               <h3>Content</h3>
@@ -117,10 +145,10 @@
             </div>
           </div>
 
-          <!-- Coordonnées -->
+          <!-- Coordonnées (contact direct) -->
           <div class="footer-contact">
             <div class="contact-item">
-              <!-- Icône téléphone -->
+              <!-- Icône téléphone (décoratif) -->
               <svg class="icon phone" width="40" height="40" viewBox="0 0 32 32" fill="currentColor" aria-hidden="true">
                 <path d="M13.216 8.064c-.382-4.394-4.966-6.55-5.16-6.638a.974.974 0 0 0-.582-.078c-5.292.878-6.088 3.958-6.12 4.086a.99.99 0 0 0 .02.54c6.312 19.584 19.43 23.214 23.742 24.408.332.092.606.166.814.234a.99.99 0 0 0 .722-.042c.132-.06 3.248-1.528 4.01-6.316a.997.997 0 0 0-.096-.612c-.068-.132-1.698-3.234-6.218-4.33a.977.977 0 0 0-.884.21c-1.426 1.218-3.396 2.516-4.246 2.65-5.698-2.786-8.88-8.132-9-9.146-.07-.57 1.236-2.572 2.738-4.2a.998.998 0 0 0 .26-.766z"></path>
               </svg>
@@ -128,7 +156,7 @@
             </div>
 
             <div class="contact-item">
-              <!-- Icône géolocalisation -->
+              <!-- Icône géolocalisation (décoratif) -->
               <svg class="icon geoloc" width="40" height="40" viewBox="0 0 64 64" fill="currentColor" aria-hidden="true">
                 <path d="M40 23c0-4.411-3.589-8-8-8s-8 3.589-8 8 3.589 8 8 8 8-3.589 8-8zm-12 0c0-2.206 1.794-4 4-4s4 1.794 4 4-1.794 4-4 4-4-1.794-4-4z"></path>
                 <path d="M31.966 64c.574 0 1.12-.247 1.5-.677.882-1 21.605-24.682 21.534-40.298C54.942 10.329 44.625 0 32 0 19.317 0 9 10.333 9 23.034c0 15.607 20.585 39.284 21.462 40.284.38.433.898.668 1.504.682zM32 4c10.429 0 18.952 8.543 19 19.043.054 11.824-14.281 30.122-19.029 35.855C27.246 53.161 13 34.872 13 23.034 13 12.539 21.523 4 32 4z"></path>
@@ -142,10 +170,18 @@
       <div class="footer-bottom">
         <p>Copyright © 2021 AGENCECO - All rights reserved</p>
 
-        <!-- Bouton “Me connecter” en pied de page -->
+        <!--
+          Bouton “Me connecter” en pied de page :
+          - Ici c’est un <button> pour une action locale (ex. ouvrir un modal).
+          - La version lien (<a href="login.html">) est utilisée en home pour une navigation.
+        -->
         <button class="login-btn" type="button">Me connecter</button>
 
-        <!-- Réseaux sociaux -->
+        <!--
+          Réseaux sociaux :
+          - target="_blank" + rel="noopener noreferrer" : sécurité (empêche window.opener) et perf.
+          - Les icônes SVG sont aria-hidden (purement décoratives).
+        -->
         <div class="social-icons">
           <a href="https://facebook.com" target="_blank" aria-label="Facebook" rel="noopener noreferrer">
             <svg class="icon facebook" width="40" height="40" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
@@ -172,7 +208,12 @@
       </div>
     </footer>
 
-    <!-- SCRIPTS -->
+    <!-- ========================= SCRIPTS =========================
+         Chargement en 'defer' :
+         - Évite de bloquer le parsing du HTML (meilleure perf).
+         - Ordre logique : burger (navigation), puis login (soumission/feedback).
+         - login.js : gère la validation côté client, l’appel API (/login), et met à jour #login-status.
+         ========================================================= -->
     <script src="js/burger.js" defer></script>
     <script src="js/login.js" defer></script>
   </main>

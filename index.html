@@ -1,35 +1,55 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8"> <!-- Encodage UTF-8 -->
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- Responsive -->
-  <title>AgenceEco</title> <!-- Titre de l’onglet -->
+  <meta charset="UTF-8"> <!-- Encodage UTF-8 pour couvrir les caractères accentués -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- Mise à l’échelle responsive côté mobile -->
+  <title>AgenceEco</title> <!-- Titre de l’onglet navigateur -->
 
-  <!-- Typo : Poppins -->
+  <!-- Typographie : Poppins via Google Fonts (poids 400/600/700) -->
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
 
-  <!-- Styles -->
+  <!-- Feuille de styles globale du site (layout, couleurs, composants) -->
   <link rel="stylesheet" href="css/style.css">
 </head>
 
 <body>
+  <!--
+    Wrapper global : sert de conteneur de mise en page (largeur max, bandes latérales, centrage).
+    Choix : inclure <header> et <footer> dans ce wrapper pour conserver un fond/cohérence visuelle sur toute la page.
+  -->
   <main class="main-wrapper">
     <!-- ========================= HEADER ========================= -->
+    <!--
+      En-tête principal contenant :
+      - le logo (lien vers l’accueil),
+      - la navigation de premier niveau,
+      - le bouton burger (mobile) qui contrôle l’ouverture/fermeture du menu.
+      Accessibilité :
+      - <nav> est étiqueté via aria-label="Navigation principale".
+      - Le bouton burger pilote #nav via aria-controls et expose l’état via aria-expanded (mis à jour par JS).
+    -->
     <header>
       <div class="container">
         <a href="index.html" class="logo">Agenc<span>eco</span></a>
 
         <nav id="nav" aria-label="Navigation principale">
           <ul>
+            <!-- Conseil a11y : sur la page d’accueil, ajouter aria-current="page" sur ce lien -->
             <li><a href="index.html">Accueil</a></li>
             <li><a href="#equipe">Notre équipe</a></li>
             <li><a href="#services">Nos services</a></li>
+            <!-- TODO : ancrer vers une section réelle ou une page dédiée pour éviter un lien vide -->
             <li><a href="">Témoignages</a></li>
             <li><a href="#contact">Contactez-nous</a></li>
             <li><a href="blog.html">Actualités</a></li>
           </ul>
         </nav>
 
+        <!--
+          Bouton burger :
+          - aria-controls cible l’ID du menu.
+          - aria-expanded bascule true/false (géré dans js/burger.js) pour les technologies d’assistance.
+        -->
         <button class="burger" id="burger" aria-label="Menu mobile" aria-controls="nav" aria-expanded="false">
           <span></span><span></span><span></span>
         </button>
@@ -37,6 +57,11 @@
     </header>
 
     <!-- ========================= HERO ========================= -->
+    <!--
+      Bannière d’accueil :
+      - .hero-overlay pour surcouche visuelle (assombrissement/contraste).
+      - Titre principal <h1> unique de la page pour le SEO et la hiérarchie sémantique.
+    -->
     <section class="hero" aria-label="Bannière d’accueil">
       <div class="hero-overlay">
         <div class="hero-text">
@@ -49,6 +74,12 @@
     </section>
 
     <!-- ========================= ÉQUIPE ========================= -->
+    <!--
+      Section équipe :
+      - Association explicite via aria-labelledby="team-title".
+      - Liste sémantique <ul> de membres pour un contenu de type collection.
+      - Alts des images : descriptifs et concis (nom de la personne).
+    -->
     <section class="team-section" id="equipe" aria-labelledby="team-title">
       <h2 id="team-title">Notre équipe</h2>
 
@@ -58,7 +89,7 @@
         Aliquam sit amet blandit nisi, sodales molestie.
       </p>
 
-      <!-- Liste sémantique -->
+      <!-- Liste sémantique de membres -->
       <ul class="team-grid">
         <li class="member">
           <div class="photo-wrapper">
@@ -97,7 +128,12 @@
         </li>
       </ul>
 
-      <!-- Stats : liste sémantique -->
+      <!--
+        Barre de statistiques :
+        - Choix d’une <ul> car il s’agit d’items répétés “valeur + libellé”.
+        - aria-label sur la liste pour donner un nom de groupe.
+        Note : un <dl> (termes/définitions) serait également acceptable ; ici on privilégie la simplicité CSS.
+      -->
       <ul class="stats-bar" aria-label="Chiffres clés">
         <li class="stat">
           <strong>2500</strong>
@@ -119,6 +155,11 @@
     </section>
 
     <!-- ========================= SERVICES ========================= -->
+    <!--
+      Section services :
+      - Grille de cartes icône + libellé.
+      - Alts : décrire l’icône si elle porte du sens ; sinon alt="" si décoratif.
+    -->
     <section class="services" id="services" aria-labelledby="services-title">
       <h2 id="services-title">Nos services</h2>
 
@@ -140,15 +181,27 @@
     </section>
 
     <!-- ========================= ACTUALITÉS ========================= -->
+    <!--
+      Flux d’actualités (rendu dynamique) :
+      - <h2> fournit l’intitulé sémantique exigé par la règle “Section needs heading”.
+      - #news-list est aria-live="polite" pour annoncer les mises à jour sans interrompre la lecture.
+      - Rendu injecté par js/actu.js (fetch sur l’API, templates de cartes).
+    -->
     <section aria-labelledby="news-heading">
       <h2 id="news-heading">Dernières actualités</h2>
-      <!-- div pour éviter le warning "Section lacks heading" -->
       <div id="news-list" aria-live="polite" aria-labelledby="news-heading">
         <!-- Rendu dynamique par js/actu.js -->
       </div>
     </section>
 
     <!-- ========================= CONTACT ========================= -->
+    <!--
+      Formulaire de contact :
+      - <label for=…> lié à chaque contrôle pour l’accessibilité.
+      - Placeholder non utilisé comme libellé (bonne pratique).
+      - Zone de texte limitée à 500 caractères (UX + sécurité côté client).
+      - Les regroupements visuels sont faits via .form-row / .form-group pour le responsive.
+    -->
     <section class="contact" id="contact" aria-labelledby="contact-title">
       <h2 id="contact-title">Contactez-nous</h2>
       <p class="subtitle">
@@ -202,6 +255,11 @@
     </section>
 
     <!-- ========================= À PROPOS ========================= -->
+    <!--
+      Section “À propos” :
+      - Deux colonnes : image illustrative + contenu texte et icônes.
+      - Les icônes contenues dans .icon-stable peuvent être stabilisées en taille via CSS (éviter les sauts de layout).
+    -->
     <section class="apropos" aria-labelledby="apropos-title">
       <div class="apropos-wrapper">
         <div class="apropos-image">
@@ -243,6 +301,13 @@
     </section>
 
     <!-- ========================= GALERIE ========================= -->
+    <!--
+      Slider accessible :
+      - aria-roledescription="carousel" : informe le lecteur d’écran de la métaphore du composant.
+      - .galerie-track : role="group" + aria-live="polite" pour annoncer les changements doux.
+      - Les boutons précédent/suivant sont des <button> avec aria-label explicite.
+      - .sr-only (défini en CSS) permet de cacher visuellement un titre utile aux technologies d’assistance.
+    -->
     <section class="notre-galerie" aria-labelledby="galerie-heading">
       <h2 id="galerie-heading">Notre galerie</h2>
       <p class="intro">
@@ -260,10 +325,19 @@
             <div class="slide"><img src="assets/galerie-3.png" alt="Bâtiment Agenceco moderne"></div>
           </div>
 
+          <!--
+            Points de navigation générés par JS (js/slide.js) :
+            - Utiliser <button> dans .galerie-dots pour la focusabilité clavier.
+            - Ajouter aria-current="true" sur le point actif.
+          -->
           <nav class="galerie-dots" aria-label="Navigation par points"></nav>
         </section>
 
-        <!-- remplace div+aria-label par nav -->
+        <!--
+          Contrôles explicites du carrousel :
+          - <nav> pour regrouper les commandes.
+          - Icônes SVG marquées aria-hidden="true" car purement décoratives (le libellé est sur le bouton).
+        -->
         <nav class="navigation-buttons" aria-label="Navigation de la galerie">
           <button class="btn prev" type="button" aria-label="Image précédente">
             <svg width="28" height="28" viewBox="0 0 24 24" fill="none"
@@ -273,7 +347,7 @@
           </button>
           <button class="btn next" type="button" aria-label="Image suivante">
             <svg width="28" height="28" viewBox="0 0 24 24" fill="none"
-                 stroke="black" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                 stroke="black" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" >
               <polyline points="9 6 15 12 9 18"></polyline>
             </svg>
           </button>
@@ -282,6 +356,11 @@
     </section>
 
     <!-- ========================= FOOTER ========================= -->
+    <!--
+      Pied de page :
+      - Deux zones : .footer-top (colonnes + contacts), .footer-bottom (mentions, login, réseaux).
+      - Icônes SVG avec aria-hidden="true" et un texte adjacent lisible (pas de redondance dans l’accessibilité).
+    -->
     <footer class="footer" aria-label="Pied de page">
       <div class="footer-top">
         <div class="footer-row">
@@ -305,6 +384,10 @@
           </div>
 
           <div class="footer-contact">
+            <!--
+              Icône téléphone :
+              - SVG décoratif (aria-hidden) + texte de contact en clair.
+            -->
             <div class="contact-item">
               <svg class="icon phone" width="40" height="40" viewBox="0 0 32 32" fill="currentColor" aria-hidden="true">
                 <path d="M13.216 8.064c-.382-4.394-4.966-6.55-5.16-6.638a.974.974 0 0 0-.582-.078c-5.292.878-6.088 3.958-6.12 4.086a.99.99 0 0 0 .02.54c6.312 19.584 19.43 23.214 23.742 24.408.332.092.606.166.814.234a.99.99 0 0 0 .722-.042c.132-.06 3.248-1.528 4.01-6.316a.997.997 0 0 0-.096-.612c-.068-.132-1.698-3.234-6.218-4.33a.977.977 0 0 0-.884.21c-1.426 1.218-3.396 2.516-4.246 2.65-5.698-2.786-8.88-8.132-9-9.146-.07-.57 1.236-2.572 2.738-4.2a.998.998 0 0 0 .26-.766z"></path>
@@ -326,9 +409,14 @@
       <div class="footer-bottom">
         <p>Copyright © 2021 AGENCECO - All rights reserved</p>
 
+        <!-- Bouton d’authentification (géré par js/auth-button.js selon l’état de session) -->
         <a id="auth-btn" class="login-btn" href="login.html">Me connecter</a>
 
-        <!-- social-icons : nav pour aria-label propre -->
+        <!--
+          Réseaux sociaux :
+          - <nav> avec aria-label pour exposer un groupe de liens cohérent.
+          - target="_blank" + rel="noopener" pour sécurité et perf (pas de référenceur JS).
+        -->
         <nav class="social-icons" aria-label="Réseaux sociaux">
           <a href="https://facebook.com" target="_blank" rel="noopener" aria-label="Facebook">
             <svg class="icon facebook" width="40" height="40" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
@@ -357,6 +445,12 @@
   </main>
 
   <!-- ========================= SCRIPTS ========================= -->
+  <!--
+    Scripts en defer :
+    - Évitent de bloquer le parsing HTML.
+    - Ordre réfléchi : burger (navigation), slide (carrousel), actu (fetch API), auth-button (état bouton).
+    - Les modules JS mettent à jour les attributs ARIA (ex. aria-expanded) pour rester conformes a11y.
+  -->
   <script src="js/burger.js" defer></script>
   <script src="js/slide.js" defer></script>
   <script src="js/actu.js" defer></script>
