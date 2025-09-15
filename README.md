@@ -37,9 +37,7 @@ Live demo
 https://agenc-eco.alwaysdata.net/
 ```
 
-The website’s backend is hosted on:
-
-https://render.com/
+The website’s backend is hosted on: https://render.com/
 
 
 
