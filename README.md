@@ -11,7 +11,7 @@ Make sure you are in the desired folder before cloning, using cd my_folder.
 
 👉 Tip: install the Live Server extension in VS Code to easily launch the site locally.
 
-Manual installation
+#### Manual installation :
 Go to the GitHub repository.
 
 Click on the green <> Code button and select Download ZIP.
@@ -36,6 +36,11 @@ Live demo
 ```bash
 https://agenc-eco.alwaysdata.net/
 ```
+
+The website’s backend is hosted on: https://render.com/
+
+
+
 📖 [See my Tech Watch (VEILLE.md)](Veille.md)
 
 

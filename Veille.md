@@ -28,6 +28,7 @@ The goal is to keep improving code quality, accessibility, performance, and secu
 - [RGAA](https://accessibilite.numerique.gouv.fr/) — French guidelines for digital accessibility.  
 - [WAI-ARIA](https://www.w3.org/WAI/standards-guidelines/aria/) — W3C recommendations for accessible web apps.  
 - [Axe DevTools](https://www.deque.com/axe/devtools/) — Browser extension to test accessibility.
+- [Wave Extension for Chrome](https://chrome.google.com/webstore/detail/wave-evaluation-tool/jbbplnpkjmmeebjpijfedlgcdilocofh) — Browser extension to test accessibility.
 
 ---
 
