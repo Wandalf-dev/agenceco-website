@@ -13,25 +13,12 @@
 </head>
 
 <body>
-  <!--
-    Stratégie de layout :
-    - L’ensemble header + contenu + footer est encapsulé dans .main-wrapper (fond blanc centré).
-    - Le <body> conserve le fond noir => “bandes” latérales visibles, cohérence avec l’index.
-  -->
   <main class="main-wrapper">
-
-    <!-- ========================= HEADER =========================
-         Rôle : zone d’identification du site, navigation primaire et bouton burger.
-         Accessibilité :
-         - <nav> reçoit aria-label="Navigation principale" pour expliciter sa fonction.
-         - Le bouton burger expose l’état d’ouverture via aria-expanded (mis à jour en JS).
-         ======================================================== -->
+    <!-- ========================= HEADER ========================= -->
     <header>
       <div class="container">
-        <!-- Logo : lien retour accueil (réassurance et repère constant) -->
         <a href="index.html" class="logo">Agenc<span>eco</span></a>
 
-        <!-- Navigation de premier niveau ; penser à aria-current="page" côté index.html si besoin -->
         <nav id="nav" aria-label="Navigation principale">
           <ul>
             <li><a href="index.html">Accueil</a></li>
@@ -43,36 +30,19 @@
           </ul>
         </nav>
 
-        <!--
-          Bouton burger (mobile) :
-          - aria-controls pointe vers #nav pour lier contrôle et contenu.
-          - aria-expanded = false par défaut ; bascule gérée dans js/burger.js.
-        -->
         <button class="burger" id="burger" aria-label="Menu mobile" aria-expanded="false" aria-controls="nav">
           <span></span><span></span><span></span>
         </button>
       </div>
     </header>
 
-    <!-- ==================== CONTENU PRINCIPAL ====================
-         Page de connexion :
-         - <h1> unique pour la hiérarchie sémantique.
-         - Texte introductif pour contextualiser l’action attendue.
-         - Le formulaire est "novalidate" pour déléguer la logique de validation à JS (messages custom),
-           tout en conservant les attributs HTML (required, type="email") pour l’ergonomie de base.
-         ========================================================= -->
+    <!-- ==================== CONTENU PRINCIPAL ==================== -->
     <section id="login-page" aria-labelledby="login-title">
       <h1 id="login-title" class="login-title">Connexion</h1>
       <p class="login-subtitle">Pour voir les actualités, merci de vous connecter.</p>
 
-      <!--
-        Formulaire :
-        - id="login-form" pour le ciblage JS (soumission, validations, feedback).
-        - autocomplete="on" pour laisser le navigateur proposer les identifiants (UX).
-        - Les <label> existent (classe .sr-only) : visibles pour lecteurs d’écran, discrets visuellement.
-      -->
       <form id="login-form" class="login-form" novalidate autocomplete="on">
-        <!-- Champ e-mail : type=email + inputmode=email -> clavier adapté mobile et validation de format -->
+        <!-- Champ e-mail -->
         <div class="login-field">
           <label class="sr-only" for="login-email">E-mail</label>
           <input
@@ -85,8 +55,8 @@
             autocomplete="email">
         </div>
 
-        <!-- Champ mot de passe : autocomplete=current-password pour l’auto-remplissage sécurisé -->
-        <div class="login-field">
+        <!-- Champ mot de passe + bouton œil -->
+        <div class="login-field" style="position: relative;">
           <label class="sr-only" for="login-password">Mot de passe</label>
           <input
             id="login-password"
@@ -94,38 +64,51 @@
             type="password"
             placeholder="Mot de passe"
             required
-            autocomplete="current-password">
+            autocomplete="current-password"
+            style="padding-right: 48px;"> <!-- espace pour l’icône -->
+
+          <!-- Bouton afficher/masquer -->
+          <button
+            type="button"
+            id="togglePassword"
+            aria-label="Afficher le mot de passe"
+            style="position:absolute;right:16px;top:50%;transform:translateY(-50%);background:none;border:none;cursor:pointer;padding:0;display:flex;align-items:center;justify-content:center">
+            
+            <!-- Œil barré (VISIBLE par défaut car mdp masqué) -->
+            <span id="eyeClosed" aria-hidden="true">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" width="30" height="30">
+                <path d="m19.356 13.72c1.578-.515 3.14-.776 4.644-.776 8.531 0 16.04 8.296 18.303 11.057-.81.992-2.292 2.694-4.247 4.46-.614.556-.662 1.504-.107 2.119.297.327.704.494 1.113.494.359 0 .719-.128 1.006-.387 3.273-2.959 5.271-5.692 5.355-5.807.382-.525.382-1.237 0-1.763-.391-.536-9.703-13.173-21.423-13.173-1.82 0-3.695.311-5.574.924-.788.257-1.218 1.104-.96 1.891.256.789 1.105 1.22 1.89.961zm-14.579-9.72c-.624-.543-1.572-.479-2.116.146-.545.624-.479 1.571.145 2.116l9.087 7.919c-5.52 3.772-9.151 8.712-9.315 8.938-.381.525-.381 1.237 0 1.763.39.537 9.702 13.174 21.422 13.174 3.62 0 7.366-1.225 11.145-3.612l8.078 7.04c.284.248.635.369.984.369.419 0 .835-.174 1.132-.515.544-.624.479-1.572-.146-2.116zm15.252 17.27 6.732 5.867c-.787.596-1.753.938-2.761.938-2.522 0-4.575-2.053-4.575-4.575 0-.8.223-1.555.604-2.23zm3.971 13.786c-8.531 0-16.039-8.295-18.302-11.057 1.326-1.621 4.467-5.135 8.548-7.768l3.476 3.03c-.842 1.24-1.298 2.699-1.298 4.239 0 4.177 3.398 7.575 7.575 7.575 1.879 0 3.674-.71 5.051-1.942l3.727 3.248c-3.022 1.771-5.969 2.675-8.777 2.675z"/>
+              </svg>
+            </span>
+
+            <!-- Œil ouvert (CACHÉ au départ) -->
+            <span id="eyeOpen" aria-hidden="true" style="display:none">
+              <svg version="1.1" id="fi_158746" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 489.935 489.935" width="30" height="30">
+                <g><g><g>
+                  <path d="M486.617,255.067c4.6-6.3,4.4-14.9-0.5-21c-74.1-91.1-154.1-137.3-237.9-137.3c-142.1,0-240.8,132.4-244.9,138
+                    c-4.6,6.3-4.4,14.9,0.5,21c74,91.2,154,137.4,237.8,137.4C383.717,393.167,482.417,260.767,486.617,255.067z M241.617,358.867
+                    c-69.8,0-137.8-38.4-202.4-114c25.3-29.9,105.7-113.8,209-113.8c69.8,0,137.8,38.4,202.4,114
+                    C425.317,274.967,344.917,358.867,241.617,358.867z"></path>
+                  <path d="M244.917,157.867c-48,0-87.1,39.1-87.1,87.1s39.1,87.1,87.1,87.1s87.1-39.1,87.1-87.1S292.917,157.867,244.917,157.867z
+                    M244.917,297.767c-29.1,0-52.8-23.7-52.8-52.8s23.7-52.8,52.8-52.8s52.8,23.7,52.8,52.8S274.017,297.767,244.917,297.767z"></path>
+                </g></g></g>
+              </svg>
+            </span>
+          </button>
         </div>
 
-        <!--
-          Bouton d’envoi :
-          - libellé explicite (et aria-label redondant choisi pour cohérence avec les autres boutons).
-          - La gestion d’état (chargement, succès/échec) est traitée côté js/login.js.
-        -->
         <button id="btn-login" type="submit" class="login-btn" aria-label="Me connecter">
           Me connecter
         </button>
 
-        <!--
-          Zone de statut dynamique :
-          - aria-live="polite" : annonce les messages (erreurs/succès) sans interrompre la lecture.
-          - Peuvent s’y afficher : “Connexion en cours…”, “Identifiants invalides”, etc.
-        -->
         <p id="login-status" class="login-status" aria-live="polite"></p>
       </form>
     </section>
 
-    <!-- ========================= FOOTER =========================
-         Structure :
-         - .footer-top : colonnes de liens et coordonnées.
-         - .footer-bottom : mentions légales, CTA secondaire, réseaux sociaux.
-         Accessibilité :
-         - Les SVG sont marqués aria-hidden="true" car décoratifs ; le texte adjacent porte l’info utile.
-         ======================================================== -->
+    <!-- ========================= FOOTER ========================= -->
     <footer class="footer">
       <div class="footer-top">
         <div class="footer-row">
-          <!-- Colonnes d’informations (contenu statique / navigation secondaire) -->
           <div class="footer-columns">
             <div class="footer-column">
               <h3>Content</h3>
@@ -145,10 +128,8 @@
             </div>
           </div>
 
-          <!-- Coordonnées (contact direct) -->
           <div class="footer-contact">
             <div class="contact-item">
-              <!-- Icône téléphone (décoratif) -->
               <svg class="icon phone" width="40" height="40" viewBox="0 0 32 32" fill="currentColor" aria-hidden="true">
                 <path d="M13.216 8.064c-.382-4.394-4.966-6.55-5.16-6.638a.974.974 0 0 0-.582-.078c-5.292.878-6.088 3.958-6.12 4.086a.99.99 0 0 0 .02.54c6.312 19.584 19.43 23.214 23.742 24.408.332.092.606.166.814.234a.99.99 0 0 0 .722-.042c.132-.06 3.248-1.528 4.01-6.316a.997.997 0 0 0-.096-.612c-.068-.132-1.698-3.234-6.218-4.33a.977.977 0 0 0-.884.21c-1.426 1.218-3.396 2.516-4.246 2.65-5.698-2.786-8.88-8.132-9-9.146-.07-.57 1.236-2.572 2.738-4.2a.998.998 0 0 0 .26-.766z"></path>
               </svg>
@@ -156,7 +137,6 @@
             </div>
 
             <div class="contact-item">
-              <!-- Icône géolocalisation (décoratif) -->
               <svg class="icon geoloc" width="40" height="40" viewBox="0 0 64 64" fill="currentColor" aria-hidden="true">
                 <path d="M40 23c0-4.411-3.589-8-8-8s-8 3.589-8 8 3.589 8 8 8 8-3.589 8-8zm-12 0c0-2.206 1.794-4 4-4s4 1.794 4 4-1.794 4-4 4-4-1.794-4-4z"></path>
                 <path d="M31.966 64c.574 0 1.12-.247 1.5-.677.882-1 21.605-24.682 21.534-40.298C54.942 10.329 44.625 0 32 0 19.317 0 9 10.333 9 23.034c0 15.607 20.585 39.284 21.462 40.284.38.433.898.668 1.504.682zM32 4c10.429 0 18.952 8.543 19 19.043.054 11.824-14.281 30.122-19.029 35.855C27.246 53.161 13 34.872 13 23.034 13 12.539 21.523 4 32 4z"></path>
@@ -169,19 +149,8 @@
 
       <div class="footer-bottom">
         <p>Copyright © 2021 AGENCECO - All rights reserved</p>
-
-        <!--
-          Bouton “Me connecter” en pied de page :
-          - Ici c’est un <button> pour une action locale (ex. ouvrir un modal).
-          - La version lien (<a href="login.html">) est utilisée en home pour une navigation.
-        -->
         <button class="login-btn" type="button">Me connecter</button>
 
-        <!--
-          Réseaux sociaux :
-          - target="_blank" + rel="noopener noreferrer" : sécurité (empêche window.opener) et perf.
-          - Les icônes SVG sont aria-hidden (purement décoratives).
-        -->
         <div class="social-icons">
           <a href="https://facebook.com" target="_blank" aria-label="Facebook" rel="noopener noreferrer">
             <svg class="icon facebook" width="40" height="40" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
@@ -208,14 +177,34 @@
       </div>
     </footer>
 
-    <!-- ========================= SCRIPTS =========================
-         Chargement en 'defer' :
-         - Évite de bloquer le parsing du HTML (meilleure perf).
-         - Ordre logique : burger (navigation), puis login (soumission/feedback).
-         - login.js : gère la validation côté client, l’appel API (/login), et met à jour #login-status.
-         ========================================================= -->
+    <!-- ========================= SCRIPTS ========================= -->
     <script src="js/burger.js" defer></script>
     <script src="js/login.js" defer></script>
+
+    <!-- Mini-script pour l'affichage/masquage du mot de passe -->
+    <script>
+      document.addEventListener('DOMContentLoaded', () => {
+        const passInput = document.getElementById('login-password')
+        const toggleBtn = document.getElementById('togglePassword')
+        const eyeOpen   = document.getElementById('eyeOpen')
+        const eyeClosed = document.getElementById('eyeClosed')
+
+        if (!passInput || !toggleBtn || !eyeOpen || !eyeClosed) return
+
+        // Par défaut : password masqué => œil barré visible
+        toggleBtn.addEventListener('click', () => {
+          const isHidden = passInput.type === 'password'  // état AVANT bascule
+          passInput.type = isHidden ? 'text' : 'password'
+
+          // alterne les icônes (isHidden = on vient de rendre visible)
+          eyeClosed.style.display = isHidden ? 'none'  : 'inline'
+          eyeOpen.style.display   = isHidden ? 'inline': 'none'
+
+          // accessibilité : mettre à jour l'intention du bouton
+          toggleBtn.setAttribute('aria-label', isHidden ? 'Masquer le mot de passe' : 'Afficher le mot de passe')
+        })
+      })
+    </script>
   </main>
 </body>
 </html>

@@ -793,3 +793,105 @@ header nav a:hover {
   /* (optionnel) rien de spécifique ici pour l’instant */
 }
 
+/* Styles erreur validation */
+input.invalid {
+  border: 2px solid rgb(255, 77, 77) !important; /* !important au cas où d'autres règles écrasent */
+  background-color: #ffe6e6; /* léger fond rouge pâle */
+}
+
+input.invalid:focus {
+  border: 2px solid red !important;
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+input.invalid,
+input.invalid:focus {
+  border: 2px solid rgb(250, 117, 117) !important;
+  background-color: #ffe6e6;
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+/* Champ invalide (reste rouge même en focus) */
+#login-page .login-field input.invalid {
+  border: 2px solid rgb(255, 144, 144) !important;
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+/* Quand il redevient valide (classe retirée), 
+   c’est ta règle focus qui s’applique : */
+#login-page .login-field input:focus {
+  border-color: #469b61;
+  box-shadow:
+    0 3px 0 rgba(0, 0, 0, .08),
+    0 0 0 6px rgba(70, 155, 97, .15);
+}
+
+/* Champ invalide : rouge */
+#login-page .login-field input.invalid {
+  border: 2px solid rgb(194, 46, 46) !important;
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+/* Champ valide : vert (même sans focus) */
+#login-page .login-field input.valid {
+  border: 2px solid #469b61 !important;
+  box-shadow:
+    0 3px 0 rgba(0, 0, 0, .08),
+    0 0 0 6px rgba(70, 155, 97, .15);
+}
+
+/* Pour que le vert reste aussi en focus */
+#login-page .login-field input.valid:focus {
+  border: 2px solid #469b61 !important;
+  box-shadow:
+    0 3px 0 rgba(0, 0, 0, .08),
+    0 0 0 6px rgba(70, 155, 97, .15);
+}
+
+/* Oeil pour mot de passe */ 
+
+.login-field {
+  position: relative;
+}
+
+#togglePassword {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  display: flex;
+  align-items: center;
+}
+
+
+.login-field {
+  position: relative; /* permet de positionner l’œil par rapport au champ */
+}
+
+#togglePassword {
+  position: absolute;
+  right: 10px;           /* espace entre l’œil et le bord droit */
+  top: 50%;              /* place le bouton au milieu */
+  transform: translateY(-50%); /* recentre parfaitement */
+  display: flex;         /* centre l’icône dans le bouton */
+  align-items: center;   /* aligne verticalement */
+  justify-content: center; /* aligne horizontalement */
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+}
+
+#togglePassword svg {
+  width: 28px;
+  height: 28px;
+}
+
